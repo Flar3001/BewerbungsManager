@@ -66,7 +66,7 @@ namespace _2_UML.Controller
 
         private void AusbilderHinzufuegen()
         {
-
+            NutzerAnlegenBearbeitenController nutzerAnlegenBearbeitenController = new NutzerAnlegenBearbeitenController(new Models.Ausbilder { });
         }
 
     }

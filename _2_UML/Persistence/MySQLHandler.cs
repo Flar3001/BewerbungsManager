@@ -330,8 +330,8 @@ namespace _2_UML.Persistence
         /// <returns></returns>
         private static bool AddNewNutzer(Nutzer nutzer)
         {
-            string sql0 = "INSERT INTO nutzer (passwort, fk.sicherheitsabfrage, fk_nutzertyp, sicherheitsantwort)";
-            sql0 += "VALUES(@0,@1,@2,@3);";
+            string sql0 = "INSERT INTO nutzer (passwort, fk_sicherheitsabfrage, fk_nutzertyp, sicherheitsantwort)";
+            sql0 += " VALUES(@0,@1,@2,@3);";
 
             List<KeyValuePair<string, string>> parameters0 = new List<KeyValuePair<string, string>>
                 {
@@ -579,7 +579,9 @@ namespace _2_UML.Persistence
 
             if (ExecuteSQL(sql, parameters))
             {
-                if ((int)Result.Tables[0].Rows[0][0] == 0)
+                Int32.TryParse(Result.Tables[0].Rows[0][0].ToString(), out int matches);
+
+                if(matches == 0)
                 {
                     return true;
                 }

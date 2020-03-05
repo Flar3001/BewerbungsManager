@@ -16,9 +16,10 @@ namespace _2_UML.Controller
         /// <summary>
         /// Konstruktor für das Erschaffen oder Bearbeiten eines Ausbilderprofels
         /// </summary>
-        /// <param name="ausbilder">Der zu bearbeitende Ausbilder. Wenn neu erstellt werden soll, hier LEEREN Ausbilder übergeben</param>
-        public NutzerAnlegenBearbeitenController(Models.Ausbilder ausbilder)
+        /// <param name="ausbilder">Der zu bearbeitende Ausbilder. Wenn neu erstellt werden soll, nichts übergeben</param>
+        public NutzerAnlegenBearbeitenController(Models.Ausbilder ausbilder = null)
         {
+            ausbilder = ausbilder ?? new Models.Ausbilder { Id = 0 };
             MainNutzerAnlegenBearbeitenController(ausbilder);
 
             //Ausbilderspezifische Events vorbereiten
@@ -34,9 +35,10 @@ namespace _2_UML.Controller
         /// <summary>
         /// Konstruktor für das Erschaffen oder Bearbeiten eines Ausbilderprofils
         /// </summary>
-        /// <param name="ausbilder">Der zu bearbeitende Teilnehmer. Wenn neu erstellt werden soll, hier LEEREN Teilnehmer übergeben</param>
-        public NutzerAnlegenBearbeitenController(Models.Teilnehmer teilnehmer)
+        /// <param name="ausbilder">Der zu bearbeitende Teilnehmer. Wenn neu erstellt werden soll, nichts übergeben</param>
+        public NutzerAnlegenBearbeitenController(Models.Teilnehmer teilnehmer = null)
         {
+            teilnehmer = teilnehmer ?? new Models.Teilnehmer { Id = 0 };
             MainNutzerAnlegenBearbeitenController(teilnehmer);
 
             //Teilnehmerspezifische Events vorbereiten
@@ -63,7 +65,7 @@ namespace _2_UML.Controller
 
             OriginalNutzer = nutzer;
 
-            if (nutzer == null)
+            if (nutzer.Id == 0)
             {
                 NeuErschaffen = true;
                 LadeSicherheitsfragen();
@@ -202,10 +204,11 @@ namespace _2_UML.Controller
         /// <returns>Boolean ob vollständig oder nicht</returns>
         private bool NutzerdatenUeberpruefen(INutzer nutzer, bool istNeu)
         {
+            /*
             //Schritt 1: Sind die Daten vollständig?
             foreach (PropertyInfo propertyInfo in nutzer.GetType().GetProperties())
             {
-                if ((propertyInfo.Name != "Id" || propertyInfo.Name != "Nutzer" ) && propertyInfo==null)
+                if ((propertyInfo.Name != "Id" || propertyInfo.Name != "Nutzer" ) && string.IsNullOrEmpty(propert))
                 {
                     NutzerAnlegenBearbeitenView.ZeigeFehlermeldung("Bitte füllen Sie alle Felder vollständig aus");
                     return false;
@@ -225,6 +228,7 @@ namespace _2_UML.Controller
                     }
                 }
             }
+            */
 
             //Schritt 3: Ist die E-Mail-Adresse bereits vorhanden?
             if (NeuErschaffen)

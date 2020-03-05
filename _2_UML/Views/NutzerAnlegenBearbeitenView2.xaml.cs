@@ -91,6 +91,7 @@ namespace _2_UML.Views
         {
             IstTeilnehmer = false;
             WirdNeuErschaffen = neuErschaffen;
+            this.AlleSicherheitsfragen = AlleSicherheitsfragen;
 
             Id = ausbilder.Id;
             Vorname = ausbilder.Vorname;
@@ -103,6 +104,7 @@ namespace _2_UML.Views
         {
             IstTeilnehmer = true;
             WirdNeuErschaffen = neuErschaffen;
+            this.AlleSicherheitsfragen = AlleSicherheitsfragen;
             this.AlleAusbilder = AlleAusbilder;
             this.AlleBerufe = AlleBerufe;
 
@@ -129,15 +131,22 @@ namespace _2_UML.Views
 
         private void AenderungenSpeichernButton(object sender, RoutedEventArgs e)
         {
-            if (IstTeilnehmer)
+            if (IstInputOK())
             {
-                SpeichereAenderungenTeilnehmer(ErschaffeTeilnehmer());
+                if (IstTeilnehmer)
+                {
+                    SpeichereAenderungenTeilnehmer(ErschaffeTeilnehmer());
+                }
+                else
+                {
+                    SpeichereAenderungenAusbilder(ErschaffeAusbilder());
+                }
             }
             else
             {
-                SpeichereAenderungenAusbilder(ErschaffeAusbilder());
+                ZeigeFehlermeldung("Bitte füllen Sie alle Felder vollständig aus");
             }
-    }
+        }
 
         private void AendernAbbrechenButton(object sender, RoutedEventArgs e)
         {
@@ -146,13 +155,18 @@ namespace _2_UML.Views
 
         private void NeuenNutzerSpeichernButton(object sender, RoutedEventArgs e)
         {
-            if (Passwort == Antwort)
+            if (IstInputOK())
             {
-                ZeigeFehlermeldung("Passwort und Sicherheitsantwort dürfen nicht gleich sein");
-            }
-            else if (Passwort == Passwort_bestaetigen && Antwort==Antwort_bestaetigen)
-            {
-
+                if (Passwort.Password == Antwort.Text)
+                {
+                    ZeigeFehlermeldung("Passwort und Sicherheitsantwort dürfen nicht gleich sein");
+                }
+                else if (Passwort.Password != Passwort_bestaetigen.Password || Antwort.Text != Antwort_bestaetigen.Text)
+                {
+                    ZeigeFehlermeldung("Bitte überprüfen Sie Passwort und Sicherheitsantwort auf Differenzen");
+                }
+                else
+                {
                     if (IstTeilnehmer)
                     {
                         SpeichereNeuenTeilnehmer(ErschaffeTeilnehmer());
@@ -160,12 +174,12 @@ namespace _2_UML.Views
                     else
                     {
                         SpeichereNeuenAusbilder(ErschaffeAusbilder());
-                    }
-
+                    }                
+                }
             }
             else
             {
-                ZeigeFehlermeldung("Bitte überprüfen Sie Passwort und Sicherheitsantwort auf Differenzen");
+                ZeigeFehlermeldung("Bitte füllen Sie alle Felder vollständig aus");
             }
         }
 
@@ -210,13 +224,45 @@ namespace _2_UML.Views
         {
             return new Nutzer
             {
-                Passwort = this.Passwort.Text,
+                Passwort = this.Passwort.Password,
                 Sicherheitsfrage = (WirdNeuErschaffen) ? (Sicherheitsfrage)this.Sicherheitsfrage.SelectionBoxItem : new Sicherheitsfrage { },
                 Sicherheitsantwort = this.Antwort.Text,
 
                 //Das folgende muss ersetzt werden, wenn der Wechsel auf ein ordentliches Nutzersystem erfolgt
                 Nutzertyp = (IstTeilnehmer) ? new Nutzertyp { Id = 2, Typ = "Teilnehmer" } : new Nutzertyp { Id = 1, Typ = "Ausbilder" }
             };
+        }
+
+        /// <summary>
+        /// Überprüft, ob alle relevanten Einträge nicht leer sind
+        /// </summary>
+        /// <returns></returns>
+        private bool IstInputOK()
+        {
+            if (string.IsNullOrWhiteSpace(Nachname)) return false; 
+            if (string.IsNullOrWhiteSpace(Vorname))  return false; 
+            if (string.IsNullOrWhiteSpace(E_Mail)) return false;
+            if (string.IsNullOrWhiteSpace(Telefonnummer)) return false;
+
+            if (IstTeilnehmer)
+            {
+                if (string.IsNullOrWhiteSpace(Beruf.Bezeichnung)) return false;
+                if (string.IsNullOrWhiteSpace(Ausbilder.Name)) return false;
+                if (string.IsNullOrWhiteSpace(Ort)) return false;
+                if (string.IsNullOrWhiteSpace(Postleitzahl)) return false;
+                if (string.IsNullOrWhiteSpace(Straße)) return false;
+                if (string.IsNullOrWhiteSpace(Hausnummer)) return false;
+                if (string.IsNullOrWhiteSpace(Land)) return false;
+            }
+            if (WirdNeuErschaffen)
+            {
+                if (string.IsNullOrWhiteSpace(Passwort.Password)) return false;
+                if (string.IsNullOrWhiteSpace(Passwort_bestaetigen.Password)) return false;
+                //Sicherheitsfrage kann nicht leer sein
+                if (string.IsNullOrWhiteSpace(Antwort.Text)) return false;
+                if (string.IsNullOrWhiteSpace(Antwort_bestaetigen.Text)) return false;
+            }
+            return true;
         }
 
         public void ZeigeFehlermeldung(string Fehlermeldung)

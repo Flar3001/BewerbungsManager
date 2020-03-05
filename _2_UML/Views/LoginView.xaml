@@ -41,6 +41,7 @@
                    FontSize="20"
                    />
             <TextBox HorizontalAlignment="Stretch"
+                     VerticalContentAlignment="Center"
                      Grid.Column="1"
                      Grid.Row="0"  
                      Text="{Binding EMail}"

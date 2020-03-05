@@ -78,6 +78,7 @@
 
         <TextBox Text="{Binding Vorname}"
                  VerticalAlignment="Bottom"
+                 VerticalContentAlignment="Center"
                    FontSize="16"
                    Grid.Column="1"
                    Grid.Row="1"/>
@@ -88,6 +89,7 @@
                    Grid.Column="4"
                    Grid.Row="1"/>
         <TextBox Text="{Binding Nachname}"
+                 VerticalContentAlignment="Center"
                  VerticalAlignment="Bottom"
                    FontSize="16"
                    Grid.Column="5"
@@ -101,6 +103,7 @@
                    Grid.Row="2"/>
         <TextBox Text="{Binding Telefonnummer}"
                  VerticalAlignment="Bottom"
+                 VerticalContentAlignment="Center"
                    FontSize="16"
                    Grid.Column="1"
                    Grid.Row="2"/>
@@ -112,6 +115,7 @@
                    Grid.Row="2"/>
         <TextBox Text="{Binding E_Mail}"
                  VerticalAlignment="Bottom"
+                 VerticalContentAlignment="Center"
                    FontSize="16"
                    Grid.Column="5"
                    Grid.Row="2"/>
@@ -179,6 +183,7 @@
                    Grid.Row="5"/>
         <TextBox Text="{Binding Ort}"
                  VerticalAlignment="Bottom"
+                 VerticalContentAlignment="Center"
                    FontSize="16"
                    Grid.Column="1"
                    Grid.Row="5"/>
@@ -190,6 +195,7 @@
                    Grid.Row="5"/>
         <TextBox Text="{Binding Postleitzahl}"
                  VerticalAlignment="Bottom"
+                 VerticalContentAlignment="Center"
                    FontSize="16"
                    Grid.Column="5"
                    Grid.Row="5"/>
@@ -202,6 +208,7 @@
                    Grid.Row="6"/>
         <TextBox Text="{Binding Straße}"
                  VerticalAlignment="Bottom"
+                 VerticalContentAlignment="Center"
                    FontSize="16"
                    Grid.Column="1"
                    Grid.Row="6"/>
@@ -213,19 +220,21 @@
                    Grid.Row="6"/>
         <TextBox Text="{Binding Hausnummer}"
                  VerticalAlignment="Bottom"
+                 VerticalContentAlignment="Center"
                    FontSize="16"
                    Grid.Column="5"
                    Grid.Row="6"/>
 
 
         <TextBlock Text="Land:"
-                   VerticalAlignment="Bottom"
+                   VerticalAlignment="Bottom"                 
                    FontSize="16"
                    TextDecorations="Underline"
                    Grid.Column="0"
                    Grid.Row="7"/>
         <TextBox Text="{Binding Land}"
                  VerticalAlignment="Bottom"
+                 VerticalContentAlignment="Center"
                    FontSize="16"
                    Grid.Column="1"
                    Grid.Row="7"/>
@@ -244,9 +253,10 @@
                    TextDecorations="Underline"
                    Grid.Column="0"
                    Grid.Row="9"/>
-        <TextBox   Grid.Column="1"
+        <PasswordBox   Grid.Column="1"
                    Name="Passwort"
                    VerticalAlignment="Bottom"
+                   VerticalContentAlignment="Center"
                    FontSize="16"
                    Grid.Row="9"/>
         <TextBlock VerticalAlignment="Bottom"
@@ -257,9 +267,10 @@
             Passwort<LineBreak/>
             bestätigen:
         </TextBlock>
-        <TextBox   Grid.Column="5"
+        <PasswordBox   Grid.Column="5"
                    Name="Passwort_bestaetigen"
                    VerticalAlignment="Bottom"
+                   VerticalContentAlignment="Center"
                    FontSize="16"
                    Grid.Row="9"/>
         <TextBlock Text="Sicherheitsfrage:"
@@ -268,7 +279,7 @@
                    TextDecorations="Underline"
                    Grid.Column="0"
                    Grid.Row="10"/>
-        <ComboBox ItemsSource="{Binding Sicherheitsfragen}"
+        <ComboBox ItemsSource="{Binding AlleSicherheitsfragen}"
                   IsSynchronizedWithCurrentItem="True"
                   Name="Sicherheitsfrage"
                   Grid.Column="1"
@@ -290,6 +301,7 @@
         <TextBox   Grid.Column="1"
                    Name="Antwort"
                    VerticalAlignment="Bottom"
+                   VerticalContentAlignment="Center"
                    FontSize="16"
                    Grid.Row="11"/>
         <TextBlock VerticalAlignment="Bottom"
@@ -303,6 +315,7 @@
         <TextBox   Grid.Column="5"
                    Name="Antwort_bestaetigen"
                    VerticalAlignment="Bottom"
+                   VerticalContentAlignment="Center"
                    FontSize="16"
                    Grid.Row="11"/>
 

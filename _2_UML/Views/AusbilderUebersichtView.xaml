@@ -23,12 +23,13 @@
         <DataGrid ItemsSource="{Binding AngezeigteObjekte}" 
                   AutoGenerateColumns="False" 
                   CanUserSortColumns="True" 
-                  AlternatingRowBackground="Gainsboro" 
-                  AlternationCount="2"
-                   
+                  IsReadOnly="True"
+                  AlternatingRowBackground="LightGreen" 
+                  AlternationCount="2"                 
+                  CanUserAddRows="False" 
                   Grid.Row="1">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Name">
+                <DataGridTemplateColumn Header="Name" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Click="GeheZuProfilButton"
@@ -42,13 +43,13 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Telefonnummer" Binding="{Binding Telefonnummer}"/>
-                <DataGridTextColumn Header="E-Mail" Binding="{Binding EMail}"/>
-                <DataGridTemplateColumn>
+                <DataGridTextColumn Header="Telefonnummer" Binding="{Binding Telefonnummer}" Width="*"/>
+                <DataGridTextColumn Header="E-Mail" Binding="{Binding EMail}" Width="*"/>
+                <DataGridTemplateColumn Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Click="AusbilderLoeschenButton"
-                                        Tag="{Binding .}">
+                                    Tag="{Binding .}">
                                 <TextBlock Text="Löschen"/>
                             </Button>
                         </DataTemplate>
