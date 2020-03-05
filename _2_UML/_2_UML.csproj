@@ -1,0 +1,300 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D91B59F9-4D2E-4765-A8E5-B14690190741}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>_2_UML</RootNamespace>
+    <AssemblyName>_2_UML</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.3.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf, Version=3.6.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=8.0.19.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.8.0.19\lib\net452\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
+      <HintPath>..\packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Ubiety.Dns.Core, Version=2.2.1.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.8.0.19\lib\net452\Ubiety.Dns.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Controller\BasisControllerKlasse.cs" />
+    <Compile Include="Controller\AnlegenBearbeitenController.cs" />
+    <Compile Include="Controller\BerufeUebersichtController.cs" />
+    <Compile Include="Controller\FirmenAnsichtController.cs" />
+    <Compile Include="Controller\MainWindowController.cs" />
+    <Compile Include="Controller\NutzerAnlegenBearbeitenController.cs" />
+    <Compile Include="Controller\NutzerAnsichtController.cs" />
+    <Compile Include="Controller\SicherheitsabfrageController.cs" />
+    <Compile Include="Controller\SicherheitsdatenController.cs" />
+    <Compile Include="Converter\BoolToGridRowHeightConverter.cs" />
+    <Compile Include="Converter\BoolToGridRowHeightConverter2.cs" />
+    <Compile Include="Converter\ElementIsVisibleConverter.cs" />
+    <Compile Include="Interfaces\IBerufUebersichtView.cs" />
+    <Compile Include="Interfaces\IController.cs" />
+    <Compile Include="Interfaces\IFirmenAnsichtView.cs" />
+    <Compile Include="Interfaces\ILoginView.cs" />
+    <Compile Include="Interfaces\IAnlegenBearbeitenView.cs" />
+    <Compile Include="Interfaces\IMainWindow.cs" />
+    <Compile Include="Interfaces\INutzer.cs" />
+    <Compile Include="Interfaces\INutzerAnlegenBearbeitenView.cs" />
+    <Compile Include="Interfaces\INutzerAnsichtView.cs" />
+    <Compile Include="Interfaces\ISicherheitsabfrageView.cs" />
+    <Compile Include="Interfaces\ISicherheitsdatenView.cs" />
+    <Compile Include="Interfaces\IUebersichtView.cs" />
+    <Compile Include="Interfaces\IPerson.cs" />
+    <Compile Include="Controller\LoginController.cs" />
+    <Compile Include="Interfaces\IStartseiteView.cs" />
+    <Compile Include="Interfaces\IView.cs" />
+    <Compile Include="Models\Ausbilder.cs" />
+    <Compile Include="Controller\AusbilderAnlegenBearbeitenController.cs" />
+    <Compile Include="Controller\AusbilderUebersichtController.cs" />
+    <Compile Include="Interfaces\IAusbilderAnlegenBearbeitenView.cs" />
+    <Compile Include="Interfaces\IAusbilderUebersichtView.cs" />
+    <Compile Include="Models\Abteilung.cs" />
+    <Compile Include="Models\Ansprechpartner.cs" />
+    <Compile Include="Models\Bewerbung.cs" />
+    <Compile Include="Controller\BewerbungAnlegenBearbeitenController.cs" />
+    <Compile Include="Controller\BewerbungUebersichtController.cs" />
+    <Compile Include="Models\Bewerbung_Status.cs" />
+    <Compile Include="Models\Bewerbung_Typ.cs" />
+    <Compile Include="Interfaces\IBewerbungAnlegenBearbeitenView.cs" />
+    <Compile Include="Interfaces\IBewerbungUebersichtView.cs" />
+    <Compile Include="Interfaces\ITeilnehmerAnlegenBearbeitenView.cs" />
+    <Compile Include="Interfaces\ITeilnehmerUebersichtView.cs" />
+    <Compile Include="Models\Beruf.cs" />
+    <Compile Include="Controller\FirmaAnlegenBearbeitenController.cs" />
+    <Compile Include="Interfaces\IFimaAnlegenBearbeitenView.cs" />
+    <Compile Include="Models\Adresse.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Firma.cs" />
+    <Compile Include="Controller\UebersichtController.cs" />
+    <Compile Include="Controller\StartseiteController.cs" />
+    <Compile Include="Models\Nutzer.cs" />
+    <Compile Include="Models\Nutzertyp.cs" />
+    <Compile Include="Persistence\MySQLHandler.cs" />
+    <Compile Include="Models\Sicherheitsfrage.cs" />
+    <Compile Include="Views\AusbilderAnlegenBearbeitenView.xaml.cs">
+      <DependentUpon>AusbilderAnlegenBearbeitenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AusbilderUebersichtView.xaml.cs">
+      <DependentUpon>AusbilderUebersichtView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BasePage.cs" />
+    <Compile Include="Views\BerufUebersichtView.xaml.cs">
+      <DependentUpon>BerufUebersichtView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FirmenAnsichtView.xaml.cs">
+      <DependentUpon>FirmenAnsichtView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NutzerAnlegenBearbeitenView2.xaml.cs">
+      <DependentUpon>NutzerAnlegenBearbeitenView2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NutzerAnsichtView.xaml.cs">
+      <DependentUpon>NutzerAnsichtView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SicherheitsabfrageView.xaml.cs">
+      <DependentUpon>SicherheitsabfrageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SicherheitsdatenView.xaml.cs">
+      <DependentUpon>SicherheitsdatenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StartseiteView.xaml.cs">
+      <DependentUpon>StartseiteView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TeilnehmerAnlegenBearbeitenView.xaml.cs">
+      <DependentUpon>TeilnehmerAnlegenBearbeitenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TeilnehmerUebersichtView.xaml.cs">
+      <DependentUpon>TeilnehmerUebersichtView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controller\FirmenUebersichtController.cs" />
+    <Compile Include="Models\Teilnehmer.cs" />
+    <Compile Include="Controller\TeilnehmerAnlegenBearbeitenController.cs" />
+    <Compile Include="Controller\TeilnehmerUebersichtController.cs" />
+    <Compile Include="Views\BewerbungAnlegenBearbeitenView.xaml.cs">
+      <DependentUpon>BewerbungAnlegenBearbeitenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BewerbungUebersichtView.xaml.cs">
+      <DependentUpon>BewerbungUebersichtView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FirmaAnlegenBearbeitenView.xaml.cs">
+      <DependentUpon>FirmaAnlegenBearbeitenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FirmenuebersichtView.xaml.cs">
+      <DependentUpon>FirmenuebersichtView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\IFirmenuebersichtView.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\AusbilderAnlegenBearbeitenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AusbilderUebersichtView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BerufUebersichtView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BewerbungAnlegenBearbeitenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BewerbungUebersichtView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FirmaAnlegenBearbeitenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FirmenAnsichtView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FirmenuebersichtView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NutzerAnlegenBearbeitenView2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NutzerAnsichtView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SicherheitsabfrageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SicherheitsdatenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StartseiteView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TeilnehmerAnlegenBearbeitenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TeilnehmerUebersichtView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pictures\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

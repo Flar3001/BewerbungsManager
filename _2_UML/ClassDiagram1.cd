@@ -1,0 +1,684 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="_2_UML.App" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="_2_UML.Properties.Resources" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="_2_UML.Properties.Settings" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="_2_UML.Models.Adresse">
+    <Position X="14.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAACAAAAAAAAAAAAAAAAAAAAAAAACAAgAgAAAAAAABA=</HashCode>
+      <FileName>Models\Adresse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="_2_UML.Models.Firma">
+    <Position X="6.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAABAAAgAQAAAIAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Models\Firma.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Adresse" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="_2_UML.Controller.FirmenUebersichtController">
+    <Position X="12.25" Y="8.25" Width="2.25" />
+    <InheritanceLine Type="_2_UML.Controller.UebersichtController&lt;T&gt;" FixedToPoint="true">
+      <Path>
+        <Point X="55.25" Y="7.367" />
+        <Point X="55.25" Y="8" />
+        <Point X="43.573" Y="8" Type="JumpStart" />
+        <Point X="43.407" Y="8" Type="JumpEnd" />
+        <Point X="31.333" Y="8" Type="JumpStart" />
+        <Point X="31.167" Y="8" Type="JumpEnd" />
+        <Point X="23.333" Y="8" Type="JumpStart" />
+        <Point X="23.167" Y="8" Type="JumpEnd" />
+        <Point X="13.125" Y="8" />
+        <Point X="13.125" Y="8.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Controller\FirmenUebersichtController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="IFirmenuebersichtView" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="_2_UML.Controller.FirmaAnlegenBearbeitenController">
+    <Position X="9" Y="8.25" Width="2.75" />
+    <InheritanceLine Type="_2_UML.Controller.AnlegenBearbeitenController&lt;T&gt;" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="55.25" Y="4" />
+        <Point X="55.25" Y="3.626" />
+        <Point X="43.46" Y="3.626" />
+        <Point X="43.46" Y="7.76" />
+        <Point X="10.375" Y="7.76" />
+        <Point X="10.375" Y="8.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Controller\FirmaAnlegenBearbeitenController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="IFimaAnlegenBearbeitenView" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="_2_UML.Models.Beruf">
+    <Position X="17.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Models\Beruf.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="_2_UML.Models.Ansprechpartner">
+    <Position X="4.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAACAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Ansprechpartner.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="_2_UML.Models.Abteilung">
+    <Position X="8.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAABAACAAAA=</HashCode>
+      <FileName>Models\Abteilung.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Ansprechpartner" />
+      <Property Name="Firma" />
+      <Property Name="Beruf" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="_2_UML.Models.Bewerbung">
+    <Position X="14.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACgAAAAAABAAAAAAQAAAAAAAAAABAAAAAAAAQAAIA=</HashCode>
+      <FileName>Models\Bewerbung.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Bewerbung_Status" />
+      <Property Name="Bewerbung_Typ" />
+      <Property Name="Teilnehmer" />
+      <Property Name="Abteilung" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="_2_UML.Models.Bewerbung_Typ">
+    <Position X="12.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Bewerbung_Typ.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="_2_UML.Models.Bewerbung_Status">
+    <Position X="16.75" Y="5.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Bewerbung_Status.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="_2_UML.Controller.BewerbungUebersichtController">
+    <Position X="25.25" Y="8.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Controller\BewerbungUebersichtController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="IBewerbungUebersichtView" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="_2_UML.Controller.BewerbungAnlegenBearbeitenController">
+    <Position X="21.75" Y="8.25" Width="3" />
+    <InheritanceLine Type="_2_UML.Controller.AnlegenBearbeitenController&lt;T&gt;" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="55.25" Y="4" />
+        <Point X="55.25" Y="3.606" />
+        <Point X="43.483" Y="3.606" />
+        <Point X="43.483" Y="7.76" />
+        <Point X="23.25" Y="7.76" />
+        <Point X="23.25" Y="8.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Controller\BewerbungAnlegenBearbeitenController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="IBewerbungAnlegenBearbeitenView" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="_2_UML.Models.Teilnehmer">
+    <Position X="22.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAABAAAAAAAQAAAAAQAACAAAABAAAABQAAAAAA=</HashCode>
+      <FileName>Models\Teilnehmer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Ausbilder" />
+      <Property Name="Beruf" />
+      <Property Name="Adresse" />
+      <Property Name="Nutzer" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="_2_UML.Controller.TeilnehmerUebersichtController">
+    <Position X="33.25" Y="8.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\TeilnehmerUebersichtController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ITeilnehmerUebersichtView" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="_2_UML.Controller.TeilnehmerAnlegenBearbeitenController">
+    <Position X="29.75" Y="8.25" Width="3" />
+    <InheritanceLine Type="_2_UML.Controller.AnlegenBearbeitenController&lt;T&gt;" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="55.25" Y="4" />
+        <Point X="55.25" Y="3.625" />
+        <Point X="43.501" Y="3.625" />
+        <Point X="43.501" Y="7.76" />
+        <Point X="31.25" Y="7.76" />
+        <Point X="31.25" Y="8.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\TeilnehmerAnlegenBearbeitenController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ITeilnehmerAnlegenBearbeitenView" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="_2_UML.Models.Ausbilder">
+    <Position X="27.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAQAAAAAQAACAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Ausbilder.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Nutzer" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="_2_UML.Controller.AusbilderAnlegenBearbeitenController">
+    <Position X="40.5" Y="8.25" Width="2.75" />
+    <InheritanceLine Type="_2_UML.Controller.AnlegenBearbeitenController&lt;T&gt;" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="55.25" Y="4" />
+        <Point X="55.218" Y="3.876" />
+        <Point X="55.218" Y="3.625" />
+        <Point X="43.49" Y="3.625" />
+        <Point X="43.49" Y="8.749" />
+        <Point X="43.25" Y="8.749" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\AusbilderAnlegenBearbeitenController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="IAusbilderAnlegenBearbeitenView" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="_2_UML.Controller.AusbilderUebersichtController">
+    <Position X="43.75" Y="8.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Controller\AusbilderUebersichtController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="IAusbilderUebersichtView" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="_2_UML.Controller.AnlegenBearbeitenController&lt;T&gt;">
+    <Position X="54" Y="4" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Controller\AnlegenBearbeitenController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="_2_UML.Controller.UebersichtController&lt;T&gt;">
+    <Position X="54" Y="5.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\UebersichtController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="_2_UML.Views.AusbilderAnlegenBearbeitenView" Collapsed="true">
+    <Position X="40.75" Y="14" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Views\AusbilderAnlegenBearbeitenView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Bottom" Position="0.269" />
+  </Class>
+  <Class Name="_2_UML.Views.AusbilderUebersichtView" Collapsed="true">
+    <Position X="44.5" Y="14" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAIABCAAAAAQIAAAAAAACAACAAAAQ=</HashCode>
+      <FileName>Views\AusbilderUebersichtView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Bottom" Position="0.273" />
+  </Class>
+  <Class Name="_2_UML.Views.BewerbungAnlegenBearbeitenView" Collapsed="true">
+    <Position X="22" Y="14.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Views\BewerbungAnlegenBearbeitenView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Bottom" Position="0.252" />
+  </Class>
+  <Class Name="_2_UML.Views.BewerbungUebersichtView">
+    <Position X="25.5" Y="14" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAIABiAAAAAQAAAAAAAACAACAAAAQ=</HashCode>
+      <FileName>Views\BewerbungUebersichtView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Bottom" Position="0.356" />
+  </Class>
+  <Class Name="_2_UML.Views.FirmaAnlegenBearbeitenView" Collapsed="true">
+    <Position X="9.25" Y="14.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Views\FirmaAnlegenBearbeitenView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Bottom" Position="0.201" />
+  </Class>
+  <Class Name="_2_UML.Views.FirmenuebersichtView" Collapsed="true">
+    <Position X="12.5" Y="14.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAIABCAAAAAQAAAAAAAACAACAAAAQ=</HashCode>
+      <FileName>Views\FirmenuebersichtView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Bottom" Position="0.19" />
+  </Class>
+  <Class Name="_2_UML.Views.TeilnehmerAnlegenBearbeitenView" Collapsed="true">
+    <Position X="33.5" Y="14" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Views\TeilnehmerAnlegenBearbeitenView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Bottom" Position="0.242" />
+  </Class>
+  <Class Name="_2_UML.Views.TeilnehmerUebersichtView" Collapsed="true">
+    <Position X="30.25" Y="14" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAIABCAAAAAQAAAAAAAASAACAAAAQ=</HashCode>
+      <FileName>Views\TeilnehmerUebersichtView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Bottom" Position="0.346" />
+  </Class>
+  <Class Name="_2_UML.Controller.LoginController">
+    <Position X="0.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAQAABAAAA=</HashCode>
+      <FileName>Controller\LoginController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="LoginView" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="_2_UML.StartseiteController">
+    <Position X="2.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\StartseiteController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="IStartseiteView" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="_2_UML.Views.StartseiteView" Collapsed="true">
+    <Position X="2.5" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIoACAAEAgDABAAQBCAAEAAoAEAAABAAAgAAAAAIA=</HashCode>
+      <FileName>Views\StartseiteView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Bottom" Position="0.242" />
+  </Class>
+  <Class Name="_2_UML.Controller.SicherheitsabfrageController">
+    <Position X="4.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\SicherheitsabfrageController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ISicherheitsabfrageView" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="_2_UML.Views.SicherheitsabfrageView" Collapsed="true">
+    <Position X="4.5" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAhAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\SicherheitsabfrageView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Bottom" Position="0.1" />
+  </Class>
+  <Class Name="_2_UML.Controller.SicherheitsdatenController">
+    <Position X="6" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Controller\SicherheitsdatenController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ISicherheitsdatenView" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="_2_UML.Views.SicherheitsdatenView" Collapsed="true">
+    <Position X="6.25" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAhAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\SicherheitsdatenView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Bottom" Position="0.1" />
+  </Class>
+  <Class Name="_2_UML.Controller.BerufeUebersichtController">
+    <Position X="47.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\BerufeUebersichtController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="IBerufUebersichtView" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="_2_UML.Views.BerufUebersichtView" Collapsed="true">
+    <Position X="47.75" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAhAAAAAAAAAAAIABCAAAAAQAAAAAAAACAACAAAAQ=</HashCode>
+      <FileName>Views\BerufUebersichtView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Bottom" Position="0.242" />
+  </Class>
+  <Class Name="_2_UML.Controller.FimenAnsichtController" Collapsed="true">
+    <Position X="15.75" Y="8.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\FimenAnsichtController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="IFirmenansichtView" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="_2_UML.Views.FirmenAnsichtView" Collapsed="true">
+    <Position X="16" Y="14.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAhAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\FirmenAnsichtView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Bottom" Position="0.263" />
+  </Class>
+  <Class Name="_2_UML.Views.NutzerAnsichtView" Collapsed="true">
+    <Position X="37.5" Y="14" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>CACCgAgABAABAAAAAAACgAAgAAAACABgAgQAAwAAABA=</HashCode>
+      <FileName>Views\NutzerAnsichtView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Bottom" Position="0.2" />
+  </Class>
+  <Class Name="_2_UML.Controller.BasisControllerKlasse">
+    <Position X="58" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\BasisControllerKlasse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="_2_UML.Views.LoginView" Collapsed="true">
+    <Position X="0.5" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAACAAAIICAAADAAgAAYAAAAGAA=</HashCode>
+      <FileName>Views\LoginView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="_2_UML.Models.Nutzer">
+    <Position X="25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAQAAAAIAAAAACAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Models\Nutzer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Nutzertyp" />
+      <Property Name="Sicherheitsfrage" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="_2_UML.Models.Nutzertyp">
+    <Position X="35.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Nutzertyp.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="_2_UML.Models.Sicherheitsfrage">
+    <Position X="35.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Sicherheitsfrage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="_2_UML.Controller.NutzerAnsichtController">
+    <Position X="37" Y="8.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAggAAgAABAAAQAAAAIAACAAAAAAAAAAAAAUAAA=</HashCode>
+      <FileName>Controller\NutzerAnsichtController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="_2_UML.Interfaces.IFirmenuebersichtView">
+    <Position X="12.5" Y="11.25" Width="2" />
+    <InheritanceLine Type="_2_UML.Interfaces.IUebersichtView&lt;T&gt;" ManuallyRouted="true">
+      <Path>
+        <Point X="59.125" Y="14.5" />
+        <Point X="59.125" Y="12.886" />
+        <Point X="57.833" Y="12.886" Type="JumpStart" />
+        <Point X="57.667" Y="12.886" Type="JumpEnd" />
+        <Point X="56.583" Y="12.886" Type="JumpStart" />
+        <Point X="56.417" Y="12.886" Type="JumpEnd" />
+        <Point X="37.333" Y="12.886" Type="JumpStart" />
+        <Point X="37.167" Y="12.886" Type="JumpEnd" />
+        <Point X="17.083" Y="12.886" Type="JumpStart" />
+        <Point X="16.917" Y="12.886" Type="JumpEnd" />
+        <Point X="13.5" Y="12.886" />
+        <Point X="13.5" Y="12.247" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IFirmenuebersichtView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="_2_UML.Interfaces.IFimaAnlegenBearbeitenView">
+    <Position X="9.25" Y="11.25" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <InheritanceLine Type="_2_UML.Interfaces.IAnlegenBearbeitenView&lt;T&gt;" ManuallyRouted="true">
+      <Path>
+        <Point X="56.5" Y="15.25" />
+        <Point X="56.5" Y="12.605" />
+        <Point X="48.583" Y="12.605" Type="JumpStart" />
+        <Point X="48.417" Y="12.605" Type="JumpEnd" />
+        <Point X="45.458" Y="12.605" Type="JumpStart" />
+        <Point X="45.292" Y="12.605" Type="JumpEnd" />
+        <Point X="34.708" Y="12.605" Type="JumpStart" />
+        <Point X="34.542" Y="12.605" Type="JumpEnd" />
+        <Point X="26.708" Y="12.605" Type="JumpStart" />
+        <Point X="26.542" Y="12.605" Type="JumpEnd" />
+        <Point X="17.083" Y="12.605" Type="JumpStart" />
+        <Point X="16.917" Y="12.605" Type="JumpEnd" />
+        <Point X="13.583" Y="12.605" Type="JumpStart" />
+        <Point X="13.417" Y="12.605" Type="JumpEnd" />
+        <Point X="10.5" Y="12.605" />
+        <Point X="10.5" Y="12.247" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IFimaAnlegenBearbeitenView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="_2_UML.Interfaces.IBewerbungAnlegenBearbeitenView">
+    <Position X="22" Y="11.25" Width="2.75" />
+    <InheritanceLine Type="_2_UML.Interfaces.IAnlegenBearbeitenView&lt;T&gt;" ManuallyRouted="true">
+      <Path>
+        <Point X="56.5" Y="15.25" />
+        <Point X="56.5" Y="12.604" />
+        <Point X="48.583" Y="12.604" Type="JumpStart" />
+        <Point X="48.417" Y="12.604" Type="JumpEnd" />
+        <Point X="45.458" Y="12.604" Type="JumpStart" />
+        <Point X="45.292" Y="12.604" Type="JumpEnd" />
+        <Point X="34.708" Y="12.604" Type="JumpStart" />
+        <Point X="34.542" Y="12.604" Type="JumpEnd" />
+        <Point X="26.708" Y="12.604" Type="JumpStart" />
+        <Point X="26.542" Y="12.604" Type="JumpEnd" />
+        <Point X="23.375" Y="12.604" />
+        <Point X="23.375" Y="12.247" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IBewerbungAnlegenBearbeitenView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="_2_UML.Interfaces.IBewerbungUebersichtView">
+    <Position X="25.5" Y="11.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IBewerbungUebersichtView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="_2_UML.Interfaces.ITeilnehmerAnlegenBearbeitenView">
+    <Position X="30" Y="11.25" Width="2.75" />
+    <InheritanceLine Type="_2_UML.Interfaces.IAnlegenBearbeitenView&lt;T&gt;" ManuallyRouted="true">
+      <Path>
+        <Point X="56.5" Y="15.25" />
+        <Point X="56.5" Y="12.616" />
+        <Point X="48.583" Y="12.616" Type="JumpStart" />
+        <Point X="48.417" Y="12.616" Type="JumpEnd" />
+        <Point X="45.458" Y="12.616" Type="JumpStart" />
+        <Point X="45.292" Y="12.616" Type="JumpEnd" />
+        <Point X="34.708" Y="12.616" Type="JumpStart" />
+        <Point X="34.542" Y="12.616" Type="JumpEnd" />
+        <Point X="31.375" Y="12.616" />
+        <Point X="31.375" Y="12.247" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ITeilnehmerAnlegenBearbeitenView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="_2_UML.Interfaces.ITeilnehmerUebersichtView">
+    <Position X="33.5" Y="11.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ITeilnehmerUebersichtView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="_2_UML.Interfaces.IAusbilderAnlegenBearbeitenView">
+    <Position X="40.5" Y="11.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IAusbilderAnlegenBearbeitenView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="_2_UML.Interfaces.IAusbilderUebersichtView">
+    <Position X="44.25" Y="11.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IAusbilderUebersichtView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="_2_UML.Interfaces.IAnlegenBearbeitenView&lt;T&gt;">
+    <Position X="55.5" Y="15.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Interfaces\IAnlegenBearbeitenView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="_2_UML.Interfaces.IUebersichtView&lt;T&gt;">
+    <Position X="58.25" Y="14.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIABAAAAAAQAAAAAAAACAACAAAAQ=</HashCode>
+      <FileName>Interfaces\IUebersichtView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="_2_UML.Interfaces.ILoginView">
+    <Position X="0.5" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAEAA=</HashCode>
+      <FileName>Interfaces\ILoginView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="_2_UML.Interfaces.IStartseiteView">
+    <Position X="2.5" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAACAAAAACABAAQAAAAEAAAAEAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IStartseiteView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="_2_UML.Interfaces.IView">
+    <Position X="57" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="_2_UML.Interfaces.ISicherheitsabfrageView" Collapsed="true">
+    <Position X="4.25" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ISicherheitsabfrageView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="_2_UML.Interfaces.ISicherheitsdatenView" Collapsed="true">
+    <Position X="6" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ISicherheitsdatenView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="_2_UML.Interfaces.IBerufUebersichtView">
+    <Position X="47.75" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IBerufUebersichtView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="_2_UML.Interfaces.IFirmenAnsichtView" Collapsed="true">
+    <Position X="16" Y="11.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IFirmenAnsichtView.cs</FileName>
+      <NewMemberFileName>Interfaces\IFirmenansichtView.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="_2_UML.Interfaces.INutzerAnsichtView" Collapsed="true">
+    <Position X="37" Y="11.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAABAAAQAAAAAAAA=</HashCode>
+      <FileName>Interfaces\INutzerAnsichtView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

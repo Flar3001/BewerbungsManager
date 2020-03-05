@@ -1,0 +1,360 @@
+﻿<local:BasePage x:Class="_2_UML.Views.NutzerAnlegenBearbeitenView2"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:_2_UML.Views"
+      xmlns:converter="clr-namespace:_2_UML.Converter"
+      mc:Ignorable="d"
+      Title="NutzerAnlegenBearbeitenView" Height="450" Width="800">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <converter:BoolToGridRowHeightConverter x:Key="BoolToGridHeight"/>
+            <converter:BoolToGridRowHeightConverter2 x:Key="BoolToGridHeight2"/>
+            <converter:ElementIsVisibleConverter x:Key="ElementIsVisible"/>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid Margin="50,10,50,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="130"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0.025*"/>
+            <ColumnDefinition Width="0.025*"/>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="0.95*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="1*" MaxHeight="100" MinHeight="40"/>
+            <RowDefinition Height="1*" MaxHeight="100" MinHeight="40"/>
+
+            <RowDefinition Height="{Binding IstTeilnehmer, Converter={StaticResource BoolToGridHeight}}" MaxHeight="100"/>
+            <RowDefinition Height="{Binding IstTeilnehmer, Converter={StaticResource BoolToGridHeight2}}" MaxHeight="150"/>
+            <RowDefinition Height="{Binding IstTeilnehmer, Converter={StaticResource BoolToGridHeight}}" MaxHeight="100"/>
+            <RowDefinition Height="{Binding IstTeilnehmer, Converter={StaticResource BoolToGridHeight}}" MaxHeight="100"/>
+            <RowDefinition Height="{Binding IstTeilnehmer, Converter={StaticResource BoolToGridHeight}}" MaxHeight="100"/>
+
+            <RowDefinition Height="{Binding WirdNeuErschaffen, Converter={StaticResource BoolToGridHeight2}}" MaxHeight="150"/>
+            <RowDefinition Height="{Binding WirdNeuErschaffen, Converter={StaticResource BoolToGridHeight}}" MaxHeight="100"/>
+            <RowDefinition Height="{Binding WirdNeuErschaffen, Converter={StaticResource BoolToGridHeight}}" MaxHeight="100"/>
+            <RowDefinition Height="{Binding WirdNeuErschaffen, Converter={StaticResource BoolToGridHeight}}" MaxHeight="100"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Column="3"
+                Grid.Row="1"
+                Grid.RowSpan="3"
+                BorderBrush="Black"
+                BorderThickness="1,0,0,0"/>
+        <Border Grid.Column="3"
+                Grid.Row="5"
+                Grid.RowSpan="3"
+                BorderBrush="Black"
+                BorderThickness="1,0,0,0"/>
+        <Border Grid.Column="3"
+                Grid.Row="9"
+                Grid.RowSpan="3"
+                BorderBrush="Black"
+                BorderThickness="1,0,0,0"/>
+
+
+        <TextBlock Text="{Binding Ueberschrift}"
+                   Grid.Column="0"
+                   Grid.Row="0"
+                   Grid.ColumnSpan="6"
+                   FontSize="40"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"/>
+
+        <TextBlock Text="Vorname:"
+                   VerticalAlignment="Bottom"
+                   FontSize="16"
+                   Grid.Column="0"
+                   Grid.Row="1"
+                   TextDecorations="Underline"/>
+
+        <TextBox Text="{Binding Vorname}"
+                 VerticalAlignment="Bottom"
+                   FontSize="16"
+                   Grid.Column="1"
+                   Grid.Row="1"/>
+        <TextBlock Text="Nachname:"
+                   VerticalAlignment="Bottom"
+                   FontSize="16"
+                   TextDecorations="Underline"                  
+                   Grid.Column="4"
+                   Grid.Row="1"/>
+        <TextBox Text="{Binding Nachname}"
+                 VerticalAlignment="Bottom"
+                   FontSize="16"
+                   Grid.Column="5"
+                   Grid.Row="1"/>
+
+        <TextBlock Text="Telefonnummer:"
+                   VerticalAlignment="Bottom"
+                   FontSize="16"
+                   TextDecorations="Underline"
+                   Grid.Column="0"
+                   Grid.Row="2"/>
+        <TextBox Text="{Binding Telefonnummer}"
+                 VerticalAlignment="Bottom"
+                   FontSize="16"
+                   Grid.Column="1"
+                   Grid.Row="2"/>
+        <TextBlock Text="E-Mail:"
+                   VerticalAlignment="Bottom"
+                   FontSize="16"
+                   TextDecorations="Underline"
+                   Grid.Column="4"
+                   Grid.Row="2"/>
+        <TextBox Text="{Binding E_Mail}"
+                 VerticalAlignment="Bottom"
+                   FontSize="16"
+                   Grid.Column="5"
+                   Grid.Row="2"/>
+        
+
+        <TextBlock Text="Beruf:"
+                   VerticalAlignment="Bottom"
+                   FontSize="16"
+                   TextDecorations="Underline"
+                   Grid.Column="0"
+                   Grid.Row="3"/>
+        <ComboBox  ItemsSource="{Binding AlleBerufe}"
+                   SelectedItem="{Binding Beruf}"
+                   IsSynchronizedWithCurrentItem="True"
+                   VerticalAlignment="Bottom"
+                   FontSize="16"
+                   Grid.Column="1"
+                   Grid.Row="3">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Bezeichnung}" Background="White"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <TextBlock Text="Ausbilder:"
+                   VerticalAlignment="Bottom"
+                   FontSize="16"
+                   TextDecorations="Underline"
+                   Grid.Column="4"
+                   Grid.Row="3"/>
+        <ComboBox  ItemsSource="{Binding AlleAusbilder}"
+                   SelectedItem="{Binding Ausbilder}"
+                   IsSynchronizedWithCurrentItem="True"
+                   VerticalAlignment="Bottom"
+                   FontSize="16"
+                   Grid.Column="5"
+                   Grid.Row="3">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}" Background="White"/>
+                        <TextBlock Text=", "/>
+                        <TextBlock Text="{Binding Vorname}" Background="White"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <TextBlock Text="Adresse"
+                   Grid.Row="4"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="6"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontSize="20"/>
+
+        <TextBlock Text="Ort:"
+                   VerticalAlignment="Bottom"
+                   FontSize="16"
+                   TextDecorations="Underline"
+                   Grid.Column="0"
+                   Grid.Row="5"/>
+        <TextBox Text="{Binding Ort}"
+                 VerticalAlignment="Bottom"
+                   FontSize="16"
+                   Grid.Column="1"
+                   Grid.Row="5"/>
+        <TextBlock Text="Postleitzahl:"
+                   VerticalAlignment="Bottom"
+                   FontSize="16"
+                   TextDecorations="Underline"
+                   Grid.Column="4"
+                   Grid.Row="5"/>
+        <TextBox Text="{Binding Postleitzahl}"
+                 VerticalAlignment="Bottom"
+                   FontSize="16"
+                   Grid.Column="5"
+                   Grid.Row="5"/>
+
+        <TextBlock Text="Straße:"
+                   VerticalAlignment="Bottom"
+                   FontSize="16"
+                   TextDecorations="Underline"
+                   Grid.Column="0"
+                   Grid.Row="6"/>
+        <TextBox Text="{Binding Straße}"
+                 VerticalAlignment="Bottom"
+                   FontSize="16"
+                   Grid.Column="1"
+                   Grid.Row="6"/>
+        <TextBlock Text="Hausnummer:"
+                   VerticalAlignment="Bottom"
+                   FontSize="16"
+                   TextDecorations="Underline"
+                   Grid.Column="4"
+                   Grid.Row="6"/>
+        <TextBox Text="{Binding Hausnummer}"
+                 VerticalAlignment="Bottom"
+                   FontSize="16"
+                   Grid.Column="5"
+                   Grid.Row="6"/>
+
+
+        <TextBlock Text="Land:"
+                   VerticalAlignment="Bottom"
+                   FontSize="16"
+                   TextDecorations="Underline"
+                   Grid.Column="0"
+                   Grid.Row="7"/>
+        <TextBox Text="{Binding Land}"
+                 VerticalAlignment="Bottom"
+                   FontSize="16"
+                   Grid.Column="1"
+                   Grid.Row="7"/>
+
+        <TextBlock Text="Sicherheitsdaten"
+                   Grid.Row="8"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="6"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontSize="20"/>
+
+        <TextBlock Text="Passwort:"
+                   VerticalAlignment="Bottom"
+                   FontSize="16"
+                   TextDecorations="Underline"
+                   Grid.Column="0"
+                   Grid.Row="9"/>
+        <TextBox   Grid.Column="1"
+                   Name="Passwort"
+                   VerticalAlignment="Bottom"
+                   FontSize="16"
+                   Grid.Row="9"/>
+        <TextBlock VerticalAlignment="Bottom"
+                   FontSize="16"
+                   TextDecorations="Underline"
+                   Grid.Column="4"
+                   Grid.Row="9">
+            Passwort<LineBreak/>
+            bestätigen:
+        </TextBlock>
+        <TextBox   Grid.Column="5"
+                   Name="Passwort_bestaetigen"
+                   VerticalAlignment="Bottom"
+                   FontSize="16"
+                   Grid.Row="9"/>
+        <TextBlock Text="Sicherheitsfrage:"
+                   VerticalAlignment="Bottom"
+                   FontSize="16"
+                   TextDecorations="Underline"
+                   Grid.Column="0"
+                   Grid.Row="10"/>
+        <ComboBox ItemsSource="{Binding Sicherheitsfragen}"
+                  IsSynchronizedWithCurrentItem="True"
+                  Name="Sicherheitsfrage"
+                  Grid.Column="1"
+                  Grid.Row="10"
+                  Grid.ColumnSpan="5"
+                  VerticalAlignment="Bottom">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Frage}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBlock Text="Antwort:"
+                   VerticalAlignment="Bottom"
+                   FontSize="16"
+                   TextDecorations="Underline"
+                   Grid.Column="0"
+                   Grid.Row="11"/>
+        <TextBox   Grid.Column="1"
+                   Name="Antwort"
+                   VerticalAlignment="Bottom"
+                   FontSize="16"
+                   Grid.Row="11"/>
+        <TextBlock VerticalAlignment="Bottom"
+                   FontSize="16"
+                   TextDecorations="Underline"
+                   Grid.Column="4"
+                   Grid.Row="11">
+            Antwort<LineBreak/>
+            bestätigen:
+        </TextBlock>
+        <TextBox   Grid.Column="5"
+                   Name="Antwort_bestaetigen"
+                   VerticalAlignment="Bottom"
+                   FontSize="16"
+                   Grid.Row="11"/>
+
+
+
+        <Button
+            Grid.Row="13"
+            Grid.ColumnSpan="2"
+            Grid.Column="0"
+            VerticalAlignment="Center"
+            FontSize="16"
+            Visibility="{Binding WirdNichtNeuErschaffen, Converter={StaticResource ElementIsVisible}}"
+            Width="200">
+            Sicherheitsdaten ändern
+        </Button>
+
+        <Button
+            Grid.Column="3"
+            Grid.ColumnSpan="2"
+            Grid.Row="13"
+            FontSize="16"
+            Width="100"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left"
+            Visibility="{Binding WirdNichtNeuErschaffen, Converter={StaticResource ElementIsVisible}}"
+            Click="AenderungenSpeichernButton">
+            Speichern
+        </Button>
+
+        <Button
+            Grid.Column="4"
+            Grid.ColumnSpan="2"
+            Grid.Row="13"
+            FontSize="16"
+            Width="100"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left"
+            Visibility="{Binding WirdNeuErschaffen, Converter={StaticResource ElementIsVisible}}"
+            Click="NeuenNutzerSpeichernButton">
+            Speichern
+        </Button>
+
+        <Button
+            Grid.Column="5"
+            Grid.Row="13"
+            FontSize="16"
+            Width="100"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Right"
+            Click="AendernAbbrechenButton">
+            Abbrechen
+        </Button>
+
+    </Grid>
+</local:BasePage>
