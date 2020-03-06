@@ -11,6 +11,6 @@ namespace _2_UML.Controller
     public class TeilnehmerUebersichtController : UebersichtController<Models.Teilnehmer>
     {
         //public ITeilnehmerUebersichtView TeilnehmerUebersichtView = new TeilnehmerUebersichtView();
-        public ITeilnehmerUebersichtView ITeilnehmerUebersichtView { get; set; } = new TeilnehmerUebersichtView();
+        public ITeilnehmerUebersichtView TeilnehmerUebersichtView { get; set; } = new TeilnehmerUebersichtView();
     }
 }

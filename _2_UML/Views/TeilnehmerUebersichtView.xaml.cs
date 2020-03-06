@@ -32,28 +32,16 @@ namespace _2_UML.Views
         ObservableCollection<Interfaces.Teilnehmer> IUebersichtView<Interfaces.Teilnehmer>.AngezeigteObjekte { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public event SeitenAnsicht ZeigeViewFertig;
+        public event ObjektLoeschen AusbilderLoeschen;
+        public event ZurStartseite ZurStartseite;
+        public event ObjektHinzufuegen AusbilderHinzufuegen;
 
-        public void AktualisiereObjekt(Models.Teilnehmer Objekt)
+        public void ObjektHinzufuegenButton(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
         }
 
-        public void AktualisiereObjekt(Interfaces.Teilnehmer Objekt)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void LoeseSpeichernAus(Models.Teilnehmer Objekt)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void LoeseSpeichernAus(Interfaces.Teilnehmer Objekt)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ZeigeAlleObjekte()
+        public void ObjektLoeschenButton(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
         }
@@ -63,17 +51,12 @@ namespace _2_UML.Views
             throw new NotImplementedException();
         }
 
-        public void ZeigeAusgewaehlteObjekte()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ZeigeBestaetigungsbox(string AreYouSureMessage)
-        {
-            throw new NotImplementedException();
-        }
-
         public void ZeigeView()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ZurStartseiteButton(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
         }

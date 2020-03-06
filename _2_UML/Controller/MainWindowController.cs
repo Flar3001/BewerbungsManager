@@ -14,8 +14,6 @@ namespace _2_UML.Controller
     {
         static IMainWindow MainWindow;
 
-
-
         public static void MainWindowControllerStart()
         {
             MainWindow = new MainWindow();

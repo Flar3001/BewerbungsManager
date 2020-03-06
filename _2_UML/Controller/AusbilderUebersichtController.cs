@@ -24,6 +24,7 @@ namespace _2_UML.Controller
             AusbilderUebersichtView.ZurStartseite += ZurStartseite;
             AusbilderUebersichtView.AusbilderHinzufuegen += AusbilderHinzufuegen;
 
+            NavigationsHistorie.Add(this);
             AusbilderUebersichtView.ZeigeView();
         }
 
@@ -59,11 +60,22 @@ namespace _2_UML.Controller
             StartseiteController startseiteController = new StartseiteController();
         }
 
-        private void ObjektLoeschen(int AusbilderId)
+        /// <summary>
+        /// Löscht einen Ausbilder aus der Datenbank und der angezeigten Liste
+        /// </summary>
+        /// <param name="objektId"></param>
+        private void ObjektLoeschen(int objektId)
         {
-            MySQLHandler.DeleteFromAusbilder(AusbilderId);
+            MySQLHandler.DeleteFromAusbilder(objektId);
+
+            Models.Ausbilder ausbilder = AusbilderUebersichtView.AngezeigteObjekte.Where(x => x.Id == objektId).FirstOrDefault();
+
+            AusbilderUebersichtView.AngezeigteObjekte.Remove(ausbilder);
         }
 
+        /// <summary>
+        /// Leitet weiter zur Ansicht zum Erstellen von Ausbildern
+        /// </summary>
         private void AusbilderHinzufuegen()
         {
             NutzerAnlegenBearbeitenController nutzerAnlegenBearbeitenController = new NutzerAnlegenBearbeitenController(new Models.Ausbilder { });

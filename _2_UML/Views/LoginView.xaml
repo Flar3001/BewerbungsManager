@@ -41,13 +41,14 @@
                    FontSize="20"
                    />
             <TextBox HorizontalAlignment="Stretch"
-                     VerticalContentAlignment="Center"
+                     VerticalContentAlignment="Center"                     
                      Grid.Column="1"
-                     Grid.Row="0"  
+                     Grid.Row="0"           
                      Text="{Binding EMail}"
                      FontSize="20"
                      />
             <PasswordBox HorizontalAlignment="Stretch"
+                     VerticalContentAlignment="Center"
                      Grid.Column="1"
                      Grid.Row="2"   
                      Name="Passwort"
@@ -55,9 +56,17 @@
                      />
 
         </Grid>
+
+        <TextBlock Text="{Binding Meldung}" 
+                   Visibility="{Binding MeldungSichtbar, Converter={StaticResource TextBoxConverter}}" 
+                   Foreground="{Binding MeldungsFarbe}"
+                   HorizontalAlignment="Center"
+                   Margin="0,20,0,0"     
+                   FontSize="20"/>
+
         <Button
             Width="150"
-            Margin="150,40,0,20"
+            Margin="150,30,0,20"
             FontSize="20"
             Click="LoeseLoginAus"
             >
@@ -70,10 +79,5 @@
             FontSize="20">
             Passwort vergessen?
         </Button>
-
-        <TextBlock Text="{Binding Meldung}" 
-                   Visibility="{Binding MeldungSichtbar, Converter={StaticResource TextBoxConverter}}" 
-                   Foreground="{Binding MeldungsFarbe}"
-                   FontSize="20"/>
     </StackPanel>
 </local:BasePage>

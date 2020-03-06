@@ -348,7 +348,12 @@ namespace _2_UML.Persistence
             return false;
         }
         
-
+        /// <summary>
+        /// Überprüft die eigegebenen Logindaten
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public static bool CheckLogin(string email, string password)
         {
             CheckLoginTeilnehmer(email, password);
@@ -476,6 +481,10 @@ namespace _2_UML.Persistence
         }
         */
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static List<Ausbilder> SelectAllAusbilder()
         {
             List<Ausbilder> AllAusbilder = new List<Ausbilder>();
@@ -511,7 +520,7 @@ namespace _2_UML.Persistence
         public static void DeleteFromAusbilder(int deleteid)
         {
             string sql = "DELETE FROM ausbilder";
-            sql += "WHERE id=@0";
+            sql += " WHERE id=@0";
 
             List<KeyValuePair<string, string>> parameters = new List<KeyValuePair<string, string>>
             {

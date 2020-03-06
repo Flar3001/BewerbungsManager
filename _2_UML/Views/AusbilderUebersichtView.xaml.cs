@@ -29,45 +29,27 @@ namespace _2_UML.Views
             this.DataContext = this;
         }
 
-        public event AusbilderLoeschen AusbilderLoeschen;
+        public event ObjektLoeschen AusbilderLoeschen;
         public event ZuAusbilder ZuAusbilder;
         public event ZurStartseite ZurStartseite;
-        public event AusbilderHinzufuegen AusbilderHinzufuegen;
+        public event ObjektHinzufuegen AusbilderHinzufuegen;
 
         public ObservableCollection<Models.Ausbilder> AngezeigteObjekte { get; set; }
 
         public event SeitenAnsicht ZeigeViewFertig;
-
-        public void AktualisiereObjekt(Models.Ausbilder Objekt)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void LoeseSpeichernAus(Models.Ausbilder Objekt)
-        {
-            throw new NotImplementedException();
-        }
-
 
         public void ZeigeAlleObjekte(ObservableCollection<Models.Ausbilder> ausbilders)
         {
             AngezeigteObjekte = ausbilders;
         }
 
-        public void ZeigeAusgewaehlteObjekte()
-        {
-            throw new NotImplementedException();
-        }
-
-
         public void ZeigeView()
         {
             ZeigeViewFertig(this);
         }
 
-
         //Nachfragen: Soll jeder Ausbilder einfach so andere Ausbilder löschen können?
-        private void AusbilderLoeschenButton(object sender, RoutedEventArgs e)
+        public void ObjektLoeschenButton(object sender, RoutedEventArgs e)
         {
             var AusgewaehlterAusbilder = ((Button)sender).Tag as Models.Ausbilder;
 
@@ -84,18 +66,18 @@ namespace _2_UML.Views
             }
         }
 
-        private void GeheZuProfilButton(object sender, RoutedEventArgs e)
+        public void GeheZuProfilButton(object sender, RoutedEventArgs e)
         {
-            var AusgewaehlterAusbilder = ((Button)sender).Tag as Models.Ausbilder;
+            Models.Ausbilder AusgewaehlterAusbilder = (Models.Ausbilder)((TextBlock)sender).BindingGroup.Items[0];
             ZuAusbilder(AusgewaehlterAusbilder);
         }
 
-        private void AusbilderHinzufuegenButton(object sender, RoutedEventArgs e)
+        public void ObjektHinzufuegenButton(object sender, RoutedEventArgs e)
         {
             AusbilderHinzufuegen();
         }
 
-        private void ZurStartseiteButton(object sender, RoutedEventArgs e)
+        public void ZurStartseiteButton(object sender, RoutedEventArgs e)
         {
             ZurStartseite();
         }

@@ -29,6 +29,7 @@ namespace _2_UML.Controller
             //Bereitet alle nötigen Informationen für die Anzeige eines Ausbilders vor
             NutzerAnlegenBearbeitenView.DatenAnzeigen(ausbilder, NeuErschaffen, AlleSicherheitsfragen);
 
+            NavigationsHistorie.Add(this);
             NutzerAnlegenBearbeitenView.ZeigeView();
         }
 
@@ -50,6 +51,7 @@ namespace _2_UML.Controller
             LadeBerufe();
             NutzerAnlegenBearbeitenView.DatenAnzeigen(teilnehmer, NeuErschaffen,AlleAusbilder,AlleSicherheitsfragen, AlleBerufe);
 
+            NavigationsHistorie.Add(this);
             NutzerAnlegenBearbeitenView.ZeigeView();
         }
 
@@ -198,39 +200,13 @@ namespace _2_UML.Controller
 
 
         /// <summary>
-        /// Überprüft, ob die Nutzerdaten vollständig eingegeben wurden
+        /// Überprüft, ob die eingegebenen Nutzerdaten korrekt vorliegen
         /// </summary>
         /// <param name="nutzer"></param>
         /// <returns>Boolean ob vollständig oder nicht</returns>
         private bool NutzerdatenUeberpruefen(INutzer nutzer, bool istNeu)
         {
-            /*
-            //Schritt 1: Sind die Daten vollständig?
-            foreach (PropertyInfo propertyInfo in nutzer.GetType().GetProperties())
-            {
-                if ((propertyInfo.Name != "Id" || propertyInfo.Name != "Nutzer" ) && string.IsNullOrEmpty(propert))
-                {
-                    NutzerAnlegenBearbeitenView.ZeigeFehlermeldung("Bitte füllen Sie alle Felder vollständig aus");
-                    return false;
-                }
-            }
-
-            //Nur bei der Neuerstellung eines Nutzers sind Sicherheitsdaten nötig.
-            if (istNeu)
-            {
-                //Schritt 2: Sind die Sicherheitsdaten alle vorhanden?
-                foreach (PropertyInfo propertyInfo in nutzer.Nutzer.GetType().GetProperties())
-                {
-                    if (propertyInfo.Name != "Id" && propertyInfo == null)
-                    {
-                        NutzerAnlegenBearbeitenView.ZeigeFehlermeldung("Bitte füllen Sie alle Felder vollständig aus");
-                        return false;
-                    }
-                }
-            }
-            */
-
-            //Schritt 3: Ist die E-Mail-Adresse bereits vorhanden?
+            //Ist die E-Mail-Adresse bereits vorhanden?
             if (NeuErschaffen)
             {
                 if(MySQLHandler.EMailUnique(nutzer.EMail) == false)
@@ -250,13 +226,11 @@ namespace _2_UML.Controller
                     }
                 }
             }
-
             return true; 
         }
 
         private bool NutzerUeberpruefen(Models.Nutzer nutzer)
         {
-
             return true;
         }
     }

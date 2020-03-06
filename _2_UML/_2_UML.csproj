@@ -89,6 +89,7 @@
     <Compile Include="Controller\SicherheitsdatenController.cs" />
     <Compile Include="Converter\BoolToGridRowHeightConverter.cs" />
     <Compile Include="Converter\BoolToGridRowHeightConverter2.cs" />
+    <Compile Include="Converter\CombineNameConverter.cs" />
     <Compile Include="Converter\ElementIsVisibleConverter.cs" />
     <Compile Include="Interfaces\IBerufUebersichtView.cs" />
     <Compile Include="Interfaces\IController.cs" />
@@ -107,7 +108,6 @@
     <Compile Include="Interfaces\IStartseiteView.cs" />
     <Compile Include="Interfaces\IView.cs" />
     <Compile Include="Models\Ausbilder.cs" />
-    <Compile Include="Controller\AusbilderAnlegenBearbeitenController.cs" />
     <Compile Include="Controller\AusbilderUebersichtController.cs" />
     <Compile Include="Interfaces\IAusbilderAnlegenBearbeitenView.cs" />
     <Compile Include="Interfaces\IAusbilderUebersichtView.cs" />

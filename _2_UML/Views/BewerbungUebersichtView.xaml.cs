@@ -32,33 +32,21 @@ namespace _2_UML.Views
         ObservableCollection<Bewerbung> IUebersichtView<Bewerbung>.AngezeigteObjekte { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public event SeitenAnsicht ZeigeViewFertig;
+        public event ObjektLoeschen AusbilderLoeschen;
+        public event ZurStartseite ZurStartseite;
+        public event ObjektHinzufuegen AusbilderHinzufuegen;
 
-        public void AktualisiereObjekt(Bewerbung Objekt)
+        public void ObjektHinzufuegenButton(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
         }
 
-        public void ZeigeAlleObjekte()
+        public void ObjektLoeschenButton(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
         }
 
-        public void ZeigeAusgewaehlteObjekte()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ZeigeBestaetigungsbox(string AreYouSureMessage)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Method()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void LoeseSpeichernAus(Bewerbung Objekt)
+        public void ZeigeAlleObjekte(ObservableCollection<Bewerbung> ts)
         {
             throw new NotImplementedException();
         }
@@ -68,7 +56,7 @@ namespace _2_UML.Views
             throw new NotImplementedException();
         }
 
-        public void ZeigeAlleObjekte(ObservableCollection<Bewerbung> ts)
+        public void ZurStartseiteButton(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
         }
