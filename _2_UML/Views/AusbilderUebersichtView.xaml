@@ -36,21 +36,6 @@
                   CanUserAddRows="False" 
                   Grid.Row="1">
             <DataGrid.Columns>
-                <!--
-                <DataGridTemplateColumn Header="Name" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Click="GeheZuProfilButton"
-                                        Tag="{Binding .}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Vorname}"/>
-                                    <TextBlock Text=" "/>
-                                    <TextBlock Text="{Binding Name}"/>
-                                </StackPanel>
-                            </Button>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>-->
                 <DataGridHyperlinkColumn Header="Name" Width="*">
                     <DataGridHyperlinkColumn.Binding>
                         <MultiBinding Converter="{StaticResource CombineNames}">

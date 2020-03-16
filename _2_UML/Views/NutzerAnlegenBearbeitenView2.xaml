@@ -76,7 +76,7 @@
                    Grid.Row="1"
                    TextDecorations="Underline"/>
 
-        <TextBox Text="{Binding Vorname}"
+        <TextBox Text="{Binding AktuellerNutzer.Vorname}"
                  VerticalAlignment="Bottom"
                  VerticalContentAlignment="Center"
                    FontSize="16"
@@ -88,7 +88,7 @@
                    TextDecorations="Underline"                  
                    Grid.Column="4"
                    Grid.Row="1"/>
-        <TextBox Text="{Binding Nachname}"
+        <TextBox Text="{Binding AktuellerNutzer.Name}"
                  VerticalContentAlignment="Center"
                  VerticalAlignment="Bottom"
                    FontSize="16"
@@ -101,7 +101,7 @@
                    TextDecorations="Underline"
                    Grid.Column="0"
                    Grid.Row="2"/>
-        <TextBox Text="{Binding Telefonnummer}"
+        <TextBox Text="{Binding AktuellerNutzer.Telefonnummer}"
                  VerticalAlignment="Bottom"
                  VerticalContentAlignment="Center"
                    FontSize="16"
@@ -113,7 +113,7 @@
                    TextDecorations="Underline"
                    Grid.Column="4"
                    Grid.Row="2"/>
-        <TextBox Text="{Binding E_Mail}"
+        <TextBox Text="{Binding AktuellerNutzer.EMail}"
                  VerticalAlignment="Bottom"
                  VerticalContentAlignment="Center"
                    FontSize="16"
@@ -128,7 +128,7 @@
                    Grid.Column="0"
                    Grid.Row="3"/>
         <ComboBox  ItemsSource="{Binding AlleBerufe}"
-                   SelectedItem="{Binding Beruf}"
+                   SelectedItem="{Binding AktuellerNutzer.Beruf}"
                    IsSynchronizedWithCurrentItem="True"
                    VerticalAlignment="Bottom"
                    FontSize="16"
@@ -150,7 +150,7 @@
                    Grid.Column="4"
                    Grid.Row="3"/>
         <ComboBox  ItemsSource="{Binding AlleAusbilder}"
-                   SelectedItem="{Binding Ausbilder}"
+                   SelectedItem="{Binding AktuellerNutzer.Ausbilder}"
                    IsSynchronizedWithCurrentItem="True"
                    VerticalAlignment="Bottom"
                    FontSize="16"
@@ -181,7 +181,7 @@
                    TextDecorations="Underline"
                    Grid.Column="0"
                    Grid.Row="5"/>
-        <TextBox Text="{Binding Ort}"
+        <TextBox Text="{Binding AktuellerNutzer.Adresse.Ort}"
                  VerticalAlignment="Bottom"
                  VerticalContentAlignment="Center"
                    FontSize="16"
@@ -193,7 +193,7 @@
                    TextDecorations="Underline"
                    Grid.Column="4"
                    Grid.Row="5"/>
-        <TextBox Text="{Binding Postleitzahl}"
+        <TextBox Text="{Binding AktuellerNutzer.Adresse.Postleitzahl}"
                  VerticalAlignment="Bottom"
                  VerticalContentAlignment="Center"
                    FontSize="16"
@@ -206,7 +206,7 @@
                    TextDecorations="Underline"
                    Grid.Column="0"
                    Grid.Row="6"/>
-        <TextBox Text="{Binding Straße}"
+        <TextBox Text="{Binding AktuellerNutzer.Adresse.Straße}"
                  VerticalAlignment="Bottom"
                  VerticalContentAlignment="Center"
                    FontSize="16"
@@ -218,7 +218,7 @@
                    TextDecorations="Underline"
                    Grid.Column="4"
                    Grid.Row="6"/>
-        <TextBox Text="{Binding Hausnummer}"
+        <TextBox Text="{Binding AktuellerNutzer.Adresse.Hausnummer}"
                  VerticalAlignment="Bottom"
                  VerticalContentAlignment="Center"
                    FontSize="16"
@@ -232,7 +232,7 @@
                    TextDecorations="Underline"
                    Grid.Column="0"
                    Grid.Row="7"/>
-        <TextBox Text="{Binding Land}"
+        <TextBox Text="{Binding AktuellerNutzer.Adresse.Land}"
                  VerticalAlignment="Bottom"
                  VerticalContentAlignment="Center"
                    FontSize="16"

@@ -28,7 +28,7 @@ namespace _2_UML.Controller
         {
             MainController();
 
-            bool istEigenesProfil = (teilnehmer.Nutzer.Id == _Id) ? true : false;
+            bool istEigenesProfil = (teilnehmer.Nutzer.Id == _Nutzer_Id) ? true : false;
             NutzerAnsichtView.DatenFestlegen(teilnehmer, istEigenesProfil);
             AusgewaehlterTeilnehmer = teilnehmer;
 
@@ -39,7 +39,7 @@ namespace _2_UML.Controller
         {
             MainController();
 
-            bool istEigenesProfil = (ausbilder.Nutzer.Id == _Id) ? true : false;
+            bool istEigenesProfil = (ausbilder.Nutzer.Id == _Nutzer_Id) ? true : false;
             NutzerAnsichtView.DatenFestlegen(ausbilder, istEigenesProfil);
             AusgewaehlterAusbilder = ausbilder;
 
@@ -56,8 +56,8 @@ namespace _2_UML.Controller
 
             Nutzertyp = Application.Current.Properties["User_Nutzertyp"].ToString();
             //Geht wahrscheinlich effizienter, aber (int)Application.Current.Properties["User_Id"] wurde nicht genommen
-            Int32.TryParse(Application.Current.Properties["User_Id"].ToString(), out int number);
-            _Id = number;
+            Int32.TryParse(Application.Current.Properties["User_Nutzer_Id"].ToString(), out int number);
+            _Nutzer_Id = number;
 
             NavigationsHistorie.Add(this);//Zur Navigation hinzufügen
         }
@@ -66,8 +66,8 @@ namespace _2_UML.Controller
         internal INutzerAnsichtView NutzerAnsichtView { get; set; }
 
         private string Nutzertyp { get; set; }
-        //Id des momentanen Nutzers
-        private int _Id { get; set; }
+        //Id des momentanen Nutzers ACHTUNG: Nicht die Id des Teilnehmers/Ausbilders, die des Nutzers!!!
+        private int _Nutzer_Id { get; set; }
         private Models.Teilnehmer AusgewaehlterTeilnehmer { get; set; }
         private Models.Ausbilder AusgewaehlterAusbilder { get; set; }
 
@@ -81,7 +81,7 @@ namespace _2_UML.Controller
         /// </summary>
         private void NutzerErschaffen()
         {
-;
+            Int32.TryParse(Application.Current.Properties["User_Id"].ToString(), out int UserId);
             string _Vorname = Application.Current.Properties["User_Vorname"].ToString();
             string _Name = Application.Current.Properties["User_Nachname"].ToString();
             string _Telefonnummer = Application.Current.Properties["User_Telefone"].ToString();
@@ -91,11 +91,19 @@ namespace _2_UML.Controller
             {
                 Models.Ausbilder nutzer= new Models.Ausbilder()
                 {
-                    Id = _Id,
+                    Id = UserId,
                     Vorname = _Vorname,
                     Name = _Name,
                     Telefonnummer = _Telefonnummer,
                     EMail = _E_Mail,
+                    Nutzer = new Nutzer
+                    {
+                        Id = _Nutzer_Id,
+                        Nutzertyp = new Nutzertyp
+                        {
+                            Typ = Nutzertyp,
+                        }
+                    },
                 };
 
                 NutzerAnsichtView.DatenFestlegen(nutzer,true);
@@ -107,7 +115,7 @@ namespace _2_UML.Controller
 
                 Models.Teilnehmer nutzer = new Models.Teilnehmer()
                 {
-                    Id = _Id,
+                    Id = UserId,
                     Vorname = _Vorname,
                     Name = _Name,
                     Telefonnummer = _Telefonnummer,
@@ -127,6 +135,14 @@ namespace _2_UML.Controller
                         Vorname = Application.Current.Properties["User_Ausbilder_Vorname"].ToString(),
                         Name = Application.Current.Properties["User_Ausbilder_Nachname"].ToString(),
                     },
+                    Nutzer= new Nutzer
+                    {
+                        Id = _Nutzer_Id,
+                        Nutzertyp = new Nutzertyp
+                        {
+                            Typ = Nutzertyp,
+                        }
+                    }
                 };
 
                 NutzerAnsichtView.DatenFestlegen(nutzer, true);

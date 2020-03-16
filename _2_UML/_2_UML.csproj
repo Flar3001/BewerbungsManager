@@ -137,6 +137,7 @@
     <Compile Include="Models\Nutzertyp.cs" />
     <Compile Include="Persistence\MySQLHandler.cs" />
     <Compile Include="Models\Sicherheitsfrage.cs" />
+    <Compile Include="Persistence\Nutzereinstellungen.cs" />
     <Compile Include="Views\AusbilderAnlegenBearbeitenView.xaml.cs">
       <DependentUpon>AusbilderAnlegenBearbeitenView.xaml</DependentUpon>
     </Compile>

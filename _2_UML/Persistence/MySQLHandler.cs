@@ -138,6 +138,11 @@ namespace _2_UML.Persistence
             return everythingOkay;
         }
 
+        /// <summary>
+        /// Speichert Änderungen, die an einem Ausbilder vorgenommen wurden
+        /// </summary>
+        /// <param name="ausbilder"></param>
+        /// <returns>Änderungen erfolgreich?</returns>
         public static bool UpdateAusbilder(Ausbilder ausbilder)
         {
             string sql = "UPDATE ausbilder";
@@ -160,6 +165,11 @@ namespace _2_UML.Persistence
             return false;
         }
 
+        /// <summary>
+        /// Speichert Teilnehmer, die an einem Ausbilder vorgenommen wurden
+        /// </summary>
+        /// <param name="ausbilder"></param>
+        /// <returns>Änderungen erfolgreich?</returns>
         public static bool UpdateTeilnehmer(Teilnehmer teilnehmer)
         {
             if (UpdateAdresse(teilnehmer.Adresse))
@@ -189,6 +199,11 @@ namespace _2_UML.Persistence
             return false;
         }
 
+        /// <summary>
+        /// Speichert Änderungen, die an einer Adresse vorgenommen wurden
+        /// </summary>
+        /// <param name="ausbilder"></param>
+        /// <returns>Änderungen erfolgreich?</returns>
         private static bool UpdateAdresse(Adresse adresse)
         {
             string sql = "UPDATE adresse SET ort=@0, postleitzahl=@1, straße=@2, hausnummer=@3, land=@4";
@@ -211,6 +226,11 @@ namespace _2_UML.Persistence
             return false;
         }
 
+        /// <summary>
+        /// Fügt einen neuen Ausbilder zur Liste hinzu
+        /// </summary>
+        /// <param name="ausbilder"></param>
+        /// <returns>Einfügen erfolgreich</returns>
         public static bool AddNewAusbilder(Ausbilder ausbilder)
         {
             if (AddNewNutzer(ausbilder.Nutzer))
@@ -241,7 +261,11 @@ namespace _2_UML.Persistence
             return false;
         }
 
-
+        /// <summary>
+        /// Fügt einen neuen Teilnehmer zur Liste hinzu
+        /// </summary>
+        /// <param name="ausbilder"></param>
+        /// <returns>Einfügen erfolgreich</returns>
         public static bool AddNewTeilnehmer(Teilnehmer teilnehmer)
         {
             if (AddNewNutzer(teilnehmer.Nutzer))
@@ -281,6 +305,11 @@ namespace _2_UML.Persistence
             return false;
         }
 
+        /// <summary>
+        /// Fügt eine neue Adresse zur Liste hinzu
+        /// </summary>
+        /// <param name="ausbilder"></param>
+        /// <returns>Einfügen erfolgreich</returns>
         private static bool AddNewAdresse(Adresse adresse)
         {
             string sql = "INSERT INTO adresse(ort, postleitzahl, straße, hausnummer, land)";
@@ -302,7 +331,10 @@ namespace _2_UML.Persistence
             return false;
         }
 
-
+        /// <summary>
+        /// Sucht die id der zuletzt eingefügten Adresse heraus
+        /// </summary>
+        /// <returns></returns>
         private static bool NeuesteAdresseAuswaehlen()
         {
             string sql = "SELECT MAX(a.id) FROM adresse as a;";
@@ -313,6 +345,10 @@ namespace _2_UML.Persistence
             return false;
         }
 
+        /// <summary>
+        /// Sucht die Id des zuletzt hinzugefügten Nutzers heraus
+        /// </summary>
+        /// <returns></returns>
         private static bool NeuestenNutzerAuswaehlen()
         {
             string sql = "SELECT MAX(n.id) FROM nutzer as n;";
@@ -356,7 +392,10 @@ namespace _2_UML.Persistence
         /// <returns></returns>
         public static bool CheckLogin(string email, string password)
         {
-            CheckLoginTeilnehmer(email, password);
+            if (CheckLoginTeilnehmer(email, password) == false)
+            {
+                return false;
+            }
 
             if (Result.Tables[0].Rows.Count != 1)
             {
@@ -393,38 +432,79 @@ namespace _2_UML.Persistence
         /// </summary>
         private static void SaveUser()
         {
-            Application.Current.Properties.Clear();
-
-            Application.Current.Properties.Add("User_Vorname", $"{Result.Tables[0].Rows[0][0]}");
-            Application.Current.Properties.Add("User_Nachname", $"{Result.Tables[0].Rows[0][1]}");
-            Application.Current.Properties.Add("User_Telefone", $"{Result.Tables[0].Rows[0][2]}");
-            Application.Current.Properties.Add("User_E_Mail", $"{Result.Tables[0].Rows[0][3]}");
-            Application.Current.Properties.Add("User_Nutzertyp", $"{Result.Tables[0].Rows[0][4]}");
-            Application.Current.Properties.Add("User_Id", $"{ Result.Tables[0].Rows[0][5]}");
+            Int32.TryParse(Result.Tables[0].Rows[0][5].ToString(), out int IdNeu);
+            Int32.TryParse(Result.Tables[0].Rows[0][6].ToString(), out int IdNutzerNeu);
 
             if (Result.Tables[0].Rows[0][4].ToString() == "Teilnehmer")
             {
-                Application.Current.Properties.Add("User_Beruf", $"{Result.Tables[0].Rows[0][6]}");
-                Application.Current.Properties.Add("User_Wohnort", $"{Result.Tables[0].Rows[0][7]}");
-                Application.Current.Properties.Add("User_Postleitzahl", $"{Result.Tables[0].Rows[0][8]}");
-                Application.Current.Properties.Add("User_Straße", $"{Result.Tables[0].Rows[0][9]}");
-                Application.Current.Properties.Add("User_Hausnummer", $"{Result.Tables[0].Rows[0][10]}");
-                Application.Current.Properties.Add("User_Land", $"{Result.Tables[0].Rows[0][11]}");
-                Application.Current.Properties.Add("User_Ausbilder_Vorname", $"{Result.Tables[0].Rows[0][12]}");
-                Application.Current.Properties.Add("User_Ausbilder_Nachname", $"{Result.Tables[0].Rows[0][13]}");
-                Application.Current.Properties.Add("User_Ausbilder_Id", $"{Result.Tables[0].Rows[0][14]}");
+                Int32.TryParse(Result.Tables[0].Rows[0][15].ToString(), out int IdAusbilderNeu);
+
+                Teilnehmer teilnehmer = new Teilnehmer
+                {
+                    Vorname = $"{Result.Tables[0].Rows[0][0]}",
+                    Name = $"{Result.Tables[0].Rows[0][1]}",
+                    Telefonnummer = $"{Result.Tables[0].Rows[0][2]}",
+                    EMail = $"{Result.Tables[0].Rows[0][3]}",
+                    Nutzer = new Nutzer
+                    {
+                        Id = IdNutzerNeu,
+                        Nutzertyp = new Nutzertyp
+                        {
+                            Typ = $"{Result.Tables[0].Rows[0][4]}"
+                        },
+                    },
+                    Id = IdNeu,
+                    Beruf = new Beruf
+                    {
+                        Bezeichnung = $"{Result.Tables[0].Rows[0][7]}",
+                    },
+                    Adresse = new Adresse
+                    {
+                        Ort = $"{Result.Tables[0].Rows[0][8]}",
+                        Postleitzahl = $"{Result.Tables[0].Rows[0][9]}",
+                        Straße = $"{Result.Tables[0].Rows[0][10]}",
+                        Hausnummer = $"{Result.Tables[0].Rows[0][11]}",
+                        Land = $"{Result.Tables[0].Rows[0][12]}",
+                    },
+                    Ausbilder = new Ausbilder
+                    {
+                        Vorname = $"{Result.Tables[0].Rows[0][13]}",
+                        Name = $"{Result.Tables[0].Rows[0][14]}",
+                        Id = IdAusbilderNeu,
+                    },
+                };
+                Nutzereinstellungen.EinstellungenSpeichern(teilnehmer);
+            }
+            else
+            {
+                Ausbilder ausbilder = new Ausbilder
+                {
+                    Vorname = $"{Result.Tables[0].Rows[0][0]}",
+                    Name = $"{Result.Tables[0].Rows[0][1]}",
+                    Telefonnummer = $"{Result.Tables[0].Rows[0][2]}",
+                    EMail = $"{Result.Tables[0].Rows[0][3]}",
+                    Nutzer = new Nutzer
+                    {
+                        Id = IdNutzerNeu,
+                        Nutzertyp = new Nutzertyp
+                        {                            
+                            Typ = $"{Result.Tables[0].Rows[0][4]}"
+                        },
+                    },
+                    Id = IdNeu,
+                };
+                Nutzereinstellungen.EinstellungenSpeichern(ausbilder);
             }
         }
-
 
         /// <summary>
         /// Durchsucht nch einem Teilnehmer mit den eingegebenen Anmeldedaten
         /// </summary>
         /// <param name="email">Eingebene E-Mail-Adresse</param>
         /// <param name="password">Eingegebenes Passwort</param>
-        private static void CheckLoginTeilnehmer(string email, string password)
+        private static bool CheckLoginTeilnehmer(string email, string password)
         {
-            string sql = "SELECT t.vorname, t.name, t.telefon, t.e_mail, nt.nutzertyp, n.id,";
+            string sql = "SELECT t.vorname, t.name, t.telefon, t.e_mail, nt.nutzertyp, t.id, n.id,";
             sql += " b.bezeichnung, a.ort, a.postleitzahl, a.straße, a.hausnummer, a.land, au.vorname, au.name, au.id";
             sql += " FROM teilnehmer as t";
             sql += " LEFT JOIN nutzer as n ON t.fk_nutzer=n.id";
@@ -441,7 +521,11 @@ namespace _2_UML.Persistence
                 new KeyValuePair<string, string>("@1",password),
             };
 
-            ExecuteSQL(sql, parameters);
+            if (ExecuteSQL(sql, parameters))
+            {
+                return true;
+            }
+            return false;
         }
 
 
@@ -450,9 +534,9 @@ namespace _2_UML.Persistence
         /// </summary>
         /// <param name="email">Eingebene E-Mail-Adresse</param>
         /// <param name="password">Eingegebenes Passwort</param>
-        private static void CheckLoginAusbilder(string email, string password)
+        private static bool CheckLoginAusbilder(string email, string password)
         {
-            string sql = "SELECT au.vorname, au.name, au.telefon, au.e_mail, nt.nutzertyp, n.id";
+            string sql = "SELECT au.vorname, au.name, au.telefon, au.e_mail, nt.nutzertyp, au.id, n.id";
 
             sql += " FROM ausbilder as au";
             sql += " LEFT JOIN nutzer as n ON au.fk_nutzer=n.id";
@@ -466,7 +550,11 @@ namespace _2_UML.Persistence
                 new KeyValuePair<string, string>("@1",password),
             };
 
-            ExecuteSQL(sql, parameters);
+            if (ExecuteSQL(sql, parameters))
+            {
+                return true;
+            }
+            return false;
         }
 
         /*
@@ -490,10 +578,10 @@ namespace _2_UML.Persistence
             List<Ausbilder> AllAusbilder = new List<Ausbilder>();
 
             string sql = "SELECT au.id, au.vorname, au.name, au.telefon, au.e_mail";
-            sql += ", n.id";
+            sql += ", n.id, nt.nutzertyp";
             sql += " FROM ausbilder as au";
             sql += " LEFT JOIN nutzer as n ON au.fk_nutzer=n.id";
-
+            sql += " LEFT JOIN nutzertyp as nt ON n.fk_nutzertyp=nt.id";
 
             if(ExecuteSQL(sql))
             {
@@ -508,7 +596,14 @@ namespace _2_UML.Persistence
                             Name = Result.Tables[0].Rows[i][2].ToString(),
                             Telefonnummer = Result.Tables[0].Rows[i][3].ToString(),
                             EMail = Result.Tables[0].Rows[i][4].ToString(),
-                            Nutzer = new Nutzer { Id = (int)Result.Tables[0].Rows[i][5] }
+                            Nutzer = new Nutzer
+                            {
+                                Id = (int)Result.Tables[0].Rows[i][5],
+                                Nutzertyp= new Nutzertyp
+                                {
+                                    Typ = Result.Tables[0].Rows[i][6].ToString(),
+                                }
+                            }
                         }
                     );
                 }
@@ -529,6 +624,7 @@ namespace _2_UML.Persistence
 
             ExecuteSQL(sql, parameters);
         }
+
 
         public static List<Beruf> SelectAllBerufe()
         {

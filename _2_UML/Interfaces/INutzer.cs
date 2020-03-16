@@ -7,7 +7,7 @@ using _2_UML.Models;
 
 namespace _2_UML.Interfaces
 {
-    interface INutzer : IPerson
+    public interface INutzer : IPerson
     {
         int Id { get; set; }
 

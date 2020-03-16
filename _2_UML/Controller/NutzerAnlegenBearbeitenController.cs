@@ -14,7 +14,7 @@ namespace _2_UML.Controller
     public class NutzerAnlegenBearbeitenController : AnlegenBearbeitenController<Nutzer>, IController
     {
         /// <summary>
-        /// Konstruktor für das Erschaffen oder Bearbeiten eines Ausbilderprofels
+        /// Konstruktor für das Erschaffen oder Bearbeiten eines Ausbilderprofils
         /// </summary>
         /// <param name="ausbilder">Der zu bearbeitende Ausbilder. Wenn neu erstellt werden soll, nichts übergeben</param>
         public NutzerAnlegenBearbeitenController(Models.Ausbilder ausbilder = null)
@@ -189,6 +189,7 @@ namespace _2_UML.Controller
             {                
                 if (MySQLHandler.UpdateAusbilder(ausbilder))
                 {
+                    Nutzereinstellungen.EinstellungenSpeichern(ausbilder);
                     AusbilderUebersichtController ausbilderUebersichtController = new AusbilderUebersichtController();
                 }
                 else

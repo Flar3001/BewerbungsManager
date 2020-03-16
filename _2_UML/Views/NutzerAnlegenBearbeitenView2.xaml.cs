@@ -40,30 +40,12 @@ namespace _2_UML.Views
         public event SpeichereAenderungenAusbilder SpeichereAenderungenAusbilder;
         public event SpeichereAenderungenTeilnehmer SpeichereAenderungenTeilnehmer;
 
-        private int Id { get; set; }
-        private int AdresseId { get; set; }
-        private string vorname;
-        public string Vorname { get { return vorname; } set { SetValue(ref vorname, value); } }
-        private string nachname;
-        public string Nachname { get { return nachname; } set { SetValue(ref nachname, value); } }
-        private string telefonnummer;
-        public string Telefonnummer { get { return telefonnummer; } set { SetValue(ref telefonnummer, value); } }
-        private string e_mail;
-        public string E_Mail { get { return e_mail; } set { SetValue(ref e_mail, value); } }
-        private string ort;
-        public string Ort { get { return ort; } set { SetValue(ref ort, value); } }
-        private string postleitzahl;
-        public string Postleitzahl { get { return postleitzahl; } set { SetValue(ref postleitzahl, value); } }
-        private string straße;
-        public string Straße { get { return straße; } set { SetValue(ref straße, value); } }
-        private string hausnummer;
-        public string Hausnummer { get { return hausnummer; } set { SetValue(ref hausnummer, value); } }
-        private Models.Ausbilder ausbilder;
-        public Models.Ausbilder Ausbilder { get { return ausbilder; } set { SetValue(ref ausbilder, value); } }
-        private string land;
-        public string Land { get { return land; } set { SetValue(ref land, value); } }
-        private Beruf beruf;
-        public Beruf Beruf { get { return beruf; } set { SetValue(ref beruf, value); } }
+
+        //ACHTUNG: AktuellerNutzer ist NICHT UNBEDINGT EIN TEILNEHMER!!! Es kann sich auch um einen Ausbilder handeln. 
+        //Dies ist eine Preview darauf, wie die Versionsverwaltung in Zukunft aussehen wird
+        private Models.Teilnehmer aktuellerNutzer;
+        public Models.Teilnehmer AktuellerNutzer { get { return aktuellerNutzer; } set { SetValue(ref aktuellerNutzer, value); } }
+
 
         public List<Models.Ausbilder> AlleAusbilder { get; private set; }
         public List<Sicherheitsfrage> AlleSicherheitsfragen { get; private set; }
@@ -77,50 +59,43 @@ namespace _2_UML.Views
         {
             get
             {
-                string Nutzer;
-                string Aktion;
+                string nutzer;
+                string aktion;
 
-                Nutzer= (IstTeilnehmer) ? "Teilnehmer" : "Ausbilder";
-                Aktion= (WirdNeuErschaffen) ?"erstellen" : "bearbeiten";
-                return $"{Nutzer} {Aktion}";
+                //Nutzer = (IstTeilnehmer) ? "Teilnehmer" : "Ausbilder";
+                
+                nutzer = AktuellerNutzer.Nutzer.Nutzertyp.Typ;
+                aktion = (WirdNeuErschaffen) ?"erstellen" : "bearbeiten";
+                return $"{nutzer} {aktion}";
             }
         }
 
 
         public void DatenAnzeigen(Models.Ausbilder ausbilder, bool neuErschaffen, List<Sicherheitsfrage> AlleSicherheitsfragen)
         {
-            IstTeilnehmer = false;
+
+            AktuellerNutzer = new Models.Teilnehmer
+            {
+                Id = ausbilder.Id,
+                Vorname=ausbilder.Vorname,
+                Name=ausbilder.Name,
+                Telefonnummer=ausbilder.Telefonnummer,
+                EMail=ausbilder.EMail,
+                Nutzer=ausbilder.Nutzer,
+            };
             WirdNeuErschaffen = neuErschaffen;
             this.AlleSicherheitsfragen = AlleSicherheitsfragen;
-
-            Id = ausbilder.Id;
-            Vorname = ausbilder.Vorname;
-            Nachname = ausbilder.Name;
-            Telefonnummer = ausbilder.Telefonnummer;
-            E_Mail = ausbilder.EMail;
+            IstTeilnehmer = false;
         }
 
         public void DatenAnzeigen(Models.Teilnehmer teilnehmer, bool neuErschaffen, List<Models.Ausbilder> AlleAusbilder, List<Sicherheitsfrage> AlleSicherheitsfragen, List<Beruf> AlleBerufe)
         {
-            IstTeilnehmer = true;
+            AktuellerNutzer = teilnehmer;
             WirdNeuErschaffen = neuErschaffen;
             this.AlleSicherheitsfragen = AlleSicherheitsfragen;
             this.AlleAusbilder = AlleAusbilder;
             this.AlleBerufe = AlleBerufe;
-
-            Id = teilnehmer.Id;
-            AdresseId = teilnehmer.Adresse.Id;
-            Vorname = teilnehmer.Vorname;
-            Nachname = teilnehmer.Name;
-            Telefonnummer = teilnehmer.Telefonnummer;
-            E_Mail = teilnehmer.EMail;
-            Ort = teilnehmer.Adresse.Ort;
-            Postleitzahl = teilnehmer.Adresse.Postleitzahl;
-            Straße = teilnehmer.Adresse.Straße;
-            Hausnummer = teilnehmer.Adresse.Hausnummer;
-            Ausbilder = teilnehmer.Ausbilder;//$"{teilnehmer.Ausbilder.Vorname} {teilnehmer.Ausbilder.Name}";
-            Land = teilnehmer.Adresse.Land;
-            Beruf = teilnehmer.Beruf;
+            this.IstTeilnehmer = true;
         }
 
 
@@ -133,9 +108,9 @@ namespace _2_UML.Views
         {
             if (IstInputOK())
             {
-                if (IstTeilnehmer)
+                if (AktuellerNutzer.Nutzer.Nutzertyp.Typ == "Teilnehmer")
                 {
-                    SpeichereAenderungenTeilnehmer(ErschaffeTeilnehmer());
+                    SpeichereAenderungenTeilnehmer(AktuellerNutzer);
                 }
                 else
                 {
@@ -167,9 +142,9 @@ namespace _2_UML.Views
                 }
                 else
                 {
-                    if (IstTeilnehmer)
+                    if (AktuellerNutzer.Nutzer.Nutzertyp.Typ == "Teilnehmer")
                     {
-                        SpeichereNeuenTeilnehmer(ErschaffeTeilnehmer());
+                        SpeichereNeuenTeilnehmer(AktuellerNutzer);
                     }
                     else
                     {
@@ -183,55 +158,26 @@ namespace _2_UML.Views
             }
         }
 
-        private Models.Teilnehmer ErschaffeTeilnehmer()
-        {
-            return new Models.Teilnehmer
-            {
-                Id = this.Id,
-                Vorname = this.Vorname.Trim(),
-                Name = this.Nachname.Trim(),
-                Telefonnummer = this.Telefonnummer.Trim(),
-                EMail = this.E_Mail.Trim(),
-                Ausbilder = this.Ausbilder,
-                Beruf = this.Beruf,
-                Adresse = new Adresse
-                {
-                    Id = AdresseId,
-                    Ort = Ort,
-                    Straße = Straße,
-                    Land = Land,
-                    Hausnummer = Hausnummer,
-                    Postleitzahl = Postleitzahl
-                },
-                Nutzer = ErschaffeNutzer(),
-            };
-        }
-
         private Models.Ausbilder ErschaffeAusbilder()
         {
             return new Models.Ausbilder
             {
-                Id = this.Id,
-                Vorname = this.Vorname.Trim(),
-                Name = this.Nachname.Trim(),
-                EMail = this.E_Mail.Trim(),
-                Telefonnummer = this.Telefonnummer.Trim(),
-                Nutzer=ErschaffeNutzer(),
+                Id = AktuellerNutzer.Id,
+                Vorname = AktuellerNutzer.Vorname.Trim(),
+                Name = AktuellerNutzer.Name.Trim(),
+                EMail = AktuellerNutzer.EMail.Trim(),
+                Telefonnummer = AktuellerNutzer.Telefonnummer.Trim(),
+                Nutzer= new Nutzer
+                {
+                    Passwort = this.Passwort.Password,
+                    Sicherheitsfrage = (WirdNeuErschaffen) ? (Sicherheitsfrage)this.Sicherheitsfrage.SelectionBoxItem : new Sicherheitsfrage { },
+                    Sicherheitsantwort = Antwort.Text,
+                    Id = AktuellerNutzer.Nutzer.Id,
+                    Nutzertyp = AktuellerNutzer.Nutzer.Nutzertyp,
+                },
             };
         }
 
-        private Nutzer ErschaffeNutzer()
-        {
-            return new Nutzer
-            {
-                Passwort = this.Passwort.Password,
-                Sicherheitsfrage = (WirdNeuErschaffen) ? (Sicherheitsfrage)this.Sicherheitsfrage.SelectionBoxItem : new Sicherheitsfrage { },
-                Sicherheitsantwort = this.Antwort.Text,
-
-                //Das folgende muss ersetzt werden, wenn der Wechsel auf ein ordentliches Nutzersystem erfolgt
-                Nutzertyp = (IstTeilnehmer) ? new Nutzertyp { Id = 2, Typ = "Teilnehmer" } : new Nutzertyp { Id = 1, Typ = "Ausbilder" }
-            };
-        }
 
         /// <summary>
         /// Überprüft, ob alle relevanten Einträge nicht leer sind
@@ -239,20 +185,20 @@ namespace _2_UML.Views
         /// <returns></returns>
         private bool IstInputOK()
         {
-            if (string.IsNullOrWhiteSpace(Nachname)) return false; 
-            if (string.IsNullOrWhiteSpace(Vorname))  return false; 
-            if (string.IsNullOrWhiteSpace(E_Mail)) return false;
-            if (string.IsNullOrWhiteSpace(Telefonnummer)) return false;
+            if (string.IsNullOrWhiteSpace(AktuellerNutzer.Name)) return false; 
+            if (string.IsNullOrWhiteSpace(AktuellerNutzer.Vorname))  return false; 
+            if (string.IsNullOrWhiteSpace(AktuellerNutzer.EMail)) return false;
+            if (string.IsNullOrWhiteSpace(AktuellerNutzer.Telefonnummer)) return false;
 
-            if (IstTeilnehmer)
+            if (AktuellerNutzer.Nutzer.Nutzertyp.Typ == "Teilnehmer")
             {
-                if (string.IsNullOrWhiteSpace(Beruf.Bezeichnung)) return false;
-                if (string.IsNullOrWhiteSpace(Ausbilder.Name)) return false;
-                if (string.IsNullOrWhiteSpace(Ort)) return false;
-                if (string.IsNullOrWhiteSpace(Postleitzahl)) return false;
-                if (string.IsNullOrWhiteSpace(Straße)) return false;
-                if (string.IsNullOrWhiteSpace(Hausnummer)) return false;
-                if (string.IsNullOrWhiteSpace(Land)) return false;
+                if (string.IsNullOrWhiteSpace(AktuellerNutzer.Beruf.Bezeichnung)) return false;
+                if (string.IsNullOrWhiteSpace(AktuellerNutzer.Ausbilder.Name)) return false;
+                if (string.IsNullOrWhiteSpace(AktuellerNutzer.Adresse.Ort)) return false;
+                if (string.IsNullOrWhiteSpace(AktuellerNutzer.Adresse.Postleitzahl)) return false;
+                if (string.IsNullOrWhiteSpace(AktuellerNutzer.Adresse.Straße)) return false;
+                if (string.IsNullOrWhiteSpace(AktuellerNutzer.Adresse.Hausnummer)) return false;
+                if (string.IsNullOrWhiteSpace(AktuellerNutzer.Adresse.Land)) return false;
             }
             if (WirdNeuErschaffen)
             {
@@ -270,10 +216,4 @@ namespace _2_UML.Views
             MessageBox.Show(Fehlermeldung);
         }
     }
-
-
-
-
-
-
 }
