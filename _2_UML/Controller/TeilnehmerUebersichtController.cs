@@ -8,9 +8,25 @@ using _2_UML.Models;
 
 namespace _2_UML.Controller
 {
-    public class TeilnehmerUebersichtController : UebersichtController<Models.Teilnehmer>
+    public class TeilnehmerUebersichtController : UebersichtController<Models.Teilnehmer>,IController
     {
+        public TeilnehmerUebersichtController()
+        {
+            TeilnehmerUebersichtView = new TeilnehmerUebersichtView();
+
+
+
+            NavigationsHistorie.Add(this);
+            TeilnehmerUebersichtView.ZeigeView();
+        }
+
+
         //public ITeilnehmerUebersichtView TeilnehmerUebersichtView = new TeilnehmerUebersichtView();
-        public ITeilnehmerUebersichtView TeilnehmerUebersichtView { get; set; } = new TeilnehmerUebersichtView();
+        public ITeilnehmerUebersichtView TeilnehmerUebersichtView { get; set; }
+
+        public void SeiteNeuLaden()
+        {
+            TeilnehmerUebersichtView.ZeigeView();
+        }
     }
 }

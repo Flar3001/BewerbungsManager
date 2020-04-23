@@ -6,7 +6,7 @@ using _2_UML.Models;
 
 namespace _2_UML.Interfaces
 {
-    public interface ITeilnehmerUebersichtView : IUebersichtView<Teilnehmer>
+    public interface ITeilnehmerUebersichtView : IUebersichtView<Models.Teilnehmer>
     {
     }
 }

@@ -21,18 +21,17 @@ namespace _2_UML.Views
     /// <summary>
     /// Interaktionslogik für TeilnehmerUebersichtView.xaml
     /// </summary>
-    public partial class TeilnehmerUebersichtView : Page, ITeilnehmerUebersichtView
+    public partial class TeilnehmerUebersichtView : BasePage, ITeilnehmerUebersichtView
     {
         public TeilnehmerUebersichtView()
         {
             InitializeComponent();
+            this.DataContext = this;
         }
 
-        public List<Models.Teilnehmer> AngezeigteObjekte { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        ObservableCollection<Interfaces.Teilnehmer> IUebersichtView<Interfaces.Teilnehmer>.AngezeigteObjekte { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public ObservableCollection<Models.Teilnehmer> AngezeigteObjekte {get;set;}
 
         public event SeitenAnsicht ZeigeViewFertig;
-        public event ObjektLoeschen AusbilderLoeschen;
         public event ZurStartseite ZurStartseite;
         public event ObjektHinzufuegen AusbilderHinzufuegen;
 
@@ -47,6 +46,11 @@ namespace _2_UML.Views
         }
 
         public void ZeigeAlleObjekte(ObservableCollection<Interfaces.Teilnehmer> ts)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ZeigeAlleObjekte(ObservableCollection<Models.Teilnehmer> ts)
         {
             throw new NotImplementedException();
         }

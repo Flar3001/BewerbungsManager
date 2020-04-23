@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 using _2_UML.Interfaces;
 
@@ -29,6 +30,16 @@ namespace _2_UML.Controller
             NavigationsHistorie.RemoveAt(length - 1);
             IController basisController = NavigationsHistorie[length - 2];
             basisController.SeiteNeuLaden();
+        }
+
+        /// <summary>
+        /// Führt das Logout aus
+        /// </summary>
+        protected void LogoutAusfuehren()
+        {
+            Application.Current.Properties.Clear();
+            NavigationsHistorie.Clear();
+            LoginController login = new LoginController(true);
         }
 
         static protected List<IController> NavigationsHistorie;

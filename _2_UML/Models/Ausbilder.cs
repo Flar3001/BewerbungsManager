@@ -6,7 +6,7 @@ using System.Text;
 
 namespace _2_UML.Models
 {
-    public class Ausbilder :  INutzer
+    public class Ausbilder : INutzer
     {
         public int Id { get; set; }
         public string Name { get; set; }

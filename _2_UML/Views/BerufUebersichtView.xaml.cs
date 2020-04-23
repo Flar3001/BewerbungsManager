@@ -32,7 +32,7 @@ namespace _2_UML.Views
         ObservableCollection<Beruf> IUebersichtView<Beruf>.AngezeigteObjekte { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public event SeitenAnsicht ZeigeViewFertig;
-        public event ObjektLoeschen AusbilderLoeschen;
+        //public event ObjektLoeschen AusbilderLoeschen;
         public event ZurStartseite ZurStartseite;
         public event ObjektHinzufuegen AusbilderHinzufuegen;
 

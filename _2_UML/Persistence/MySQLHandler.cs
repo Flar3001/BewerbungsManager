@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using _2_UML.Models;
+using _2_UML.Exceptions;
 
 namespace _2_UML.Persistence
 {
@@ -27,7 +28,7 @@ namespace _2_UML.Persistence
 
         private static MySqlConnection connection;
 
-        //This is the result of sql-SELECT-queries. Must be cleared before a new query is executed
+        //This is the result of sql-SELECT-queries. Must be cleared before a new query is executed!
         private static DataSet Result { get; set; }
 
         public static string Errormessage { get; private set; }
@@ -40,7 +41,6 @@ namespace _2_UML.Persistence
         {
             if (connection == null || connection.State == ConnectionState.Closed)
             {
-
                 Connectionstring = defaultConnection;
 
                 try
@@ -59,13 +59,108 @@ namespace _2_UML.Persistence
                     string errortext = "Es konnte keine Verbindung zur Datenbank hergestellt werden. Fehlermeldung: '" + e + "'";
                     Errormessage = errortext;
                     return false;
-                }
-                
+                }              
             }
-
             return true;
         }
 
+        /// <summary>
+        /// This is the method that is usually called for executing multiple statements within one transaction. 
+        /// Executes the given sql commands and if we hava a result from a query, it gets saved in the DataSet "result".
+        /// In general not suited for multiple select queries! Only the results of the last query will be saved in "result", so only experienced users
+        /// should try to use multiple selects.
+        /// Errors can be read by accessing the string "Errormessage".
+        /// </summary>
+        /// <param name="commands">A list of custom SqlCommands that shall be executed</param>
+        /// <returns>If all commands were successful. If even one didn't work, no commands were executed</returns>
+        private static bool ExecuteSQL(List<SqlCommand> commands)
+        {
+            bool status = true;
+            Errormessage = String.Empty;
+            Result = new DataSet();
+
+            if (IsConnected())
+            {
+                //Begin transaction
+                using (MySqlTransaction trans = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        foreach (SqlCommand command in commands)
+                        {
+                            MySqlCommand newCommand = new MySqlCommand(command.Commandtext, connection, trans);
+
+                            //Insert parameters for prepared statements
+                            if (command.Parameters != null)
+                            {
+                                foreach (KeyValuePair<string, string> parameter in command.Parameters)
+                                {
+                                    newCommand.Parameters.AddWithValue(parameter.Key, parameter.Value);
+                                }
+                            }
+
+                            newCommand.ExecuteNonQuery();
+
+                            if (IsSelectQuery(command.Commandtext))
+                            {
+                                if (SaveResults(newCommand) == false)
+                                    throw new CustomMysqlException("Es konnten keine Daten aus der Datenbank ausgelesen werden");
+                            }
+                        }
+
+                        //Once every command has successfully been executed, the transaction will be commited.
+                        trans.Commit();
+                    }
+
+                    catch (CustomMysqlException cex)
+                    {
+                        Errormessage = cex.Message;
+                        status = false;
+                    }
+                    catch (MySqlException ex)
+                    {
+                        Errormessage = ex.Message;
+                        status = false;
+                    }
+                    catch (Exception e)
+                    {
+                        Errormessage = e.Message;
+                        status = false;
+                    }
+                    finally
+                    {
+                        Close();
+                    }
+                }
+            }
+            else
+            {
+                Errormessage = "Es konnte keine Verbindung zur Datenbank hergestellt werden.";
+                status = false;
+            }
+            return status;
+        }
+
+        /// <summary>
+        /// Saves the results of a successful sql-query in the "Result" DataSet
+        /// </summary>
+        /// <param name="newCommand"></param>
+        /// <returns></returns>
+        private static bool SaveResults(MySqlCommand newCommand)
+        {
+            MySqlDataAdapter dataAdapter = new MySqlDataAdapter(newCommand);
+            dataAdapter.Fill(Result);
+
+            if (CheckResults() == false)
+            {
+                Errormessage = "Es konnten keine Daten aus der Datenbank ausgelesen werden";
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
 
         /// <summary>
         /// This is the method that is usually called. Executes the sql command and if we hava a result from a query, it gets saved in the DataSet "result"
@@ -94,7 +189,7 @@ namespace _2_UML.Persistence
                 newCommand.Connection = connection;
                 newCommand.CommandText = sqlString;
                 
-                bool isSelect = CheckQuery(sqlString);
+                bool isSelect = IsSelectQuery(sqlString);
 
                 try
                 {
@@ -103,14 +198,7 @@ namespace _2_UML.Persistence
 
                     if (isSelect)
                     {
-                        MySqlDataAdapter dataAdapter = new MySqlDataAdapter(newCommand);
-                        dataAdapter.Fill(Result);
-
-                        if (CheckResults() == false)
-                        {
-                            Errormessage = "Es konnten keine Daten aus der Datenbank ausgelesen werden";
-                            everythingOkay = false;
-                        }
+                        SaveResults(newCommand);
                     }
                 }
                 catch (MySqlException ex)
@@ -158,53 +246,66 @@ namespace _2_UML.Persistence
                 new KeyValuePair<string, string>("@5",ausbilder.Id.ToString()),
             };
 
+            
             if (ExecuteSQL(sql, parameters))
             {
                 return true;
             }
             return false;
+            
+
         }
 
         /// <summary>
-        /// Speichert Teilnehmer, die an einem Ausbilder vorgenommen wurden
+        /// Speichert Änderungen, die an einem Teilnehmer vorgenommen wurden
         /// </summary>
         /// <param name="ausbilder"></param>
         /// <returns>Änderungen erfolgreich?</returns>
         public static bool UpdateTeilnehmer(Teilnehmer teilnehmer)
-        {
-            if (UpdateAdresse(teilnehmer.Adresse))
-            {
+        {           
+            List<SqlCommand> updateCommands = new List<SqlCommand>();
 
-                string sql = "UPDATE teilnehmer";
-                sql += " SET vorname=@0, name=@1, telefon=@2, e_mail=@3, fk_beruf=@4, fk_ausbilder=@5";
-                sql += " WHERE id=@8";
+            updateCommands.Add(UpdateTeilnehmerCommand(teilnehmer));
+            updateCommands.Add(UpdateAdressCommand(teilnehmer.Adresse));
 
-                List<KeyValuePair<string, string>> parameters = new List<KeyValuePair<string, string>>
-                {
-                    new KeyValuePair<string, string>("@0",teilnehmer.Vorname),
-                    new KeyValuePair<string, string>("@1",teilnehmer.Name),
-                    new KeyValuePair<string, string>("@2",teilnehmer.Telefonnummer),
-                    new KeyValuePair<string, string>("@3",teilnehmer.EMail),
-                    new KeyValuePair<string, string>("@4",teilnehmer.Beruf.Id.ToString()),
-                    new KeyValuePair<string, string>("@5",teilnehmer.Ausbilder.Id.ToString()),
-                    //new KeyValuePair<string, string>("@7",teilnehmer.Nutzer.Id.ToString()),
-                    new KeyValuePair<string, string>("@8",teilnehmer.Id.ToString()),
-                };
-
-                if (ExecuteSQL(sql, parameters))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return ExecuteSQL(updateCommands);
         }
 
         /// <summary>
-        /// Speichert Änderungen, die an einer Adresse vorgenommen wurden
+        /// Forms an sql command which updates the properties of a teilnehmer 
         /// </summary>
-        /// <param name="ausbilder"></param>
-        /// <returns>Änderungen erfolgreich?</returns>
-        private static bool UpdateAdresse(Adresse adresse)
+        /// <param name="teilnehmer">The new teilnehmer that shall be saved</param>
+        /// <returns>The finished command</returns>
+        private static SqlCommand UpdateTeilnehmerCommand(Teilnehmer teilnehmer)
+        {
+            string sql = "UPDATE teilnehmer";
+            sql += " SET vorname=@0, name=@1, telefon=@2, e_mail=@3, fk_beruf=@4, fk_ausbilder=@5";
+            sql += " WHERE id=@8";
+
+            List<KeyValuePair<string, string>> parameters = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("@0",teilnehmer.Vorname),
+                new KeyValuePair<string, string>("@1",teilnehmer.Name),
+                new KeyValuePair<string, string>("@2",teilnehmer.Telefonnummer),
+                new KeyValuePair<string, string>("@3",teilnehmer.EMail),
+                new KeyValuePair<string, string>("@4",teilnehmer.Beruf.Id.ToString()),
+                new KeyValuePair<string, string>("@5",teilnehmer.Ausbilder.Id.ToString()),
+                new KeyValuePair<string, string>("@8",teilnehmer.Id.ToString()),
+            };
+
+            return new SqlCommand
+            {
+                Commandtext = sql,
+                Parameters = parameters,
+            };
+        }
+
+        /// <summary>
+        /// Forms an sql command which updates the properties of an adress
+        /// </summary>
+        /// <param name="adresse">The new adress that shall be saved</param>
+        /// <returns>The finished command</returns>
+        private static SqlCommand UpdateAdressCommand (Adresse adresse)
         {
             string sql = "UPDATE adresse SET ort=@0, postleitzahl=@1, straße=@2, hausnummer=@3, land=@4";
             sql += " WHERE id=@5";
@@ -219,12 +320,14 @@ namespace _2_UML.Persistence
                 new KeyValuePair<string, string>("@5",adresse.Id.ToString()),
             };
 
-            if (ExecuteSQL(sql, parameters))
+            return new SqlCommand
             {
-                return true;
-            }
-            return false;
+                Commandtext = sql,
+                Parameters = parameters
+            };
         }
+
+ 
 
         /// <summary>
         /// Fügt einen neuen Ausbilder zur Liste hinzu
@@ -233,6 +336,7 @@ namespace _2_UML.Persistence
         /// <returns>Einfügen erfolgreich</returns>
         public static bool AddNewAusbilder(Ausbilder ausbilder)
         {
+            //Since the individual queries need the results of the previous one, we can't use a list of sqlcommands
             if (AddNewNutzer(ausbilder.Nutzer))
             {
                 if (NeuestenNutzerAuswaehlen())
@@ -568,12 +672,28 @@ namespace _2_UML.Persistence
             sql += " LEFT JOIN bewerbung as b ON b.fk_abteilung=ab.id";
         }
         */
-        
+
+
+        private static SqlCommand SelectFromAusbilder()
+        {
+            string sql = "SELECT au.id, au.vorname, au.name, au.telefon, au.e_mail";
+            sql += ", n.id, nt.nutzertyp";
+            sql += " FROM ausbilder as au";
+            sql += " LEFT JOIN nutzer as n ON au.fk_nutzer=n.id";
+            sql += " LEFT JOIN nutzertyp as nt ON n.fk_nutzertyp=nt.id";
+
+            return new SqlCommand
+            {
+                Commandtext = sql,
+            };
+        } 
+
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public static List<Ausbilder> SelectAllAusbilder()
+        public static List<Ausbilder> SelectAusbilder()
         {
             List<Ausbilder> AllAusbilder = new List<Ausbilder>();
 
@@ -582,7 +702,6 @@ namespace _2_UML.Persistence
             sql += " FROM ausbilder as au";
             sql += " LEFT JOIN nutzer as n ON au.fk_nutzer=n.id";
             sql += " LEFT JOIN nutzertyp as nt ON n.fk_nutzertyp=nt.id";
-
             if(ExecuteSQL(sql))
             {
                 for (int i=0; i < Result.Tables[0].Rows.Count;i++)
@@ -612,19 +731,101 @@ namespace _2_UML.Persistence
             return AllAusbilder;            
         }
 
-        public static void DeleteFromAusbilder(int deleteid)
+        public static bool DeleteAusbilder(Ausbilder ausbilder)
         {
-            string sql = "DELETE FROM ausbilder";
-            sql += " WHERE id=@0";
+            List<SqlCommand> deleteCommands = new List<SqlCommand>();
 
-            List<KeyValuePair<string, string>> parameters = new List<KeyValuePair<string, string>>
-            {
-                new KeyValuePair<string, string>("@0",deleteid.ToString()),
-            };
+            List<int> ausbilderIds = new List<int>();
+            List<int> ausbilderNutzerIds = new List<int>();
+            ausbilderIds.Add(ausbilder.Id);
+            ausbilderNutzerIds.Add(ausbilder.Nutzer.Id);
 
-            ExecuteSQL(sql, parameters);
+            deleteCommands.Add(DeleteFromAusbilder(ausbilderIds));
+            deleteCommands.Add(DeleteFromNutzer(ausbilderNutzerIds));
+            deleteCommands.Add(UpdateTeilnehmer(ausbilder.Id));
+
+
+            return ExecuteSQL(deleteCommands);
         }
 
+        /// <summary>
+        /// Method that creates the command to delete from the table 'ausbilder' where the conditons are met
+        /// </summary>
+        /// <param name="conditions">The id's of the ausbilder we want to delete</param>
+        /// <returns>The finished command</returns>
+        private static SqlCommand DeleteFromAusbilder(List<int> ids)
+        {
+            List<KeyValuePair<string, string>> conditions = new List<KeyValuePair<string, string>>(); 
+
+            string sql = "DELETE FROM ausbilder WHERE";
+
+            for (int i = 0; i < ids.Count; i++)
+            {
+                sql += $" id=@{i}";
+                if (i + 1 < ids.Count)
+                {
+                    sql += " OR";
+                }
+
+                conditions.Add(new KeyValuePair<string, string>($"@{i}", ids[i].ToString()));
+
+            }
+            sql += ";";
+
+            return new SqlCommand
+            {
+                Commandtext = sql,
+                Parameters = conditions
+            };
+        }
+
+        /// <summary>
+        /// Method that creates the command to delete from the table 'nutzer' where the conditons are met
+        /// </summary>
+        /// <param name="ids">The id's of the nutzer we want to delete</param>
+        /// <returns>The finished command</returns>
+        private static SqlCommand DeleteFromNutzer(List<int> ids)
+        {
+            List<KeyValuePair<string, string>> conditions = new List<KeyValuePair<string, string>>();
+            string sql = "DELETE FROM nutzer WHERE";
+
+            for (int i = 0; i < ids.Count; i++)
+            {
+                sql += $" id=@{i}";
+                if (i + 1 < ids.Count)
+                {
+                    sql += " OR";
+                }
+
+                conditions.Add(new KeyValuePair<string, string>($"@{i}", ids[i].ToString()));
+            }
+            sql += ";";
+
+            return new SqlCommand
+            {
+                Commandtext = sql,
+                Parameters = conditions
+            };
+        }
+
+        /// <summary>
+        /// Creates a command that updates all mentions of a specific ausbilder
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private static SqlCommand UpdateTeilnehmer(int id)
+        {
+            List<KeyValuePair<string, string>> conditions = new List<KeyValuePair<string, string>>();
+            conditions.Add(new KeyValuePair<string, string>("@0", id.ToString()));
+
+            string sql = "UPDATE teilnehmer SET fk_ausbilder=0 WHERE fk_ausbilder=@0;";
+
+            return new SqlCommand
+            {
+                Commandtext = sql,
+                Parameters = conditions
+            };
+        }
 
         public static List<Beruf> SelectAllBerufe()
         {
@@ -671,6 +872,11 @@ namespace _2_UML.Persistence
             return AlleSicherheitsfragen;
         }
 
+        /// <summary>
+        /// Checks whether an E-Mail adress already exists within the database
+        /// </summary>
+        /// <param name="eMail">The e-mail adress that is checked</param>
+        /// <returns>Is unique?</returns>
         public static bool EMailUnique(string eMail)
         {
             string sql = "SELECT";
@@ -700,7 +906,7 @@ namespace _2_UML.Persistence
         /// </summary>
         /// <param name="sqlCommand"></param>
         /// <returns>Is query?</returns>
-        private static bool CheckQuery(string sqlCommand)
+        private static bool IsSelectQuery(string sqlCommand)
         {
             string trimmedQuery = sqlCommand.Trim();
 
@@ -717,5 +923,14 @@ namespace _2_UML.Persistence
             connection.Dispose();
         }
 
+    }
+
+    /// <summary>
+    /// A custom class which helps to structure commands
+    /// </summary>
+    public class SqlCommand
+    {
+        public string Commandtext { get; set; }
+        public List<KeyValuePair<string, string>> Parameters { get; set; }
     }
 }

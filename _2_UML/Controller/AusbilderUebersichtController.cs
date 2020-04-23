@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using _2_UML.Models;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace _2_UML.Controller
 {
@@ -42,7 +43,7 @@ namespace _2_UML.Controller
         private ObservableCollection<Models.Ausbilder> AusbilderAuswaehlen()
         {
             ObservableCollection<Models.Ausbilder> Ausbilder = new ObservableCollection<Models.Ausbilder>();
-            foreach(var EinAusbilder in MySQLHandler.SelectAllAusbilder())
+            foreach(var EinAusbilder in MySQLHandler.SelectAusbilder())
             {
                 Ausbilder.Add(EinAusbilder);
             }
@@ -63,14 +64,19 @@ namespace _2_UML.Controller
         /// <summary>
         /// Löscht einen Ausbilder aus der Datenbank und der angezeigten Liste
         /// </summary>
-        /// <param name="objektId"></param>
-        private void ObjektLoeschen(int objektId)
+        /// <param name="alterAusbilder"></param>
+        private void ObjektLoeschen(Models.Ausbilder alterAusbilder)
         {
-            MySQLHandler.DeleteFromAusbilder(objektId);
+            MySQLHandler.DeleteAusbilder(alterAusbilder);
 
-            Models.Ausbilder ausbilder = AusbilderUebersichtView.AngezeigteObjekte.Where(x => x.Id == objektId).FirstOrDefault();
+            AusbilderUebersichtView.AngezeigteObjekte.Remove(alterAusbilder);
 
-            AusbilderUebersichtView.AngezeigteObjekte.Remove(ausbilder);
+            //Führt Logout aus wenn der eigene Account gelöscht wurde
+            Int32.TryParse(Application.Current.Properties["User_Nutzer_Id"].ToString(), out int id);
+            if(alterAusbilder.Nutzer.Id == id)
+            {
+                LogoutAusfuehren();
+            }
         }
 
         /// <summary>

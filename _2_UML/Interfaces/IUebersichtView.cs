@@ -7,7 +7,8 @@ using System.Windows;
 
 namespace _2_UML.Interfaces
 {
-    public delegate void ObjektLoeschen(int objektId );
+    //Hinweis: ObjektLoeschen kann kein ganzes Objekt unbekanntes Model vorgeben, das hast du schon 4-mal versucht
+    //public delegate void ObjektLoeschen(int objektid);
     public delegate void ZurStartseite();
     public delegate void ObjektHinzufuegen();
 
@@ -20,7 +21,7 @@ namespace _2_UML.Interfaces
         void ObjektHinzufuegenButton(object sender, RoutedEventArgs e);
         void ZurStartseiteButton(object sender, RoutedEventArgs e);
 
-        event ObjektLoeschen AusbilderLoeschen;
+        //event ObjektLoeschen AusbilderLoeschen;
         event ZurStartseite ZurStartseite;
         event ObjektHinzufuegen AusbilderHinzufuegen;
     }

@@ -33,12 +33,7 @@ namespace _2_UML.Controller
 
         public IStartseiteView StartseiteView { get; set; }
 
-        private void LogoutAusfuehren()
-        {
-            Application.Current.Properties.Clear();
-            NavigationsHistorie.Clear();
-            LoginController login = new LoginController(true);
-        }
+
 
         private void GeheZuAusbilder()
         {

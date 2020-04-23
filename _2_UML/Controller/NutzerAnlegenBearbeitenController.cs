@@ -16,10 +16,10 @@ namespace _2_UML.Controller
         /// <summary>
         /// Konstruktor für das Erschaffen oder Bearbeiten eines Ausbilderprofils
         /// </summary>
-        /// <param name="ausbilder">Der zu bearbeitende Ausbilder. Wenn neu erstellt werden soll, nichts übergeben</param>
-        public NutzerAnlegenBearbeitenController(Models.Ausbilder ausbilder = null)
+        /// <param name="ausbilder">Der zu bearbeitende Ausbilder. Wenn neu erstellt werden soll, wird ein Ausbilder mit Id=0 übergeben</param>
+        public NutzerAnlegenBearbeitenController(Models.Ausbilder ausbilder)
         {
-            ausbilder = ausbilder ?? new Models.Ausbilder { Id = 0 };
+            if(ausbilder.Id==0 ) ausbilder.Nutzer=new Nutzer { Id=0, Nutzertyp = new Nutzertyp { Id=1, Typ="Ausbilder"} } ;
             MainNutzerAnlegenBearbeitenController(ausbilder);
 
             //Ausbilderspezifische Events vorbereiten
@@ -36,10 +36,10 @@ namespace _2_UML.Controller
         /// <summary>
         /// Konstruktor für das Erschaffen oder Bearbeiten eines Ausbilderprofils
         /// </summary>
-        /// <param name="ausbilder">Der zu bearbeitende Teilnehmer. Wenn neu erstellt werden soll, nichts übergeben</param>
-        public NutzerAnlegenBearbeitenController(Models.Teilnehmer teilnehmer = null)
+        /// <param name="ausbilder">Der zu bearbeitende Teilnehmer. Wenn neu erstellt werden soll, wird ein Teilnehmer mit Id=0 übergeben</param>
+        public NutzerAnlegenBearbeitenController(Models.Teilnehmer teilnehmer)
         {
-            teilnehmer = teilnehmer ?? new Models.Teilnehmer { Id = 0 };
+            if (teilnehmer.Id == 0) teilnehmer.Nutzer = new Nutzer { Id=0, Nutzertyp = new Nutzertyp { Id=2, Typ = "Teilnehmer" } };
             MainNutzerAnlegenBearbeitenController(teilnehmer);
 
             //Teilnehmerspezifische Events vorbereiten
@@ -98,7 +98,7 @@ namespace _2_UML.Controller
         /// </summary>
         private void LadeAusbilder()
         {
-            AlleAusbilder = MySQLHandler.SelectAllAusbilder();
+            AlleAusbilder = MySQLHandler.SelectAusbilder();
 
             //Ist die einfachste Sortiermöglichkeit, theoretisch wäre .Sort() aber effizienter
             AlleAusbilder = AlleAusbilder.OrderBy(o => o.Name).ToList();
@@ -170,7 +170,8 @@ namespace _2_UML.Controller
             {
                 if (MySQLHandler.UpdateTeilnehmer(teilnehmer))
                 {
-                    TeilnehmerUebersichtController teilnehmerUebersichtController = new TeilnehmerUebersichtController();
+                    Nutzereinstellungen.EinstellungenSpeichern(teilnehmer);
+                    NutzerAnsichtController nutzerAnsichtController = new NutzerAnsichtController();
                 }
                 else
                 {

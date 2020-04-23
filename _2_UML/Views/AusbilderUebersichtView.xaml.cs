@@ -29,7 +29,7 @@ namespace _2_UML.Views
             this.DataContext = this;
         }
 
-        public event ObjektLoeschen AusbilderLoeschen;
+        public event AusbilderLoeschen AusbilderLoeschen;
         public event ZuAusbilder ZuAusbilder;
         public event ZurStartseite ZurStartseite;
         public event ObjektHinzufuegen AusbilderHinzufuegen;
@@ -58,7 +58,7 @@ namespace _2_UML.Views
             switch(result)
             {
                 case MessageBoxResult.Yes:
-                    AusbilderLoeschen(AusgewaehlterAusbilder.Id);
+                    AusbilderLoeschen(AusgewaehlterAusbilder);
                     break;
                 case MessageBoxResult.No:
                 default:

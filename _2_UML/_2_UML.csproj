@@ -91,6 +91,7 @@
     <Compile Include="Converter\BoolToGridRowHeightConverter2.cs" />
     <Compile Include="Converter\CombineNameConverter.cs" />
     <Compile Include="Converter\ElementIsVisibleConverter.cs" />
+    <Compile Include="Exceptions\CustomMysqlException.cs" />
     <Compile Include="Interfaces\IBerufUebersichtView.cs" />
     <Compile Include="Interfaces\IController.cs" />
     <Compile Include="Interfaces\IFirmenAnsichtView.cs" />
