@@ -23,7 +23,7 @@ namespace _2_UML.Controller
             AusbilderUebersichtView.ZuAusbilder += AusbilderAnsehen;
             AusbilderUebersichtView.AusbilderLoeschen += ObjektLoeschen;
             AusbilderUebersichtView.ZurStartseite += ZurStartseite;
-            AusbilderUebersichtView.AusbilderHinzufuegen += AusbilderHinzufuegen;
+            AusbilderUebersichtView.ObjektHinzufuegen += AusbilderHinzufuegen;
 
             NavigationsHistorie.Add(this);
             AusbilderUebersichtView.ZeigeView();
@@ -54,11 +54,6 @@ namespace _2_UML.Controller
         private void AusbilderAnsehen(Models.Ausbilder ausgewaehlterAusbilder)
         {
             NutzerAnsichtController nutzerAnsichtController = new NutzerAnsichtController(ausgewaehlterAusbilder);
-        }
-
-        private void ZurStartseite()
-        {
-            StartseiteController startseiteController = new StartseiteController();
         }
 
         /// <summary>

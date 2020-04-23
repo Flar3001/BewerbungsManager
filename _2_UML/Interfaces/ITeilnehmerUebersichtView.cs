@@ -6,7 +6,12 @@ using _2_UML.Models;
 
 namespace _2_UML.Interfaces
 {
-    public interface ITeilnehmerUebersichtView : IUebersichtView<Models.Teilnehmer>
+    public delegate void ZuTeilnehmer(Models.Teilnehmer teilnehmer);
+    public delegate void TeilnehmerLoeschen(AngezeigterTeilnehmer angezeigterTeilnehmer);
+
+    public interface ITeilnehmerUebersichtView : IUebersichtView<AngezeigterTeilnehmer>
     {
+        event TeilnehmerLoeschen TeilnehmerLoeschen;
+        event ZuTeilnehmer ZuTeilnehmer;
     }
 }

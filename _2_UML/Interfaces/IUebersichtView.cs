@@ -23,6 +23,6 @@ namespace _2_UML.Interfaces
 
         //event ObjektLoeschen AusbilderLoeschen;
         event ZurStartseite ZurStartseite;
-        event ObjektHinzufuegen AusbilderHinzufuegen;
+        event ObjektHinzufuegen ObjektHinzufuegen;
     }
 }

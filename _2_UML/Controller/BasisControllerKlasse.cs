@@ -42,6 +42,14 @@ namespace _2_UML.Controller
             LoginController login = new LoginController(true);
         }
 
+        /// <summary>
+        /// Geht zurück zur Startseite
+        /// </summary>
+        protected void ZurStartseite()
+        {
+            StartseiteController startseiteController = new StartseiteController();
+        }
+
         static protected List<IController> NavigationsHistorie;
     }
 }

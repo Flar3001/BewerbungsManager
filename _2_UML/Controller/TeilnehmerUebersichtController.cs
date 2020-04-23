@@ -8,12 +8,16 @@ using _2_UML.Models;
 
 namespace _2_UML.Controller
 {
-    public class TeilnehmerUebersichtController : UebersichtController<Models.Teilnehmer>,IController
+    public class TeilnehmerUebersichtController : UebersichtController<Models.Teilnehmer>, IController
     {
         public TeilnehmerUebersichtController()
         {
             TeilnehmerUebersichtView = new TeilnehmerUebersichtView();
 
+            TeilnehmerUebersichtView.ZeigeViewFertig += SeiteWechseln;
+            TeilnehmerUebersichtView.ZurStartseite += ZurStartseite;
+            TeilnehmerUebersichtView.ObjektHinzufuegen += TeilnehmerHinzufuegen;
+            TeilnehmerUebersichtView.TeilnehmerLoeschen += TeilnehmerLoeschen;
 
 
             NavigationsHistorie.Add(this);
@@ -27,6 +31,16 @@ namespace _2_UML.Controller
         public void SeiteNeuLaden()
         {
             TeilnehmerUebersichtView.ZeigeView();
+        }
+
+        private void TeilnehmerHinzufuegen()
+        {
+
+        }
+
+        private void TeilnehmerLoeschen(AngezeigterTeilnehmer angezeigterTeilnehmer)
+        {
+
         }
     }
 }

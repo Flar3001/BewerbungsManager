@@ -34,7 +34,7 @@ namespace _2_UML.Views
         public event SeitenAnsicht ZeigeViewFertig;
         public event BewerbungLoeschen BewerbungLoeschen;
         public event ZurStartseite ZurStartseite;
-        public event ObjektHinzufuegen AusbilderHinzufuegen;
+        public event ObjektHinzufuegen ObjektHinzufuegen;
         public event ZuBewerbung ZuBewerbung;
 
         public void ObjektHinzufuegenButton(object sender, RoutedEventArgs e)

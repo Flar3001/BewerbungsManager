@@ -32,7 +32,7 @@ namespace _2_UML.Views
         public event AusbilderLoeschen AusbilderLoeschen;
         public event ZuAusbilder ZuAusbilder;
         public event ZurStartseite ZurStartseite;
-        public event ObjektHinzufuegen AusbilderHinzufuegen;
+        public event ObjektHinzufuegen ObjektHinzufuegen;
 
         public ObservableCollection<Models.Ausbilder> AngezeigteObjekte { get; set; }
 
@@ -74,7 +74,7 @@ namespace _2_UML.Views
 
         public void ObjektHinzufuegenButton(object sender, RoutedEventArgs e)
         {
-            AusbilderHinzufuegen();
+            ObjektHinzufuegen();
         }
 
         public void ZurStartseiteButton(object sender, RoutedEventArgs e)

@@ -298,5 +298,8 @@
   <ItemGroup>
     <Folder Include="Pictures\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="erm_bewerbungen.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

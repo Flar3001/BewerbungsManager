@@ -29,11 +29,13 @@ namespace _2_UML.Views
             this.DataContext = this;
         }
 
-        public ObservableCollection<Models.Teilnehmer> AngezeigteObjekte {get;set;}
+        public ObservableCollection<AngezeigterTeilnehmer> AngezeigteObjekte {get;set;}
 
         public event SeitenAnsicht ZeigeViewFertig;
         public event ZurStartseite ZurStartseite;
-        public event ObjektHinzufuegen AusbilderHinzufuegen;
+        public event ObjektHinzufuegen ObjektHinzufuegen;
+        public event TeilnehmerLoeschen TeilnehmerLoeschen;
+        public event ZuTeilnehmer ZuTeilnehmer;
 
         public void ObjektHinzufuegenButton(object sender, RoutedEventArgs e)
         {
@@ -42,27 +44,34 @@ namespace _2_UML.Views
 
         public void ObjektLoeschenButton(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            var AusgewaehlterTeilnehmer = ((Button)sender).Tag as Models.AngezeigterTeilnehmer;
+
+            MessageBoxResult result = MessageBox.Show($"Sie sind dabei, {AusgewaehlterTeilnehmer.Vorname} {AusgewaehlterTeilnehmer.Name} aus dem System zu Löschen. Sind Sie sich sicher, dass Sie dies tun möchten?", "Sicher?", MessageBoxButton.YesNo);
+
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    TeilnehmerLoeschen(AusgewaehlterTeilnehmer);
+                    break;
+                case MessageBoxResult.No:
+                default:
+                    break;
+            }
         }
 
-        public void ZeigeAlleObjekte(ObservableCollection<Interfaces.Teilnehmer> ts)
+        public void ZeigeAlleObjekte(ObservableCollection<Models.AngezeigterTeilnehmer> ts)
         {
-            throw new NotImplementedException();
-        }
-
-        public void ZeigeAlleObjekte(ObservableCollection<Models.Teilnehmer> ts)
-        {
-            throw new NotImplementedException();
+            AngezeigteObjekte = ts;
         }
 
         public void ZeigeView()
         {
-            throw new NotImplementedException();
+            ZeigeViewFertig(this);
         }
 
         public void ZurStartseiteButton(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            ZurStartseite();
         }
     }
 }

@@ -34,7 +34,7 @@ namespace _2_UML.Views
         public event SeitenAnsicht ZeigeViewFertig;
         //public event ObjektLoeschen AusbilderLoeschen;
         public event ZurStartseite ZurStartseite;
-        public event ObjektHinzufuegen AusbilderHinzufuegen;
+        public event ObjektHinzufuegen ObjektHinzufuegen;
 
         public void ObjektHinzufuegenButton(object sender, RoutedEventArgs e)
         {
