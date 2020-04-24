@@ -12,6 +12,7 @@
     <local:BasePage.Resources>
         <ResourceDictionary>
             <converter:CombineNameConverter x:Key="CombineNames"/>
+            <converter:PresentDateConverter x:Key="PresentDate"/>
         </ResourceDictionary>
     </local:BasePage.Resources>
 
@@ -22,7 +23,7 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Ausbilder" 
+        <TextBlock Text="Teilnehmer" 
                    FontSize="40" 
                    VerticalAlignment="Center" 
                    HorizontalAlignment="Center"/>
@@ -35,51 +36,62 @@
                   AlternationCount="2"                 
                   CanUserAddRows="False" 
                   Grid.Row="1">
-            <DataGridHyperlinkColumn Header="Name" Width="*">
-                <DataGridHyperlinkColumn.Binding>
-                    <MultiBinding Converter="{StaticResource CombineNames}">
-                        <Binding Path="Vorname"/>
-                        <Binding Path="Name"/>
-                    </MultiBinding>
-                </DataGridHyperlinkColumn.Binding>
-                <DataGridHyperlinkColumn.ElementStyle>
-                    <Style>
-                        <!--<EventSetter Event="Hyperlink.Click" Handler="GeheZuProfilButton"/>-->
-                    </Style>
-                </DataGridHyperlinkColumn.ElementStyle>
-            </DataGridHyperlinkColumn>
+            <DataGrid.Columns>
+                <DataGridHyperlinkColumn Header="Name" Width="SizeToCells" MinWidth="45">
+                    <DataGridHyperlinkColumn.Binding>
+                        <MultiBinding Converter="{StaticResource CombineNames}">
+                            <Binding Path="Vorname"/>
+                            <Binding Path="Name"/>
+                        </MultiBinding>
+                    </DataGridHyperlinkColumn.Binding>
+                    <DataGridHyperlinkColumn.ElementStyle>
+                        <Style>
+                            <EventSetter Event="Hyperlink.Click" Handler="GeheZuProfilButton"/>
+                        </Style>
+                    </DataGridHyperlinkColumn.ElementStyle>
+                </DataGridHyperlinkColumn>
             
-            <DataGridHyperlinkColumn Header="Anzahl Bewerbungen" Width="*">
-                <DataGridHyperlinkColumn.Binding>
-                    <Binding Path="Anzahl_Bewerbungen"/>
-                </DataGridHyperlinkColumn.Binding>
-                <DataGridHyperlinkColumn.ElementStyle>
-                    <Style>
-                        <!--<EventSetter Event="Hyperlink.Click" Handler="GeheZuBewerbungenButton"/>-->
-                    </Style>
-                </DataGridHyperlinkColumn.ElementStyle>
-            </DataGridHyperlinkColumn>
-            <DataGridTextColumn Header="Datum der letzten Bewerbung" Binding="{Binding LetzteBewerbung}" Width="*"/>
-            <DataGridTextColumn Header="Telefonnummer" Binding="{Binding Telefonnummer}" Width="*"/>
+                <DataGridHyperlinkColumn Header="Anzahl Bewerbungen" Width="SizeToHeader">
+                    <DataGridHyperlinkColumn.Binding>
+                        <Binding Path="Anzahl_Bewerbungen"/>
+                    </DataGridHyperlinkColumn.Binding>
+                    <DataGridHyperlinkColumn.ElementStyle>
+                        <Style>
+                            <EventSetter Event="Hyperlink.Click" Handler="GeheZuBewerbungenButton"/>
+                            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridHyperlinkColumn.ElementStyle>
+                </DataGridHyperlinkColumn>
+                <DataGridTextColumn Header="Letzte Bewerbung"  Width="SizeToHeader">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource PresentDate}">
+                            <Binding Path="Letzte_Bewerbung.Day"/>
+                            <Binding Path="Letzte_Bewerbung.Month"/>
+                            <Binding Path="Letzte_Bewerbung.Year"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Telefonnummer" Binding="{Binding Telefonnummer}" Width="SizeToCells" MinWidth="100"/>
 
-            <DataGridTextColumn Header="Ausbilder" Width="*">
-                <DataGridTextColumn.Binding>
-                    <MultiBinding Converter="{StaticResource CombineNames}">
-                        <Binding Path="Ausbilder.Vorname"/>
-                        <Binding Path="Ausbilder.Name"/>
-                    </MultiBinding>
-                </DataGridTextColumn.Binding>
-            </DataGridTextColumn>
-            <DataGridTemplateColumn Width="*">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <Button Click="ObjektLoeschenButton"
-                                    Tag="{Binding .}">
-                            <TextBlock Text="Löschen"/>
-                        </Button>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Ausbilder" Width="SizeToCells" MinWidth="60">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource CombineNames}">
+                            <Binding Path="Ausbilder.Vorname"/>
+                            <Binding Path="Ausbilder.Name"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTemplateColumn Width="*" MinWidth="60">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="ObjektLoeschenButton"
+                                        Tag="{Binding .}">
+                                <TextBlock Text="Löschen"/>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
         </DataGrid>
 
         <Button Grid.Row="2"

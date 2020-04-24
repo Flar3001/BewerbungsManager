@@ -8,7 +8,7 @@
         ResizeMode="NoResize"
         Title="Bewerbungen" Height="450" Width="800">
     <ScrollViewer>
-        <Frame Name="MainFrame">
+        <Frame Name="MainFrame" NavigationUIVisibility="Hidden">
         
         </Frame>
     </ScrollViewer>

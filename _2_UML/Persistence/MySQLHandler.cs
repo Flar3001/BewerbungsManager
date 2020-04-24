@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using _2_UML.Models;
 using _2_UML.Exceptions;
+using System.Collections.ObjectModel;
 
 namespace _2_UML.Persistence
 {
@@ -809,7 +810,7 @@ namespace _2_UML.Persistence
         }
 
         /// <summary>
-        /// Creates a command that updates all mentions of a specific ausbilder
+        /// Creates a command that deletes all mentions of a specific ausbilder
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -826,6 +827,99 @@ namespace _2_UML.Persistence
                 Parameters = conditions
             };
         }
+        
+        /// <summary>
+        /// Creates a list of all teilnehmer, including their number of bewerbungen and when the latest was written. 
+        /// </summary>
+        /// <returns></returns>
+        public static List<AngezeigterTeilnehmer> SelectAllTeilnehmer()
+        {
+            
+            List<AngezeigterTeilnehmer> angezeigterTeilnehmer = new List<AngezeigterTeilnehmer>();
+
+            string sql0 = "SELECT t.id, t.vorname, t.name, t.telefon, t.e_mail,";
+            sql0 += " b.id, b.bezeichnung,";
+            sql0 += " a.ort, a.postleitzahl, a.straße, a.hausnummer, a.land,";
+            sql0 += " n.id, nt.nutzertyp,";
+            sql0 += " au.id, au.vorname, au.name";
+            sql0 += " FROM teilnehmer as t";
+            sql0 += " LEFT JOIN beruf b ON t.fk_beruf=b.id";
+            sql0 += " LEFT JOIN ausbilder as au ON t.fk_ausbilder=au.id";
+            sql0 += " LEFT JOIN adresse as a ON t.fk_adresse=a.id";
+            sql0 += " LEFT JOIN nutzer as n ON t.fk_nutzer=n.id";
+            sql0 += " LEFT JOIN nutzertyp as nt ON n.fk_nutzertyp";
+            sql0 += " WHERE nt.nutzertyp='Teilnehmer'";
+
+            if (ExecuteSQL(sql0))
+            {
+                for (int i = 0; i < Result.Tables[0].Rows.Count; i++)
+                {
+                    angezeigterTeilnehmer.Add
+                    (
+                        new AngezeigterTeilnehmer
+                        {
+                            Id = (int)Result.Tables[0].Rows[i][0],
+                            Vorname = $"{Result.Tables[0].Rows[i][1]}",
+                            Name = $"{Result.Tables[0].Rows[i][2]}",
+                            Telefonnummer = $"{Result.Tables[0].Rows[i][3]}",
+                            EMail = $"{Result.Tables[0].Rows[i][4]}",
+                            Beruf = new Beruf
+                            {
+                                Id = (int)Result.Tables[0].Rows[i][5],
+                                Bezeichnung = $"{Result.Tables[0].Rows[i][6]}",
+                            },
+                            Adresse = new Adresse
+                            {
+                                Ort = $"{Result.Tables[0].Rows[0][7]}",
+                                Postleitzahl = $"{Result.Tables[0].Rows[0][8]}",
+                                Straße = $"{Result.Tables[0].Rows[0][9]}",
+                                Hausnummer = $"{Result.Tables[0].Rows[0][10]}",
+                                Land = $"{Result.Tables[0].Rows[0][11]}",
+                            },
+                            Nutzer = new Nutzer
+                            {
+                                Id = (int)Result.Tables[0].Rows[0][12],
+                                Nutzertyp=new Nutzertyp
+                                {
+                                    Typ=$"{Result.Tables[0].Rows[0][13]}",
+                                }
+                            },
+                            Ausbilder = new Ausbilder
+                            {
+                                Id=(int)Result.Tables[0].Rows[0][14],
+                                Vorname= $"{Result.Tables[0].Rows[0][15]}",
+                                Name=$"{Result.Tables[0].Rows[0][16]}",
+                            },
+                        }
+                    );
+                };
+
+
+                foreach (AngezeigterTeilnehmer Teilnehmer in angezeigterTeilnehmer)
+                {
+                    string sql = "SELECT gesendet_datum FROM bewerbung WHERE fk_teilnehmer=@0";
+                    List<KeyValuePair<string, string>> parameters = new List<KeyValuePair<string, string>>();
+                    parameters.Add(new KeyValuePair<string, string>("@0", Teilnehmer.Id.ToString()));
+
+                    ExecuteSQL(sql, parameters);
+
+                    //Here we add the number of written bewerbungen to the teilnehmer
+                    Teilnehmer.Anzahl_Bewerbungen = (int)Result.Tables[0].Rows.Count;
+
+                    List<DateTime> alldates = new List<DateTime>();
+                    
+                    for(int i=0; i < Teilnehmer.Anzahl_Bewerbungen; i++)
+                    {
+                        alldates.Add(DateTime.Parse(Result.Tables[0].Rows[i][0].ToString()));
+                    }
+
+                    DateTime latestDate = alldates.Where(x => x.Date == alldates.Max(y => y.Date)).FirstOrDefault();
+                    Teilnehmer.Letzte_Bewerbung = latestDate;
+                }                
+            }
+            return angezeigterTeilnehmer;
+        }
+
 
         public static List<Beruf> SelectAllBerufe()
         {
