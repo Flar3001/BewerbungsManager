@@ -208,7 +208,7 @@ namespace _2_UML.Controller
         /// <returns>Boolean ob vollständig oder nicht</returns>
         private bool NutzerdatenUeberpruefen(INutzer nutzer, bool istNeu)
         {
-            //Ist die E-Mail-Adresse bereits vorhanden?
+            //Wir erstellen einen komplett neuen Nutzer
             if (NeuErschaffen)
             {
                 if(MySQLHandler.EMailUnique(nutzer.EMail) == false)

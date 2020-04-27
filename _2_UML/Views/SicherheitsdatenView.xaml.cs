@@ -19,7 +19,7 @@ namespace _2_UML.Views
     /// <summary>
     /// Interaktionslogik für SicherheitsdatenView.xaml
     /// </summary>
-    public partial class SicherheitsdatenView : Page, ISicherheitsdatenView
+    public partial class SicherheitsdatenView : BasePage, ISicherheitsdatenView
     {
         public SicherheitsdatenView()
         {

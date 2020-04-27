@@ -20,7 +20,7 @@ namespace _2_UML.Views
     /// <summary>
     /// Interaktionslogik für NutzerAnsichtView.xaml
     /// </summary>
-    public partial class NutzerAnsichtView : Page, INutzerAnsichtView
+    public partial class NutzerAnsichtView : BasePage, INutzerAnsichtView
     {
         public NutzerAnsichtView()
         {

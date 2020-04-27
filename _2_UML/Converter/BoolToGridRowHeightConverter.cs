@@ -14,9 +14,10 @@ namespace _2_UML.Converter
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (targetType != typeof(GridLength))
-                throw new InvalidOperationException("The target must be a boolean");
+                throw new InvalidOperationException("The target must be a GridLength");
 
             return ((bool)value == true) ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
+            //return ((bool)value == true) ? new GridLength(40) : new GridLength(0);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

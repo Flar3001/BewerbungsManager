@@ -21,7 +21,7 @@ namespace _2_UML.Views
     /// <summary>
     /// Interaktionslogik für BewerbungUebersichtView.xaml
     /// </summary>
-    public partial class BewerbungUebersichtView : Page, IBewerbungUebersichtView
+    public partial class BewerbungUebersichtView : BasePage, IBewerbungUebersichtView
     {
         public BewerbungUebersichtView()
         {

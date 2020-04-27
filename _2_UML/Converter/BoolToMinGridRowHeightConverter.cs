@@ -9,20 +9,22 @@ using System.Windows.Data;
 
 namespace _2_UML.Converter
 {
-    public class BoolToGridRowHeightConverter2 : IValueConverter
+    public class BoolToMinGridRowHeightConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (targetType != typeof(GridLength))
-                throw new InvalidOperationException("The target must be a boolean");
+            if (targetType != typeof(double))
+                throw new InvalidOperationException("The target must be a double");
 
-            return ((bool)value == true) ? new GridLength(1.5, GridUnitType.Star) : new GridLength(0);
-            //return ((bool)value == true) ? new GridLength(40) : new GridLength(0);
+            return ((bool)value == true) ? (double)40 : (double)0;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
         }
+
+        
+    
     }
 }

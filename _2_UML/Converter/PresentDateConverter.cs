@@ -14,11 +14,16 @@ namespace _2_UML.Converter
         {
             string Day, Month, Year, Date;
 
-            if (values[0] != null && values[1] != null)
+            if (values[0] != null && values[1] != null && values[2] != null)
             {
                 Day = (values[0] is int) ? values[0].ToString() : "";
                 Month = (values[1] is int) ? values[1].ToString() : "";
-                Year = (values[2] is int) ? values[2].ToString() : "";
+                if(values[2] is int)
+                {
+                    if ((int)values[2] != 1) Year = values[2].ToString();
+                    else return "";
+                }
+                else { Year = ""; }
 
                 Date = $"{Day}.{Month}.{Year}";
                 return Date;

@@ -418,7 +418,7 @@ namespace _2_UML.Persistence
         private static bool AddNewAdresse(Adresse adresse)
         {
             string sql = "INSERT INTO adresse(ort, postleitzahl, straße, hausnummer, land)";
-            sql += " VALUES @0,@1,@2,@3,@4;";
+            sql += " VALUES (@0,@1,@2,@3,@4);";
 
             List<KeyValuePair<string, string>> parameters = new List<KeyValuePair<string, string>>
             {
@@ -497,23 +497,13 @@ namespace _2_UML.Persistence
         /// <returns></returns>
         public static bool CheckLogin(string email, string password)
         {
-            if (CheckLoginTeilnehmer(email, password) == false)
+            if (CheckLoginTeilnehmer(email, password) || CheckLoginAusbilder(email, password))
             {
-                return false;
+                SaveUser();
+                return true;
             }
-
-            if (Result.Tables[0].Rows.Count != 1)
-            {
-                CheckLoginAusbilder(email, password);
-
-                if (Result.Tables[0].Rows.Count != 1)
-                {
-                    return false;
-                }
-            }
-
-            SaveUser();
-            return true;
+            
+            return false;
         }
 
         /// <summary>
@@ -610,7 +600,8 @@ namespace _2_UML.Persistence
         private static bool CheckLoginTeilnehmer(string email, string password)
         {
             string sql = "SELECT t.vorname, t.name, t.telefon, t.e_mail, nt.nutzertyp, t.id, n.id,";
-            sql += " b.bezeichnung, a.ort, a.postleitzahl, a.straße, a.hausnummer, a.land, au.vorname, au.name, au.id";
+            sql += " b.bezeichnung, a.ort, a.postleitzahl, a.straße, a.hausnummer, a.land, au.vorname, au.name, au.id,";
+            sql += " n.passwort";
             sql += " FROM teilnehmer as t";
             sql += " LEFT JOIN nutzer as n ON t.fk_nutzer=n.id";
             sql += " LEFT JOIN nutzertyp as nt ON n.fk_nutzertyp=nt.id";
@@ -628,7 +619,8 @@ namespace _2_UML.Persistence
 
             if (ExecuteSQL(sql, parameters))
             {
-                return true;
+                if (Result.Tables[0].Rows.Count == 1 && Result.Tables[0].Rows[0][3].ToString() == email && Result.Tables[0].Rows[0][16].ToString() == password)
+                { return true; }
             }
             return false;
         }
@@ -641,8 +633,8 @@ namespace _2_UML.Persistence
         /// <param name="password">Eingegebenes Passwort</param>
         private static bool CheckLoginAusbilder(string email, string password)
         {
-            string sql = "SELECT au.vorname, au.name, au.telefon, au.e_mail, nt.nutzertyp, au.id, n.id";
-
+            string sql = "SELECT au.vorname, au.name, au.telefon, au.e_mail, nt.nutzertyp, au.id, n.id,";
+            sql += " n.passwort";
             sql += " FROM ausbilder as au";
             sql += " LEFT JOIN nutzer as n ON au.fk_nutzer=n.id";
             sql += " LEFT JOIN nutzertyp as nt ON n.fk_nutzertyp=nt.id";
@@ -657,7 +649,8 @@ namespace _2_UML.Persistence
 
             if (ExecuteSQL(sql, parameters))
             {
-                return true;
+                if (Result.Tables[0].Rows.Count == 1 && Result.Tables[0].Rows[0][3].ToString() == email && Result.Tables[0].Rows[0][7].ToString() == password)
+                { return true; }
             }
             return false;
         }
@@ -906,18 +899,86 @@ namespace _2_UML.Persistence
                     //Here we add the number of written bewerbungen to the teilnehmer
                     Teilnehmer.Anzahl_Bewerbungen = (int)Result.Tables[0].Rows.Count;
 
-                    List<DateTime> alldates = new List<DateTime>();
-                    
-                    for(int i=0; i < Teilnehmer.Anzahl_Bewerbungen; i++)
+                    if (Teilnehmer.Anzahl_Bewerbungen > 0)
                     {
-                        alldates.Add(DateTime.Parse(Result.Tables[0].Rows[i][0].ToString()));
-                    }
+                        List<DateTime> alldates = new List<DateTime>();
 
-                    DateTime latestDate = alldates.Where(x => x.Date == alldates.Max(y => y.Date)).FirstOrDefault();
-                    Teilnehmer.Letzte_Bewerbung = latestDate;
+                        for (int i = 0; i < Teilnehmer.Anzahl_Bewerbungen; i++)
+                        {
+                            alldates.Add(DateTime.Parse(Result.Tables[0].Rows[i][0].ToString()));
+                        }
+
+                        DateTime latestDate = alldates.Where(x => x.Date == alldates.Max(y => y.Date)).FirstOrDefault();
+                        Teilnehmer.Letzte_Bewerbung = latestDate;
+                    }
                 }                
             }
             return angezeigterTeilnehmer;
+        }
+
+        public static bool RemoveTeilnehmer(AngezeigterTeilnehmer teilnehmer)
+        {
+            List<SqlCommand> deleteCommands = new List<SqlCommand>();
+
+            List<int> teilnehmerIds = new List<int>();
+            List<int> teilnehmerNutzerIds = new List<int>();
+            teilnehmerIds.Add(teilnehmer.Id);
+            teilnehmerNutzerIds.Add(teilnehmer.Nutzer.Id);
+
+            deleteCommands.Add(DeleteFromNutzer(teilnehmerNutzerIds));
+            deleteCommands.Add(DeleteFromTeilnehmer(teilnehmerIds));
+            deleteCommands.Add(DeleteBewerbungen(teilnehmerIds));
+
+
+            return ExecuteSQL(deleteCommands);
+        }
+
+        private static SqlCommand DeleteBewerbungen (List<int> ids)
+        {
+            List<KeyValuePair<string, string>> conditions = new List<KeyValuePair<string, string>>();
+            string sql = "DELETE FROM bewerbung WHERE ";
+
+            for (int i = 0; i < ids.Count; i++)
+            {
+                sql += $" fk_teilnehmer=@{i}";
+                if (i + 1 < ids.Count)
+                {
+                    sql += " OR";
+                }
+
+                conditions.Add(new KeyValuePair<string, string>($"@{i}", ids[i].ToString()));
+            }
+            sql += ";";
+
+            return new SqlCommand
+            {
+                Commandtext = sql,
+                Parameters = conditions
+            };
+        }
+
+        private static SqlCommand DeleteFromTeilnehmer(List<int> ids)
+        {
+            List<KeyValuePair<string, string>> conditions = new List<KeyValuePair<string, string>>();
+            string sql = "DELETE FROM teilnehmer WHERE ";
+
+            for (int i = 0; i < ids.Count; i++)
+            {
+                sql += $" id=@{i}";
+                if (i + 1 < ids.Count)
+                {
+                    sql += " OR";
+                }
+
+                conditions.Add(new KeyValuePair<string, string>($"@{i}", ids[i].ToString()));
+            }
+            sql += ";";
+
+            return new SqlCommand
+            {
+                Commandtext = sql,
+                Parameters = conditions
+            };
         }
 
 

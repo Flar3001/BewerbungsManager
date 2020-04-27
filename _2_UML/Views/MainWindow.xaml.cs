@@ -31,6 +31,7 @@ namespace _2_UML.Views
 
         public void ZeigeView()
         {
+
             this.Show();
 
             //ACHTUNG: Es ist zwar nicht MVP-Konform, dass dieses View einen Controller kennt, jedoch ist dies in WPF nicht anders möglich. Werden MainWindow und Login

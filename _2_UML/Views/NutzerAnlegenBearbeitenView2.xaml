@@ -6,13 +6,14 @@
       xmlns:local="clr-namespace:_2_UML.Views"
       xmlns:converter="clr-namespace:_2_UML.Converter"
       mc:Ignorable="d"
-      Title="NutzerAnlegenBearbeitenView" Height="450" Width="800">
+      Title="NutzerAnlegenBearbeitenView" Height="650" Width="800">
 
     <Page.Resources>
         <ResourceDictionary>
             <converter:BoolToGridRowHeightConverter x:Key="BoolToGridHeight"/>
             <converter:BoolToGridRowHeightConverter2 x:Key="BoolToGridHeight2"/>
             <converter:ElementIsVisibleConverter x:Key="ElementIsVisible"/>
+            <converter:BoolToMinGridRowHeightConverter x:Key="BoolToMinGridHeight"/>
         </ResourceDictionary>
     </Page.Resources>
 
@@ -26,23 +27,26 @@
             <ColumnDefinition Width="0.95*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            
             <RowDefinition Height="70"/>
             <RowDefinition Height="1*" MaxHeight="100" MinHeight="40"/>
             <RowDefinition Height="1*" MaxHeight="100" MinHeight="40"/>
-
-            <RowDefinition Height="{Binding IstTeilnehmer, Converter={StaticResource BoolToGridHeight}}" MaxHeight="100"/>
-            <RowDefinition Height="{Binding IstTeilnehmer, Converter={StaticResource BoolToGridHeight2}}" MaxHeight="150"/>
-            <RowDefinition Height="{Binding IstTeilnehmer, Converter={StaticResource BoolToGridHeight}}" MaxHeight="100"/>
-            <RowDefinition Height="{Binding IstTeilnehmer, Converter={StaticResource BoolToGridHeight}}" MaxHeight="100"/>
-            <RowDefinition Height="{Binding IstTeilnehmer, Converter={StaticResource BoolToGridHeight}}" MaxHeight="100"/>
-
-            <RowDefinition Height="{Binding WirdNeuErschaffen, Converter={StaticResource BoolToGridHeight2}}" MaxHeight="150"/>
-            <RowDefinition Height="{Binding WirdNeuErschaffen, Converter={StaticResource BoolToGridHeight}}" MaxHeight="100"/>
-            <RowDefinition Height="{Binding WirdNeuErschaffen, Converter={StaticResource BoolToGridHeight}}" MaxHeight="100"/>
-            <RowDefinition Height="{Binding WirdNeuErschaffen, Converter={StaticResource BoolToGridHeight}}" MaxHeight="100"/>
+            <RowDefinition Height="{Binding IstTeilnehmer, Converter={StaticResource BoolToGridHeight}}" MaxHeight="100" MinHeight="{Binding IstTeilnehmer, Converter={StaticResource BoolToMinGridHeight}}"/>
+            <RowDefinition Height="{Binding IstTeilnehmer, Converter={StaticResource BoolToGridHeight2}}" MaxHeight="150" MinHeight="{Binding IstTeilnehmer, Converter={StaticResource BoolToMinGridHeight}}"/>
+            <RowDefinition Height="{Binding IstTeilnehmer, Converter={StaticResource BoolToGridHeight}}" MaxHeight="100" MinHeight="{Binding IstTeilnehmer, Converter={StaticResource BoolToMinGridHeight}}"/>
+            <RowDefinition Height="{Binding IstTeilnehmer, Converter={StaticResource BoolToGridHeight}}" MaxHeight="100" MinHeight="{Binding IstTeilnehmer, Converter={StaticResource BoolToMinGridHeight}}"/>
+            <RowDefinition Height="{Binding IstTeilnehmer, Converter={StaticResource BoolToGridHeight}}" MaxHeight="100" MinHeight="{Binding IstTeilnehmer, Converter={StaticResource BoolToMinGridHeight}}"/>
+            <RowDefinition Height="{Binding WirdNeuErschaffen, Converter={StaticResource BoolToGridHeight2}}" MaxHeight="150" MinHeight="{Binding IstTeilnehmer, Converter={StaticResource BoolToMinGridHeight}}"/>
+            <RowDefinition Height="{Binding WirdNeuErschaffen, Converter={StaticResource BoolToGridHeight}}" MaxHeight="100" MinHeight="{Binding IstTeilnehmer, Converter={StaticResource BoolToMinGridHeight}}"/>
+            <RowDefinition Height="{Binding WirdNeuErschaffen, Converter={StaticResource BoolToGridHeight}}" MaxHeight="100" MinHeight="{Binding IstTeilnehmer, Converter={StaticResource BoolToMinGridHeight}}"/>
+            <RowDefinition Height="{Binding WirdNeuErschaffen, Converter={StaticResource BoolToGridHeight}}" MaxHeight="100" MinHeight="{Binding IstTeilnehmer, Converter={StaticResource BoolToMinGridHeight}}"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="50"/>
+            
         </Grid.RowDefinitions>
+        <Grid.Resources>
+
+        </Grid.Resources>
 
         <Border Grid.Column="3"
                 Grid.Row="1"

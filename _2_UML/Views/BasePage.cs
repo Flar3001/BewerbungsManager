@@ -28,5 +28,10 @@ namespace _2_UML.Views
             backingField = value;
             OnPropertyChanged(propertyName);
         }
+
+        public void ZeigeMessageBox(string Nachricht)
+        {
+            MessageBox.Show(Nachricht);
+        }
     }
 }

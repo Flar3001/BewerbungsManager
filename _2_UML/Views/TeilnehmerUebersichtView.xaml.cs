@@ -40,7 +40,7 @@ namespace _2_UML.Views
 
         public void ObjektHinzufuegenButton(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            ObjektHinzufuegen();
         }
 
         public void ObjektLoeschenButton(object sender, RoutedEventArgs e)

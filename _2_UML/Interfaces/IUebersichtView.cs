@@ -16,6 +16,7 @@ namespace _2_UML.Interfaces
     {
         ObservableCollection<T> AngezeigteObjekte { get; set; }
 
+        void ZeigeMessageBox(string Nachricht);
         void ZeigeAlleObjekte(ObservableCollection <T> ts);
         void ObjektLoeschenButton(object sender, RoutedEventArgs e);
         void ObjektHinzufuegenButton(object sender, RoutedEventArgs e);

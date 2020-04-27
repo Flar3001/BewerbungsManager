@@ -90,6 +90,7 @@ namespace _2_UML.Views
 
         public void DatenAnzeigen(Models.Teilnehmer teilnehmer, bool neuErschaffen, List<Models.Ausbilder> AlleAusbilder, List<Sicherheitsfrage> AlleSicherheitsfragen, List<Beruf> AlleBerufe)
         {
+            teilnehmer.Adresse = new Adresse { };
             AktuellerNutzer = teilnehmer;
             WirdNeuErschaffen = neuErschaffen;
             this.AlleSicherheitsfragen = AlleSicherheitsfragen;
@@ -128,6 +129,11 @@ namespace _2_UML.Views
             GeheZurueck();
         }
 
+        /// <summary>
+        /// Überprüft, ob alle Daten korrekt eingegeben wurden und speichert den neuen Nutzer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NeuenNutzerSpeichernButton(object sender, RoutedEventArgs e)
         {
             if (IstInputOK())
@@ -136,20 +142,20 @@ namespace _2_UML.Views
                 {
                     ZeigeFehlermeldung("Passwort und Sicherheitsantwort dürfen nicht gleich sein");
                 }
-                else if (Passwort.Password != Passwort_bestaetigen.Password || Antwort.Text != Antwort_bestaetigen.Text)
-                {
-                    ZeigeFehlermeldung("Bitte überprüfen Sie Passwort und Sicherheitsantwort auf Differenzen");
-                }
-                else
-                {
+                else if (Passwort.Password == Passwort_bestaetigen.Password && Antwort.Text == Antwort_bestaetigen.Text)
+                {                                  
                     if (AktuellerNutzer.Nutzer.Nutzertyp.Typ == "Teilnehmer")
                     {
-                        SpeichereNeuenTeilnehmer(AktuellerNutzer);
+                        SpeichereNeuenTeilnehmer(ErschaffeTeilnehmer());
                     }
                     else
                     {
                         SpeichereNeuenAusbilder(ErschaffeAusbilder());
                     }                
+                }
+                else
+                {
+                    ZeigeFehlermeldung("Bitte überprüfen Sie Passwort und Sicherheitsantwort auf Differenzen");
                 }
             }
             else
@@ -158,6 +164,10 @@ namespace _2_UML.Views
             }
         }
 
+        /// <summary>
+        /// Wandelt den aktuellen Nutzer in einen Ausbilder um
+        /// </summary>
+        /// <returns></returns>
         private Models.Ausbilder ErschaffeAusbilder()
         {
             return new Models.Ausbilder
@@ -167,14 +177,35 @@ namespace _2_UML.Views
                 Name = AktuellerNutzer.Name.Trim(),
                 EMail = AktuellerNutzer.EMail.Trim(),
                 Telefonnummer = AktuellerNutzer.Telefonnummer.Trim(),
-                Nutzer= new Nutzer
-                {
-                    Passwort = this.Passwort.Password,
-                    Sicherheitsfrage = (WirdNeuErschaffen) ? (Sicherheitsfrage)this.Sicherheitsfrage.SelectionBoxItem : new Sicherheitsfrage { },
-                    Sicherheitsantwort = Antwort.Text,
-                    Id = AktuellerNutzer.Nutzer.Id,
-                    Nutzertyp = AktuellerNutzer.Nutzer.Nutzertyp,
-                },
+                Nutzer = ErschaffeNutzer(),
+            };
+        }
+
+        private Models.Teilnehmer ErschaffeTeilnehmer()
+        {
+            return new Models.Teilnehmer
+            {
+                Id = AktuellerNutzer.Id,
+                Vorname = AktuellerNutzer.Vorname.Trim(),
+                Name = AktuellerNutzer.Name.Trim(),
+                EMail = AktuellerNutzer.EMail.Trim(),
+                Telefonnummer = AktuellerNutzer.Telefonnummer.Trim(),
+                Adresse = AktuellerNutzer.Adresse,
+                Ausbilder = AktuellerNutzer.Ausbilder,
+                Beruf = AktuellerNutzer.Beruf,
+                Nutzer = ErschaffeNutzer(),
+            };
+        }
+
+        private Nutzer ErschaffeNutzer()
+        {
+            return new Nutzer
+            {
+                Passwort = this.Passwort.Password,
+                Sicherheitsfrage = (WirdNeuErschaffen) ? (Sicherheitsfrage)this.Sicherheitsfrage.SelectionBoxItem : new Sicherheitsfrage { },
+                Sicherheitsantwort = Antwort.Text,
+                Id = AktuellerNutzer.Nutzer.Id,
+                Nutzertyp = AktuellerNutzer.Nutzer.Nutzertyp,
             };
         }
 

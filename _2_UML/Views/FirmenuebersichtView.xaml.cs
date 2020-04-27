@@ -21,7 +21,7 @@ namespace _2_UML.Views
     /// <summary>
     /// Interaktionslogik für FirmenuebersichtView.xaml
     /// </summary>
-    public partial class FirmenuebersichtView : Page, IFirmenuebersichtView
+    public partial class FirmenuebersichtView : BasePage, IFirmenuebersichtView
     {
         public FirmenuebersichtView()
         {

@@ -89,6 +89,7 @@
     <Compile Include="Controller\SicherheitsdatenController.cs" />
     <Compile Include="Converter\BoolToGridRowHeightConverter.cs" />
     <Compile Include="Converter\BoolToGridRowHeightConverter2.cs" />
+    <Compile Include="Converter\BoolToMinGridRowHeightConverter.cs" />
     <Compile Include="Converter\CombineNameConverter.cs" />
     <Compile Include="Converter\ElementIsVisibleConverter.cs" />
     <Compile Include="Converter\PresentDateConverter.cs" />
@@ -140,9 +141,6 @@
     <Compile Include="Persistence\MySQLHandler.cs" />
     <Compile Include="Models\Sicherheitsfrage.cs" />
     <Compile Include="Persistence\Nutzereinstellungen.cs" />
-    <Compile Include="Views\AusbilderAnlegenBearbeitenView.xaml.cs">
-      <DependentUpon>AusbilderAnlegenBearbeitenView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\AusbilderUebersichtView.xaml.cs">
       <DependentUpon>AusbilderUebersichtView.xaml</DependentUpon>
     </Compile>
@@ -174,9 +172,6 @@
     <Compile Include="Views\StartseiteView.xaml.cs">
       <DependentUpon>StartseiteView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TeilnehmerAnlegenBearbeitenView.xaml.cs">
-      <DependentUpon>TeilnehmerAnlegenBearbeitenView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\TeilnehmerUebersichtView.xaml.cs">
       <DependentUpon>TeilnehmerUebersichtView.xaml</DependentUpon>
     </Compile>
@@ -184,7 +179,6 @@
   <ItemGroup>
     <Compile Include="Controller\FirmenUebersichtController.cs" />
     <Compile Include="Models\Teilnehmer.cs" />
-    <Compile Include="Controller\TeilnehmerAnlegenBearbeitenController.cs" />
     <Compile Include="Controller\TeilnehmerUebersichtController.cs" />
     <Compile Include="Views\BewerbungAnlegenBearbeitenView.xaml.cs">
       <DependentUpon>BewerbungAnlegenBearbeitenView.xaml</DependentUpon>
@@ -227,10 +221,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\AusbilderAnlegenBearbeitenView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\AusbilderUebersichtView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -284,10 +274,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\StartseiteView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\TeilnehmerAnlegenBearbeitenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

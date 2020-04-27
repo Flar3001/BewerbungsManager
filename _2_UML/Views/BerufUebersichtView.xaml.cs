@@ -21,7 +21,7 @@ namespace _2_UML.Views
     /// <summary>
     /// Interaktionslogik für BerufUebersichtView.xaml
     /// </summary>
-    public partial class BerufUebersichtView : Page,IBerufUebersichtView
+    public partial class BerufUebersichtView : BasePage,IBerufUebersichtView
     {
         public BerufUebersichtView()
         {

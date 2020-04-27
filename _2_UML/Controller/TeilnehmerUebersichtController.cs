@@ -66,7 +66,15 @@ namespace _2_UML.Controller
         /// <param name="angezeigterTeilnehmer"></param>
         private void TeilnehmerLoeschen(AngezeigterTeilnehmer angezeigterTeilnehmer)
         {
-
+            if(MySQLHandler.RemoveTeilnehmer(angezeigterTeilnehmer))
+            {
+                TeilnehmerUebersichtView.AngezeigteObjekte.Remove(angezeigterTeilnehmer);
+                TeilnehmerUebersichtView.ZeigeMessageBox("Der Teilnehmer wurde erfolgreich aus dem System gelöscht");
+            }
+            else
+            {
+                TeilnehmerUebersichtView.ZeigeMessageBox($"Folgender Fehler ist aufgetreten: {MySQLHandler.Errormessage}");
+            }
         }
 
         /// <summary>
