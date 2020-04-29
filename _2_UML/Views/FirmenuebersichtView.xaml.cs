@@ -45,9 +45,20 @@ namespace _2_UML.Views
 
         public void ObjektLoeschenButton(object sender, RoutedEventArgs e)
         {
-            AngezeigteFirma Firma = (AngezeigteFirma)sender;
- 
-            FirmaLoeschen(Firma);
+            var AusgewaehlteFirma = ((Button)sender).Tag as AngezeigteFirma;
+
+            MessageBoxResult result = MessageBox.Show($"Sie sind dabei, die Firma {AusgewaehlteFirma.Name} aus dem System zu Löschen. " +
+                $"Dies wird alle zu dieser Firma gehörigen Daten vollständig aus dem System entfernen. Sind Sie sich absolut sicher, dass Sie dies tun möchten?", "Bestätigen", MessageBoxButton.YesNo);
+
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    FirmaLoeschen(AusgewaehlteFirma);
+                    break;
+                case MessageBoxResult.No:
+                default:
+                    break;
+            }
         }
 
         public void ZeigeAlleObjekte(ObservableCollection<AngezeigteFirma> ts)

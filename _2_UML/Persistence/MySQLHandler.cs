@@ -702,7 +702,7 @@ namespace _2_UML.Persistence
 
                     conditions.Add(new KeyValuePair<string, string>("@0", eineFirma.Id.ToString()));
 
-                    string sql1 = "SELECT b.bezeichnung";
+                    string sql1 = "SELECT ab.id, b.bezeichnung, ab.fk_ansprechpartner";
                     sql1 += " FROM abteilung as ab";
                     sql1 += " LEFT JOIN beruf as b ON b.id=ab.fk_beruf";
                     sql1 += " WHERE ab.fk_firma=@0";
@@ -711,11 +711,21 @@ namespace _2_UML.Persistence
 
                     if (ExecuteSQL(newcommands))
                     {
-                        eineFirma.AbteilungenDerFirma = new List<string>();
+                        eineFirma.AbteilungenDerFirma = new List<Abteilung>();
 
                         for (int i = 0; i < Result.Tables[0].Rows.Count; i++)
                         {
-                            eineFirma.AbteilungenDerFirma.Add(Result.Tables[0].Rows[i][0].ToString());
+                            eineFirma.AbteilungenDerFirma.Add(new Abteilung {
+                                Id = (int)Result.Tables[0].Rows[i][0],
+                                Beruf = new Beruf
+                                {
+                                    Bezeichnung = Result.Tables[0].Rows[i][1].ToString(),
+                                },
+                                Ansprechpartner=new Ansprechpartner
+                                {
+                                    Id = (int)Result.Tables[0].Rows[i][2],
+                                },
+                            });
                         }
                     }
                     newcommands.Clear();
@@ -765,7 +775,159 @@ namespace _2_UML.Persistence
             return alleFirmen;
         }
         
+        /// <summary>
+        /// Removes a Firma and all other objects that go with it, as well as all references to it.
+        /// </summary>
+        /// <param name="firma"></param>
+        /// <returns></returns>
+        public static bool RemoveFirma(AngezeigteFirma firma)
+        {
+            List<SqlCommand> deleteCommands = new List<SqlCommand>();
 
+            deleteCommands.Add(UpdateTableBewerbung(firma.AbteilungenDerFirma));
+            deleteCommands.Add(DeleteFromTableAbteilung(firma.AbteilungenDerFirma));
+            deleteCommands.Add(DeleteFromTableFirma(firma.Id));
+
+            if (ExecuteSQL(deleteCommands))
+            {
+                deleteCommands.Clear();
+                deleteCommands.Add(DeleteFromTableAnsprechpartner(firma.AbteilungenDerFirma));
+                ExecuteSQL(deleteCommands);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Deletes the ansprechpartner of the transfered departments if there are no abteilungen with his foreign key left
+        /// </summary>
+        /// <returns></returns>
+        private static SqlCommand DeleteFromTableAnsprechpartner(List<Abteilung> departments)
+        {
+            List<KeyValuePair<string, string>> conditions0 = new List<KeyValuePair<string, string>>();
+            string sql0 = "DELETE FROM ansprechpartner WHERE";
+
+            foreach(Abteilung abteilung in departments)
+            {
+                int i = 0;
+
+                List<KeyValuePair<string, string>> conditions1 = new List<KeyValuePair<string, string>>();
+                conditions1.Add(new KeyValuePair<string, string>("@0", abteilung.Ansprechpartner.Id.ToString()));
+
+                string sql1 = "SELECT * FROM abteilung WHERE fk_anprechpartner=@0;";
+
+                List<SqlCommand> searchCommands = new List<SqlCommand>();
+                searchCommands.Add(new SqlCommand { Commandtext = sql1, Parameters = conditions1 });
+
+                if (ExecuteSQL(searchCommands))
+                {
+                    //If there aren't any more Abteilungen with that Ansprechpartner, we delete him from the database
+                    if (Result.Tables[0].Rows.Count == 0)
+                    {
+                        sql0 += $" id=@{i}";
+    
+                        if (i + 1 < departments.Count)
+                        {
+                            sql0 += " OR";
+                        }
+
+                        conditions0.Add(new KeyValuePair<string, string>($"@{i}", abteilung.Ansprechpartner.Id.ToString()));
+                    }
+                }
+                i++;
+            }
+            sql0 += ";";
+
+            return new SqlCommand
+            {
+                Commandtext = sql0,
+                Parameters = conditions0,
+            };
+            
+        }
+
+        /// <summary>
+        /// Command that deletes a firma from the list
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private static SqlCommand DeleteFromTableFirma(int id)
+        {
+
+            string sql = "DELETE FROM firma WHERE id=@0;";
+
+            List<KeyValuePair<string, string>> conditions = new List<KeyValuePair<string, string>>();
+            conditions.Add(new KeyValuePair<string, string>("@0", id.ToString()));
+
+            return new SqlCommand
+            {
+                Commandtext = sql,
+                Parameters = conditions
+            };
+        }
+
+        /// <summary>
+        /// Command that deletes the transfered departments from the database
+        /// </summary>
+        /// <param name="departments">The departments that shall be deleted</param>
+        /// <returns></returns>
+        private static SqlCommand DeleteFromTableAbteilung(List<Abteilung> departments)
+        {
+            List<KeyValuePair<string, string>> conditions = new List<KeyValuePair<string, string>>();
+
+            string sql = "DELETE FROM abteilung WHERE";
+
+            for (int i = 0; i < departments.Count; i++)
+            {
+                sql += $" id=@{i}";
+                if (i + 1 < departments.Count)
+                {
+                    sql += " OR";
+                }
+
+                conditions.Add(new KeyValuePair<string, string>($"@{i}", departments[i].Id.ToString()));
+            }
+            sql += ";";
+
+            return new SqlCommand
+            {
+                Commandtext = sql,
+                Parameters = conditions
+            };
+        }
+
+        /// <summary>
+        /// Command to set all references to the transfered Abteilungen to zero
+        /// </summary>
+        /// <param name="departments">A list of the departments that shall not be referenced anymore</param>
+        /// <returns></returns>
+        private static SqlCommand UpdateTableBewerbung(List<Abteilung> departments)
+        {
+            List<KeyValuePair<string, string>> conditions = new List<KeyValuePair<string, string>>(); 
+
+            string sql = "UPDATE bewerbung SET fk_abteilung=0 WHERE";
+
+            for (int i = 0; i < departments.Count; i++)
+            {
+                sql += $" fk_abteilung=@{i}";
+                if (i + 1 < departments.Count)
+                {
+                    sql += " OR";
+                }
+
+                conditions.Add(new KeyValuePair<string, string>($"@{i}", departments[i].Beruf.Bezeichnung.ToString()));
+            }
+            sql += ";";
+
+            return new SqlCommand
+            {
+                Commandtext = sql,
+                Parameters = conditions
+            };
+
+        }
 
         private static SqlCommand SelectFromAusbilder()
         {

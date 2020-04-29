@@ -9,28 +9,10 @@ namespace _2_UML.Models
     {
         public int Id { get; set; }
 
-        public Ansprechpartner Ansprechpartner
-        {
-            get => default(Ansprechpartner);
-            set
-            {
-            }
-        }
+        public Ansprechpartner Ansprechpartner { get; set; }
 
-        public Firma Firma
-        {
-            get => default(Firma);
-            set
-            {
-            }
-        }
+        public Firma Firma { get; set; }
 
-        public Beruf Beruf
-        {
-            get => default(Beruf);
-            set
-            {
-            }
-        }
+        public Beruf Beruf { get; set; }
     }
 }

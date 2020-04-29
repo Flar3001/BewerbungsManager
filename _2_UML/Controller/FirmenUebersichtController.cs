@@ -48,19 +48,27 @@ namespace _2_UML.Controller
             return ObservableAlleFirmen;
         }
 
-        private void FirmaLoeschen(Firma firma)
+        private void FirmaLoeschen(AngezeigteFirma firma)
         {
-
+            if (MySQLHandler.RemoveFirma(firma))
+            {
+                FirmenuebersichtView.AngezeigteObjekte.Remove(firma);
+                FirmenuebersichtView.ZeigeMessageBox("Die Firma wurde erfolgreich aus dem System gelöscht");
+            }
+            else
+            {
+                FirmenuebersichtView.ZeigeMessageBox($"Folgender Fehler ist aufgetreten: {MySQLHandler.Errormessage}");
+            }
         }
 
         private void FirmaHinzufuegen()
         {
-
+            //FirmaAnlegenBearbeitenController firmaAnlegenBearbeitenController = new FirmaAnlegenBearbeitenController(new Firma { });
         }
 
         private void FirmaAnzeigen(Firma firma)
         {
-            
+            //FirmenAnsichtController firmenAnsichtController = new FirmenAnsichtController(firma);
         }
 
         private void ZuBewerbungen(Firma firma)

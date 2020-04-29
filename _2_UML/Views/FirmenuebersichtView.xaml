@@ -4,9 +4,16 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:_2_UML.Views"
+      xmlns:converter="clr-namespace:_2_UML.Converter"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="FirmenuebersichtView">
+
+    <local:BasePage.Resources>
+        <ResourceDictionary>
+            <converter:DayConverter x:Key="DayAdder"/>
+        </ResourceDictionary>
+    </local:BasePage.Resources>
 
     <Grid Margin="50,0,50,0">
         <Grid.RowDefinitions>
@@ -29,7 +36,7 @@
                   CanUserAddRows="False" 
                   Grid.Row="1">
             <DataGrid.Columns>
-                <DataGridHyperlinkColumn Header="Firmenname" Width="*">
+                <DataGridHyperlinkColumn Header="Firmenname" Width="SizeToCells" MinWidth="78">
                     <DataGridHyperlinkColumn.Binding>
                         <Binding Path="Name"/>
                     </DataGridHyperlinkColumn.Binding>
@@ -39,30 +46,31 @@
                         </Style>
                     </DataGridHyperlinkColumn.ElementStyle>
                 </DataGridHyperlinkColumn>
-                <DataGridTextColumn Header="Ort" Binding="{Binding Adresse.Ort}" Width="*"/>
-                <DataGridTextColumn Header="Land" Binding="{Binding Adresse.Land}" Width="*"/>
-                <DataGridTemplateColumn Header="Berufe" Width="*">
+                <DataGridTextColumn Header="Ort" Binding="{Binding Adresse.Ort}" Width="SizeToCells" MinWidth="30"/>
+                <DataGridTextColumn Header="Land" Binding="{Binding Adresse.Land}" Width="SizeToCells" MinWidth="40"/>
+                <DataGridTemplateColumn Header="Berufe" Width="SizeToCells" MinWidth="50">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ListBox ItemsSource="{Binding Abteilungen.Beruf.Bezeichnung}"/>
+                            <ListBox ItemsSource="{Binding AbteilungenDerFirma}" DisplayMemberPath="Beruf.Bezeichnung"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridHyperlinkColumn Header="Bewerbungen" Width="*">
+                <DataGridHyperlinkColumn Header="Bewerbungen" Width="SizeToCells" MinWidth="85">
                     <DataGridHyperlinkColumn.Binding>
                         <Binding Path="AnzahlBewerbungen"/>
                     </DataGridHyperlinkColumn.Binding>
                     <DataGridHyperlinkColumn.ElementStyle>
                         <Style>
                             <EventSetter Event="Hyperlink.Click" Handler="GeheZuBewerbungenButton"/>
+                            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
                         </Style>
                     </DataGridHyperlinkColumn.ElementStyle>
                 </DataGridHyperlinkColumn>
 
-                <DataGridTextColumn Header="Durchschnittliche Antwortdauer" Binding="{Binding Antwortdauer}" Width="*"/>
+                <DataGridTextColumn Header="Durchschnittliche Antwortdauer" Binding="{Binding Antwortdauer, Converter={StaticResource DayAdder}}" Width="SizeToCells" MinWidth="180"/>
 
-                <DataGridTemplateColumn Width="*">
+                <DataGridTemplateColumn Width="50">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Click="ObjektLoeschenButton"

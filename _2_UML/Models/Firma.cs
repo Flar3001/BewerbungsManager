@@ -23,7 +23,7 @@ namespace _2_UML.Models
     /// </summary>
     public class AngezeigteFirma : Firma
     {
-        public List<string> AbteilungenDerFirma { get; set; }
+        public List<Abteilung> AbteilungenDerFirma { get; set; }
 
         public int DurchschnittlicheAntwortDauerInTagen { get; set; }
 
