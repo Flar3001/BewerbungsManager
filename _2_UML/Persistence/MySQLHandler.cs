@@ -655,17 +655,116 @@ namespace _2_UML.Persistence
             return false;
         }
 
-        /*
-        public static List<Firma> AlleFirmen()
+        /// <summary>
+        /// Creates a list of all AngezeigteFirma that can be displayed in FirmauebersichtView
+        /// </summary>
+        /// <returns></returns>
+        public static List<AngezeigteFirma> AlleFirmen()
         {
             string sql = "SELECT f.id, f.name, f.bewerbung_telefon, f.bewerbung_e_mail, f.beschreibung";
-            sql += ", a.ort, a.postleitzahl, a.straße, a.hausnummer, a.land";
+            sql += ", a.id, a.ort, a.postleitzahl, a.straße, a.hausnummer, a.land";
             sql += " FROM firma as f";
             sql += " LEFT JOIN adresse as a ON f.fk_adresse=a.id";
-            sql += " LEFT JOIN abteilung as ab ON ab.fk_firma=f.id";
-            sql += " LEFT JOIN bewerbung as b ON b.fk_abteilung=ab.id";
+
+            List<SqlCommand> sqlCommands = new List<SqlCommand>();
+            List<AngezeigteFirma> alleFirmen = new List<AngezeigteFirma>();
+            List<TimeSpan> respondtimes = new List<TimeSpan>();
+
+            sqlCommands.Add(new SqlCommand { Commandtext = sql });
+
+            if (ExecuteSQL(sqlCommands))
+            {
+                for (int i = 0; i < Result.Tables[0].Rows.Count; i++)
+                {
+                    alleFirmen.Add(new AngezeigteFirma
+                    {
+                        Id = (int)Result.Tables[0].Rows[i][0],
+                        Name = Result.Tables[0].Rows[i][1].ToString(),
+                        BewerbungsTelefonummer = Result.Tables[0].Rows[i][2].ToString(),
+                        BewerbungsEMailAdresse = Result.Tables[0].Rows[i][3].ToString(),
+                        Beschreibung = Result.Tables[0].Rows[i][4].ToString(),
+                        Adresse = new Adresse
+                        {
+                            Id = (int)Result.Tables[0].Rows[i][5],
+                            Ort = Result.Tables[0].Rows[i][6].ToString(),
+                            Postleitzahl = Result.Tables[0].Rows[i][7].ToString(),
+                            Straße = Result.Tables[0].Rows[i][8].ToString(),
+                            Hausnummer = Result.Tables[0].Rows[i][9].ToString(),
+                            Land = Result.Tables[0].Rows[i][10].ToString(),
+                        }
+                    });
+                }
+
+                foreach(AngezeigteFirma eineFirma in alleFirmen)
+                {
+                    List<SqlCommand> newcommands = new List<SqlCommand>();
+                    List<KeyValuePair<string, string>> conditions = new List<KeyValuePair<string, string>>();
+
+                    conditions.Add(new KeyValuePair<string, string>("@0", eineFirma.Id.ToString()));
+
+                    string sql1 = "SELECT b.bezeichnung";
+                    sql1 += " FROM abteilung as ab";
+                    sql1 += " LEFT JOIN beruf as b ON b.id=ab.fk_beruf";
+                    sql1 += " WHERE ab.fk_firma=@0";
+
+                    newcommands.Add(new SqlCommand { Commandtext = sql1, Parameters = conditions });
+
+                    if (ExecuteSQL(newcommands))
+                    {
+                        eineFirma.AbteilungenDerFirma = new List<string>();
+
+                        for (int i = 0; i < Result.Tables[0].Rows.Count; i++)
+                        {
+                            eineFirma.AbteilungenDerFirma.Add(Result.Tables[0].Rows[i][0].ToString());
+                        }
+                    }
+                    newcommands.Clear();
+                    conditions.Clear();
+
+                    conditions.Add(new KeyValuePair<string, string>("@0", eineFirma.Id.ToString()));
+
+                    string sql2 = "SELECT b.gesendet_datum, b.antwort_datum";
+                    sql2 += " FROM abteilung as ab";
+                    sql2 += " LEFT JOIN bewerbung as b ON ab.id=b.fk_abteilung";
+                    sql2 += " WHERE ab.fk_firma=@0";
+
+                    newcommands.Add(new SqlCommand { Commandtext = sql2, Parameters = conditions });
+
+                    if (ExecuteSQL(newcommands))
+                    {
+                        eineFirma.AnzahlBewerbungen = Result.Tables[0].Rows.Count;
+
+                        respondtimes.Clear();
+
+                        for (int i = 0; i < Result.Tables[0].Rows.Count; i++)
+                        {
+                            DateTime gesendet_datum = DateTime.Parse(Result.Tables[0].Rows[i][0].ToString());
+
+                            //Check if we have already gotten an answer. If yes, we take the timespan between those datetimes
+                            if(Result.Tables[0].Rows[i][1] != DBNull.Value)
+                            { 
+                                DateTime antwort_datum = DateTime.Parse(Result.Tables[0].Rows[i][1].ToString());
+                                respondtimes.Add(antwort_datum.Subtract(gesendet_datum));
+                            }
+                        }
+
+                        //Get the average Timespan and add it  to the AngezeigteFirma
+
+                        if(respondtimes.Count > 0)
+                        {
+                            double doubleAverageTicks = respondtimes.Average(timeSpan => timeSpan.Ticks);
+                            long longAverageTicks = Convert.ToInt64(doubleAverageTicks);
+                            TimeSpan averegeTime = new TimeSpan(longAverageTicks);
+
+                            eineFirma.DurchschnittlicheAntwortDauerInTagen = Convert.ToInt32(averegeTime.TotalDays);
+                        }
+                    }
+                }
+            }
+
+            return alleFirmen;
         }
-        */
+        
 
 
         private static SqlCommand SelectFromAusbilder()
@@ -863,25 +962,25 @@ namespace _2_UML.Persistence
                             },
                             Adresse = new Adresse
                             {
-                                Ort = $"{Result.Tables[0].Rows[0][7]}",
-                                Postleitzahl = $"{Result.Tables[0].Rows[0][8]}",
-                                Straße = $"{Result.Tables[0].Rows[0][9]}",
-                                Hausnummer = $"{Result.Tables[0].Rows[0][10]}",
-                                Land = $"{Result.Tables[0].Rows[0][11]}",
+                                Ort = $"{Result.Tables[0].Rows[i][7]}",
+                                Postleitzahl = $"{Result.Tables[0].Rows[i][8]}",
+                                Straße = $"{Result.Tables[0].Rows[i][9]}",
+                                Hausnummer = $"{Result.Tables[0].Rows[i][10]}",
+                                Land = $"{Result.Tables[0].Rows[i][11]}",
                             },
                             Nutzer = new Nutzer
                             {
-                                Id = (int)Result.Tables[0].Rows[0][12],
+                                Id = (int)Result.Tables[0].Rows[i][12],
                                 Nutzertyp=new Nutzertyp
                                 {
-                                    Typ=$"{Result.Tables[0].Rows[0][13]}",
+                                    Typ=$"{Result.Tables[0].Rows[i][13]}",
                                 }
                             },
                             Ausbilder = new Ausbilder
                             {
-                                Id=(int)Result.Tables[0].Rows[0][14],
-                                Vorname= $"{Result.Tables[0].Rows[0][15]}",
-                                Name=$"{Result.Tables[0].Rows[0][16]}",
+                                Id=(int)Result.Tables[0].Rows[i][14],
+                                Vorname= $"{Result.Tables[0].Rows[i][15]}",
+                                Name=$"{Result.Tables[0].Rows[i][16]}",
                             },
                         }
                     );
@@ -916,6 +1015,11 @@ namespace _2_UML.Persistence
             return angezeigterTeilnehmer;
         }
 
+        /// <summary>
+        /// Removes a Teilnehmer completely from the database, including his Bewerbungen
+        /// </summary>
+        /// <param name="teilnehmer"></param>
+        /// <returns></returns>
         public static bool RemoveTeilnehmer(AngezeigterTeilnehmer teilnehmer)
         {
             List<SqlCommand> deleteCommands = new List<SqlCommand>();
@@ -925,11 +1029,10 @@ namespace _2_UML.Persistence
             teilnehmerIds.Add(teilnehmer.Id);
             teilnehmerNutzerIds.Add(teilnehmer.Nutzer.Id);
 
-            deleteCommands.Add(DeleteFromNutzer(teilnehmerNutzerIds));
-            deleteCommands.Add(DeleteFromTeilnehmer(teilnehmerIds));
             deleteCommands.Add(DeleteBewerbungen(teilnehmerIds));
-
-
+            deleteCommands.Add(DeleteFromTeilnehmer(teilnehmerIds));
+            deleteCommands.Add(DeleteFromNutzer(teilnehmerNutzerIds));            
+            
             return ExecuteSQL(deleteCommands);
         }
 

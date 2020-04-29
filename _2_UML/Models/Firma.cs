@@ -16,4 +16,17 @@ namespace _2_UML.Models
         public Adresse Adresse { get; set; }
 
     }
+
+    /// <summary>
+    /// Eine spezielle Klasse, welche genutzt wird, um die Firmen in der Tabelle aller Firmen zusammen mit Eigenschaften
+    /// darzustellen, welche nicht in der normalen Firma vorhanden sind
+    /// </summary>
+    public class AngezeigteFirma : Firma
+    {
+        public List<string> AbteilungenDerFirma { get; set; }
+
+        public int DurchschnittlicheAntwortDauerInTagen { get; set; }
+
+        public int AnzahlBewerbungen { get; set; }
+    }
 }

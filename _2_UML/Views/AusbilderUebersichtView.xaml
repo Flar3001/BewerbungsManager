@@ -55,6 +55,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Click="ObjektLoeschenButton"
+                                    Width="50"
                                     Tag="{Binding .}">
                                 <TextBlock Text="Löschen"/>
                             </Button>

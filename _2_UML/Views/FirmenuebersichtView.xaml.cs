@@ -26,40 +26,72 @@ namespace _2_UML.Views
         public FirmenuebersichtView()
         {
             InitializeComponent();
+            this.DataContext = this;
         }
 
-        public List<Firma> AngezeigteObjekte { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        ObservableCollection<Firma> IUebersichtView<Firma>.AngezeigteObjekte { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public ObservableCollection<AngezeigteFirma> AngezeigteObjekte { get; set; }
 
         public event SeitenAnsicht ZeigeViewFertig;
         public event FirmaLoeschen FirmaLoeschen;
         public event ZurStartseite ZurStartseite;
         public event ObjektHinzufuegen ObjektHinzufuegen;
         public event ZuFirma ZuFirma;
+        public event ZuBewerbungenVonFirma ZuBewerbungen;
 
         public void ObjektHinzufuegenButton(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            ObjektHinzufuegen();
         }
 
         public void ObjektLoeschenButton(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            AngezeigteFirma Firma = (AngezeigteFirma)sender;
+ 
+            FirmaLoeschen(Firma);
         }
 
-        public void ZeigeAlleObjekte(ObservableCollection<Firma> ts)
+        public void ZeigeAlleObjekte(ObservableCollection<AngezeigteFirma> ts)
         {
-            throw new NotImplementedException();
+            AngezeigteObjekte = ts;
         }
 
         public void ZeigeView()
         {
-            throw new NotImplementedException();
+            ZeigeViewFertig(this);
+        }
+
+        public void GeheZuFirmaProfilButton(object sender, RoutedEventArgs e)
+        {
+            AngezeigteFirma Firma = (AngezeigteFirma)sender;
+ 
+            ZuFirma(Firma);
         }
 
         public void ZurStartseiteButton(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            ZurStartseite();
         }
+
+        public void GeheZuBewerbungenButton(object sender, RoutedEventArgs e)
+        {
+            AngezeigteFirma firma = (AngezeigteFirma)sender;
+
+            ZuBewerbungen(firma);
+        }
+
+        /*
+        private Firma FirmaTransformieren(AngezeigteFirma angezeigteFirma)
+        {
+            return new Firma
+            {
+                Id = angezeigteFirma.Id,
+                Adresse = angezeigteFirma.Adresse,
+                Beschreibung = angezeigteFirma.Beschreibung,
+                BewerbungsEMailAdresse = angezeigteFirma.BewerbungsEMailAdresse,
+                BewerbungsTelefonummer = angezeigteFirma.BewerbungsTelefonummer,
+                Name = angezeigteFirma.Name,
+            };
+        }
+        */
     }
 }

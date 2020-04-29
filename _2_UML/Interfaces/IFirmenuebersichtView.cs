@@ -9,10 +9,12 @@ namespace _2_UML.Interfaces
 {
     public delegate void ZuFirma(Firma firma);
     public delegate void FirmaLoeschen(Firma firma);
+    public delegate void ZuBewerbungenVonFirma(Firma firma);
 
-    public interface IFirmenuebersichtView : IUebersichtView<Firma>
+    public interface IFirmenuebersichtView : IUebersichtView<AngezeigteFirma>
     {
         event ZuFirma ZuFirma;
         event FirmaLoeschen FirmaLoeschen;
+        event ZuBewerbungenVonFirma ZuBewerbungen;
     }
 }
