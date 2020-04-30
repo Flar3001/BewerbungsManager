@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 23. Apr 2020 um 11:10
+-- Erstellungszeit: 30. Apr 2020 um 12:36
 -- Server-Version: 10.1.34-MariaDB
 -- PHP-Version: 7.2.8
 
@@ -35,6 +35,13 @@ CREATE TABLE `abteilung` (
   `fk_ansprechpartner` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Daten für Tabelle `abteilung`
+--
+
+INSERT INTO `abteilung` (`id`, `fk_beruf`, `fk_firma`, `fk_ansprechpartner`) VALUES
+(1, 1, 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -55,7 +62,11 @@ CREATE TABLE `adresse` (
 --
 
 INSERT INTO `adresse` (`id`, `ort`, `postleitzahl`, `straße`, `hausnummer`, `land`) VALUES
-(1, 'Husum', 25813, 'Theodor-Schäfer-Straße', '14-26', 'Deutschland');
+(1, 'Husum', 25813, 'Theodor-Schäfer-Straße', '14-26', 'Deutschland'),
+(2, 'Hamburg', 20095, 'Musterstraße', '34a', 'Deutschland'),
+(3, '333', 444, '555', '666', '777'),
+(4, 'Berlin', 10115, 'Berliner Straße', '23', 'Deutschland'),
+(5, 'PLF', 98766, 'Wald (irgendwo)', '1', 'Japan');
 
 -- --------------------------------------------------------
 
@@ -70,6 +81,13 @@ CREATE TABLE `ansprechpartner` (
   `telefon` varchar(50) NOT NULL,
   `e_mail` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Daten für Tabelle `ansprechpartner`
+--
+
+INSERT INTO `ansprechpartner` (`id`, `vorname`, `name`, `telefon`, `e_mail`) VALUES
+(1, 'Ansprech', 'Partner', '666888', 'ansprech@partner.de');
 
 -- --------------------------------------------------------
 
@@ -91,7 +109,7 @@ CREATE TABLE `ausbilder` (
 --
 
 INSERT INTO `ausbilder` (`id`, `vorname`, `name`, `telefon`, `e_mail`, `fk_nutzer`) VALUES
-(1, 'Christoph', 'Strunk', '01234-5679', 'ausbilder@tsbw.de', 2),
+(1, 'Christoph', 'Strunk', '01234-5678', 'ausbilder@tsbw.de', 2),
 (2, 'Inken', 'Kotulla', '123', 'inken@kotulla.de', 7);
 
 -- --------------------------------------------------------
@@ -110,7 +128,8 @@ CREATE TABLE `beruf` (
 --
 
 INSERT INTO `beruf` (`id`, `bezeichnung`) VALUES
-(1, 'Anwendungsentwicklung');
+(1, 'Anwendungsentwicklung'),
+(2, 'Systemadministrator');
 
 -- --------------------------------------------------------
 
@@ -128,6 +147,13 @@ CREATE TABLE `bewerbung` (
   `fk_abteilung` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Daten für Tabelle `bewerbung`
+--
+
+INSERT INTO `bewerbung` (`id`, `gesendet_datum`, `antwort_datum`, `fk_bewerbung_typ`, `fk_bewerbung_status`, `fk_teilnehmer`, `fk_abteilung`) VALUES
+(1, '2020-02-01', NULL, 1, 1, 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -139,6 +165,13 @@ CREATE TABLE `bewerbung_status` (
   `beschreibung` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Daten für Tabelle `bewerbung_status`
+--
+
+INSERT INTO `bewerbung_status` (`id`, `beschreibung`) VALUES
+(1, 'offen');
+
 -- --------------------------------------------------------
 
 --
@@ -149,6 +182,13 @@ CREATE TABLE `bewerbung_typ` (
   `id` int(10) NOT NULL,
   `beschreibung` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Daten für Tabelle `bewerbung_typ`
+--
+
+INSERT INTO `bewerbung_typ` (`id`, `beschreibung`) VALUES
+(1, 'Initiativbewerbung');
 
 -- --------------------------------------------------------
 
@@ -164,6 +204,13 @@ CREATE TABLE `firma` (
   `fk_adresse` int(10) NOT NULL,
   `beschreibung` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Daten für Tabelle `firma`
+--
+
+INSERT INTO `firma` (`id`, `name`, `bewerbung_telefon`, `bewerbung_e_mail`, `fk_adresse`, `beschreibung`) VALUES
+(1, 'Alles Ag', 332211, 'muster@ag.de', 2, 'Eine Beispielfirmas');
 
 -- --------------------------------------------------------
 
@@ -186,7 +233,10 @@ CREATE TABLE `nutzer` (
 INSERT INTO `nutzer` (`id`, `passwort`, `fk_sicherheitsabfrage`, `fk_nutzertyp`, `sicherheitsantwort`) VALUES
 (1, 'Eigentor', 4, 2, 'Michael Schuhmacher'),
 (2, 'Tobi', 1, 1, 'Knödel'),
-(7, 'neue', 1, 1, 'eis');
+(7, 'neue', 1, 1, 'eis'),
+(9, '888', 2, 2, '999'),
+(11, 'Stiefel', 4, 2, 'Otto'),
+(12, 'Izuku', 4, 2, 'Blut');
 
 -- --------------------------------------------------------
 
@@ -251,7 +301,9 @@ CREATE TABLE `teilnehmer` (
 --
 
 INSERT INTO `teilnehmer` (`id`, `vorname`, `name`, `telefon`, `e_mail`, `fk_beruf`, `fk_ausbilder`, `fk_adresse`, `fk_nutzer`) VALUES
-(1, 'Lars Rune', 'Christiansen', '04681-11125', 'ist@geheim.de', 1, 1, 1, 1);
+(1, 'Lars Rune', 'Christiansen', '04681-11125', 'ist@geheim.de', 2, 1, 1, 1),
+(3, 'Max', 'Mustermann', '04681-22913', 'max@mustermann.de', 1, 1, 4, 11),
+(4, 'Himiko', 'Toga', 'xxxxxx', 'mad@stabber.de', 2, 2, 5, 12);
 
 --
 -- Indizes der exportierten Tabellen
@@ -358,19 +410,19 @@ ALTER TABLE `teilnehmer`
 -- AUTO_INCREMENT für Tabelle `abteilung`
 --
 ALTER TABLE `abteilung`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT für Tabelle `adresse`
 --
 ALTER TABLE `adresse`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT für Tabelle `ansprechpartner`
 --
 ALTER TABLE `ansprechpartner`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT für Tabelle `ausbilder`
@@ -382,37 +434,37 @@ ALTER TABLE `ausbilder`
 -- AUTO_INCREMENT für Tabelle `beruf`
 --
 ALTER TABLE `beruf`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT für Tabelle `bewerbung`
 --
 ALTER TABLE `bewerbung`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT für Tabelle `bewerbung_status`
 --
 ALTER TABLE `bewerbung_status`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT für Tabelle `bewerbung_typ`
 --
 ALTER TABLE `bewerbung_typ`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT für Tabelle `firma`
 --
 ALTER TABLE `firma`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT für Tabelle `nutzer`
 --
 ALTER TABLE `nutzer`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT für Tabelle `nutzertyp`
@@ -430,7 +482,7 @@ ALTER TABLE `sicherheitsfrage`
 -- AUTO_INCREMENT für Tabelle `teilnehmer`
 --
 ALTER TABLE `teilnehmer`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints der exportierten Tabellen

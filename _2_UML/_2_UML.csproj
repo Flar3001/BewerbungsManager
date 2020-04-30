@@ -212,6 +212,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="ClassDiagram1.cd" />
+    <None Include="Database_Dumps\erm_bewerbungen.csv" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -287,7 +288,7 @@
     <Folder Include="Pictures\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="erm_bewerbungen.sql" />
+    <Content Include="Database_Dumps\erm_bewerbungen%281%29.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

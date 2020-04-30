@@ -51,7 +51,7 @@
                 <DataGridTemplateColumn Header="Berufe" Width="SizeToCells" MinWidth="50">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ListBox ItemsSource="{Binding AbteilungenDerFirma}" DisplayMemberPath="Beruf.Bezeichnung"/>
+                            <ListView ItemsSource="{Binding AbteilungenDerFirma}" DisplayMemberPath="Beruf.Bezeichnung"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

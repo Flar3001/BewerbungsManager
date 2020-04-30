@@ -9,7 +9,7 @@ using _2_UML.Models;
 namespace _2_UML.Interfaces
 {
     public delegate void Aendern();
-    public delegate void Zurueck();
+    //public delegate void Zurueck2();
 
     interface INutzerAnsichtView : IView
     {

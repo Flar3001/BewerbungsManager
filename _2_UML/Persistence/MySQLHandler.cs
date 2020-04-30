@@ -731,6 +731,11 @@ namespace _2_UML.Persistence
                     newcommands.Clear();
                     conditions.Clear();
 
+                    foreach(Abteilung department in eineFirma.AbteilungenDerFirma)
+                    {
+                        department.Ansprechpartner = SelectAnsprechpartner(department.Ansprechpartner.Id);
+                    }
+
                     conditions.Add(new KeyValuePair<string, string>("@0", eineFirma.Id.ToString()));
 
                     string sql2 = "SELECT b.gesendet_datum, b.antwort_datum";
@@ -758,7 +763,7 @@ namespace _2_UML.Persistence
                             }
                         }
 
-                        //Get the average Timespan and add it  to the AngezeigteFirma
+                        //Get the average Timespan and add it to the AngezeigteFirma
 
                         if(respondtimes.Count > 0)
                         {
@@ -775,6 +780,42 @@ namespace _2_UML.Persistence
             return alleFirmen;
         }
         
+
+        private static Ansprechpartner SelectAnsprechpartner(int id)
+        {
+            string sql = "SELECT a.vorname, a.name, a.telefon, a.e_mail";
+            sql += " FROM ansprechpartner as a";
+            sql += " WHERE a.id=@0";
+
+            List<KeyValuePair<string, string>> conditions = new List<KeyValuePair<string, string>>();
+            List<SqlCommand> commands = new List<SqlCommand>();
+            conditions.Add(new KeyValuePair<string, string>("@0", id.ToString()));
+
+            commands.Add(new SqlCommand
+            {
+                Commandtext = sql,
+                Parameters = conditions,
+            });
+
+            if (ExecuteSQL(commands))
+            {
+                return new Ansprechpartner
+                {
+                    Id = id,
+                    Vorname = Result.Tables[0].Rows[0][0].ToString(),
+                    Name = Result.Tables[0].Rows[0][1].ToString(),
+                    Telefonnummer = Result.Tables[0].Rows[0][2].ToString(),
+                    EMail = Result.Tables[0].Rows[0][3].ToString(),
+                };
+            }
+            return new Ansprechpartner
+            {
+                Id = id,
+            };
+        }
+
+
+
         /// <summary>
         /// Removes a Firma and all other objects that go with it, as well as all references to it.
         /// </summary>

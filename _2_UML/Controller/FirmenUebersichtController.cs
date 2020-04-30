@@ -68,7 +68,7 @@ namespace _2_UML.Controller
 
         private void FirmaAnzeigen(Firma firma)
         {
-            //FirmenAnsichtController firmenAnsichtController = new FirmenAnsichtController(firma);
+            FirmenAnsichtController firmenAnsichtController = new FirmenAnsichtController(firma);
         }
 
         private void ZuBewerbungen(Firma firma)

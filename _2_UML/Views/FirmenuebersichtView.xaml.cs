@@ -73,9 +73,9 @@ namespace _2_UML.Views
 
         public void GeheZuFirmaProfilButton(object sender, RoutedEventArgs e)
         {
-            AngezeigteFirma Firma = (AngezeigteFirma)sender;
- 
-            ZuFirma(Firma);
+            var AusgewaehlteFirma = (AngezeigteFirma)((TextBlock)sender).BindingGroup.Items[0];
+
+            ZuFirma(AusgewaehlteFirma);
         }
 
         public void ZurStartseiteButton(object sender, RoutedEventArgs e)
@@ -85,9 +85,9 @@ namespace _2_UML.Views
 
         public void GeheZuBewerbungenButton(object sender, RoutedEventArgs e)
         {
-            AngezeigteFirma firma = (AngezeigteFirma)sender;
+            var AusgewaehlteFirma = (AngezeigteFirma)((TextBlock)sender).BindingGroup.Items[0];
 
-            ZuBewerbungen(firma);
+            ZuBewerbungen(AusgewaehlteFirma);
         }
 
         /*
